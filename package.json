@@ -15,7 +15,7 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
-    "test": "mocha tests --recursive",
+    "test": "xo && mocha tests --recursive",
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
@@ -28,13 +28,22 @@
     "eslint-plugin-node": "^11.1.0",
     "mocha": "^10.0.0",
     "npm-run-all": "^4.1.5",
-    "xo": "^0.57.0"
+    "xo": "^0.57.0",
+    "@codedependant/semantic-release-docker": "^4.4.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.1",
+    "@semantic-release/npm": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0",
+    "bun-types": "latest"
   },
   "engines": {
     "node": ">= 20.11.0"
   },
   "peerDependencies": {
-    "eslint": ">=7"
+    "eslint": ">=7",
+    "typescript": "^5.0.0"
   },
   "license": "ISC",
   "packageManager": "yarn@4.1.0"
