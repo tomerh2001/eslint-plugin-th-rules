@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.3...v1.0.4) (2024-02-22)
+
+
+### Bug Fixes
+
+* 3 ([de1546e](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/de1546eff2921718c6cfd6d6c4e8d6f82b178847))
+* 5 ([8d1b80d](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/8d1b80d22129d1a5baaa7330f76645ef6e9f2cc9))
+
 ## [1.0.3](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.2...v1.0.3) (2024-02-22)
 
 
