@@ -4,3 +4,16 @@
 [![Snyk Security](../../actions/workflows/snyk-security.yml/badge.svg)](../../actions/workflows/snyk-security.yml)
 [![CodeQL](../../actions/workflows/codeql.yml/badge.svg)](../../actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/semantic-release-repo-template/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/semantic-release-repo-template)
+
+# Configuration
+> [!NOTE]
+> Go to [Repository Secrets](../../settings/secrets/actions) settings and add the following:
+
+| Name                      | Description                                | Required |
+| ------------------------- | ------------------------------------------ | -------- |
+| GH_TOKEN                  | Github Token                               | Yes      |
+| NPM_TOKEN                 | NPM Token for publishing to NPM from CI/CD | Recommended |
+| CODECOV_TOKEN             | Codecov Token for coverage tests | Recommended |
+| SNYK_TOKEN                | Snyk Token for security tests    | Recommended |
+| DOCKER_REGISTRY_USER      | Docker registry user             | Optional    |
+| DOCKER_REGISTRY_PASSWORD  | Docker registry password         | Optional
