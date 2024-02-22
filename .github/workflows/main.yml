@@ -28,6 +28,11 @@ jobs:
     - name: Authenticate with ghcr.io
       run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: "20.x"
+    
     - name: Semantic Release
       run: bunx semantic-release
       env:
