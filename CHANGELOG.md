@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.2...v1.0.3) (2024-02-22)
+
+
+### Bug Fixes
+
+* number 3 ([ac78e66](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/ac78e6685fcda4551a18f93afc0e05ecb232185c))
+
 ## [1.0.2](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.1...v1.0.2) (2024-02-22)
 
 
