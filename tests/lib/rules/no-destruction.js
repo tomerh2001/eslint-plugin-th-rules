@@ -1,5 +1,5 @@
-const rule = require("../../../lib/rules/no-destruction");
-const RuleTester = require("eslint").RuleTester;
+import rule from "../../../lib/rules/no-destruction";
+import { RuleTester } from "eslint";
 
 const ruleTester = new RuleTester({
     parserOptions: {
@@ -14,7 +14,7 @@ ruleTester.run('no-destruction', rule, {
         code: `const { a, b } = obj;`, 
         options: [{ maximumDestructuredVariables: 3, maximumLineLength: 80 }] 
       },
-      { 
+      {  
         code: `const { a } = obj;`, 
         options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }] 
       },
