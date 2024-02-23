@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.0...v1.1.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* changed index.js to ES ([d55351e](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/d55351ed380ceeb2c15d89f4b9db7e85c5250937))
+
 # [1.1.0](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.7...v1.1.0) (2024-02-23)
 
 
