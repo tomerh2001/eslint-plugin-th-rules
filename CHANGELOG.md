@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.3...v1.1.4) (2024-02-23)
+
+
+### Bug Fixes
+
+* Update lib/index.js to import all rules in lib/rules ([d4f3183](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/d4f3183de27b530a7f62fc1670055915641d7533))
+
 ## [1.1.3](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.2...v1.1.3) (2024-02-23)
 
 
