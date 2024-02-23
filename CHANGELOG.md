@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/tomerh2001/eslint-rules-th/compare/v1.3.1...v1.3.2) (2024-02-23)
+
+
+### Bug Fixes
+
+* Merge branch 'main' of https://github.com/tomerh2001/eslint-plugin-no-destruction ([0311859](https://github.com/tomerh2001/eslint-rules-th/commit/031185954930bdfb25a49bde6a728e2194293ace))
+
 ## [1.3.1](https://github.com/tomerh2001/eslint-rules-th/compare/v1.3.0...v1.3.1) (2024-02-23)
 
 
