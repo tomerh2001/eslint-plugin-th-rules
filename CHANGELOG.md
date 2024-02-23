@@ -1,29 +1,29 @@
-## [1.3.1](https://github.com/tomerh2001/eslint-rules-th/compare/v1.3.0...v1.3.1) (2024-02-23)
+## [1.3.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.3.0...v1.3.1) (2024-02-23)
 
 
 ### Bug Fixes
 
-* fixed package name ([4e006ab](https://github.com/tomerh2001/eslint-rules-th/commit/4e006ab95cb8daa4310c43adbdd24c3be82b34b4))
+* fixed package name ([4e006ab](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/4e006ab95cb8daa4310c43adbdd24c3be82b34b4))
 
-# [1.3.0](https://github.com/tomerh2001/eslint-rules-th/compare/v1.2.0...v1.3.0) (2024-02-23)
+# [1.3.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.2.0...v1.3.0) (2024-02-23)
 
 
 ### Bug Fixes
 
-* renamed recommended configuration to all ([f11d297](https://github.com/tomerh2001/eslint-rules-th/commit/f11d297861da5b9234ddebf18c1ea4f52099b7b6))
-* Update plugin and rule names in configs ([476b081](https://github.com/tomerh2001/eslint-rules-th/commit/476b0813aaecfe717291ac44fdd9c661a4356693))
+* renamed recommended configuration to all ([f11d297](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/f11d297861da5b9234ddebf18c1ea4f52099b7b6))
+* Update plugin and rule names in configs ([476b081](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/476b0813aaecfe717291ac44fdd9c661a4356693))
 
 
 ### Features
 
-* updated readme ([3903d35](https://github.com/tomerh2001/eslint-rules-th/commit/3903d354c2d4ba367258aa0cd80501db080cf595))
+* updated readme ([3903d35](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/3903d354c2d4ba367258aa0cd80501db080cf595))
 
-# [1.2.0](https://github.com/tomerh2001/eslint-rules-th/compare/v1.1.4...v1.2.0) (2024-02-23)
+# [1.2.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.1.4...v1.2.0) (2024-02-23)
 
 
 ### Features
 
-* :sparkles: Created a recommended configuration ([4c81e02](https://github.com/tomerh2001/eslint-rules-th/commit/4c81e027ef00ab06a4c69ef32857093fcb06fb3b))
+* :sparkles: Created a recommended configuration ([4c81e02](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/4c81e027ef00ab06a4c69ef32857093fcb06fb3b))
 
 ## [1.1.4](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.3...v1.1.4) (2024-02-23)
 

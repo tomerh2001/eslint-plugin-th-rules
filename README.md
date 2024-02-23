@@ -1,9 +1,9 @@
-# eslint-rules-th
+# eslint-plugin-th-rules
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![XO code style](https://shields.io/badge/code_style-5ed9c7?logo=xo&labelColor=gray)](https://github.com/xojs/xo)
 [![Snyk Security](../../actions/workflows/snyk-security.yml/badge.svg)](../../actions/workflows/snyk-security.yml)
 [![CodeQL](../../actions/workflows/codeql.yml/badge.svg)](../../actions/workflows/codeql.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/eslint-rules-th/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/eslint-rules-th)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/eslint-plugin-th-rules/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/eslint-plugin-th-rules)
 
 This repository contains custom ESLint rules to enhance code quality and consistency across projects.
 
@@ -17,7 +17,7 @@ To add all of the rules into your project, add the following configuration into 
 
 ```json
 {
-  "extends": ["plugin:eslint-rules-th/all"]
+  "extends": ["plugin:eslint-plugin-th-rules/all"]
 }
 ```
 
@@ -25,7 +25,7 @@ To add all of the rules into your project, add the following configuration into 
 
 ### 1. No-Destruction Rule
 
-**Rule ID:** `eslint-rules-th/no-destructuring`
+**Rule ID:** `eslint-plugin-th-rules/no-destructuring`
 
 #### Description
 
@@ -44,14 +44,14 @@ This rule checks for:
 ```json
 {
   "rules": {
-    "eslint-rules-th/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
+    "eslint-plugin-th-rules/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
   }
 }
 ```
 
 ### 2. Name-Export Rule
 
-**Rule ID:** `eslint-rules-th/no-unamed-default-export`
+**Rule ID:** `eslint-plugin-th-rules/no-unamed-default-export`
 
 #### Description
 
@@ -65,7 +65,7 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "rules": {
-    "eslint-rules-th/no-unamed-default-export": "error"
+    "eslint-plugin-th-rules/no-unamed-default-export": "error"
   }
 }
 ```
@@ -74,11 +74,11 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "plugins": [
-    "eslint-rules-th"
+    "eslint-plugin-th-rules"
   ],
   "rules": {
-    "eslint-rules-th/no-destructuring": "error",
-    "eslint-rules-th/no-unamed-default-export": "error"
+    "eslint-plugin-th-rules/no-destructuring": "error",
+    "eslint-plugin-th-rules/no-unamed-default-export": "error"
   }
 }
 ```
