@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.2...v1.1.3) (2024-02-23)
+
+
+### Bug Fixes
+
+* Remove "type" field from package.json ([aadbbb0](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/aadbbb090a256e20e8437b5d9c7bf57cbfd0daf5))
+
 ## [1.1.2](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.1...v1.1.2) (2024-02-23)
 
 
