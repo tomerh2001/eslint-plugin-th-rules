@@ -11,12 +11,12 @@
 
 * updated readme ([3903d35](https://github.com/tomerh2001/eslint-rules-th/commit/3903d354c2d4ba367258aa0cd80501db080cf595))
 
-# [1.2.0](https://github.com/tomerh2001/eslint-th/compare/v1.1.4...v1.2.0) (2024-02-23)
+# [1.2.0](https://github.com/tomerh2001/eslint-rules-th/compare/v1.1.4...v1.2.0) (2024-02-23)
 
 
 ### Features
 
-* :sparkles: Created a recommended configuration ([4c81e02](https://github.com/tomerh2001/eslint-th/commit/4c81e027ef00ab06a4c69ef32857093fcb06fb3b))
+* :sparkles: Created a recommended configuration ([4c81e02](https://github.com/tomerh2001/eslint-rules-th/commit/4c81e027ef00ab06a4c69ef32857093fcb06fb3b))
 
 ## [1.1.4](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.3...v1.1.4) (2024-02-23)
 
