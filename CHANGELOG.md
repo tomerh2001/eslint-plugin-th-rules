@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/tomerh2001/eslint-rules-th/compare/v1.2.0...v1.3.0) (2024-02-23)
+
+
+### Bug Fixes
+
+* renamed recommended configuration to all ([f11d297](https://github.com/tomerh2001/eslint-rules-th/commit/f11d297861da5b9234ddebf18c1ea4f52099b7b6))
+* Update plugin and rule names in configs ([476b081](https://github.com/tomerh2001/eslint-rules-th/commit/476b0813aaecfe717291ac44fdd9c661a4356693))
+
+
+### Features
+
+* updated readme ([3903d35](https://github.com/tomerh2001/eslint-rules-th/commit/3903d354c2d4ba367258aa0cd80501db080cf595))
+
 # [1.2.0](https://github.com/tomerh2001/eslint-th/compare/v1.1.4...v1.2.0) (2024-02-23)
 
 
