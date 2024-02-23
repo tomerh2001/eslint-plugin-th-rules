@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.3.2...v1.4.0) (2024-02-23)
+
+
+### Features
+
+* Update package name and plugin references ([2fd90bd](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/2fd90bd5873e541ea0e4ce05c7872732636753ec))
+
 ## [1.3.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.3.0...v1.3.1) (2024-02-23)
 
 
