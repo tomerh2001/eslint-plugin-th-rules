@@ -1,48 +1,84 @@
-# eslint-plugin-no-destruction
+# eslint-rules-th
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![XO code style](https://shields.io/badge/code_style-5ed9c7?logo=xo&labelColor=gray)](https://github.com/xojs/xo)
+[![Snyk Security](../../actions/workflows/snyk-security.yml/badge.svg)](../../actions/workflows/snyk-security.yml)
+[![CodeQL](../../actions/workflows/codeql.yml/badge.svg)](../../actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/eslint-rules-th/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/eslint-rules-th)
 
-Prevent object destructions from going out of hand
+This repository contains custom ESLint rules to enhance code quality and consistency across projects.
 
-## Installation
+# Custom ESLint Rules
 
-You'll first need to install [ESLint](https://eslint.org/):
+This repository contains custom ESLint rules to enhance code quality and consistency across projects, created by Tomer Horowitz.
 
-```sh
-npm i eslint --save-dev
-```
+## Configurations
 
-Next, install `eslint-plugin-no-destruction`:
-
-```sh
-npm install eslint-plugin-no-destruction --save-dev
-```
-
-## Usage
-
-Add `no-destruction` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
+To add all of the rules into your project, add the following configuration into your ESLint configuration file:
 
 ```json
 {
-    "plugins": [
-        "no-destruction"
-    ]
-}
-```
-
-
-Then configure the rules you want to use under the rules section.
-
-```json
-{
-    "rules": {
-        "no-destruction/rule-name": 2
-    }
+  "extends": ["plugin:eslint-rules-th/all"]
 }
 ```
 
 ## Rules
 
-<!-- begin auto-generated rules list -->
-TODO: Run eslint-doc-generator to generate the rules list.
-<!-- end auto-generated rules list -->
+### 1. No-Destruction Rule
 
+**Rule ID:** `eslint-rules-th/no-destructuring`
 
+#### Description
+
+This rule disallows destructuring that does not meet certain conditions, aiming to prevent overly complex destructuring patterns and ensure code readability.
+
+#### Rule Details
+
+This rule checks for:
+
+- Destructuring at a nesting level above 3.
+- Destructuring of more than the specified maximum number of variables (default is 2).
+- Destructuring on a line exceeding the specified maximum line length (default is 100 characters).
+
+#### Configuration
+
+```json
+{
+  "rules": {
+    "eslint-rules-th/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
+  }
+}
+```
+
+### 2. Name-Export Rule
+
+**Rule ID:** `eslint-rules-th/no-unamed-default-export`
+
+#### Description
+
+Converts unnamed default exports to named default exports based on the file name. This rule helps maintain consistency in export names and facilitates easier identification of components or modules.
+
+#### Rule Details
+
+This rule targets unnamed default exports and automatically generates a named export based on the file name.
+
+#### Configuration
+```json
+{
+  "rules": {
+    "eslint-rules-th/no-unamed-default-export": "error"
+  }
+}
+```
+
+## Installation
+```json
+{
+  "plugins": [
+    "eslint-rules-th"
+  ],
+  "rules": {
+    "eslint-rules-th/no-destructuring": "error",
+    "eslint-rules-th/no-unamed-default-export": "error"
+  }
+}
+```
