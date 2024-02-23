@@ -1,5 +1,5 @@
-import {RuleTester} from 'eslint';
-import rule from '../../../lib/rules/no-destruction.js';
+const {RuleTester} = require('eslint');
+const rule = require('../../../lib/rules/no-destruction.js');
 
 const ruleTester = new RuleTester({
 	parserOptions: {
