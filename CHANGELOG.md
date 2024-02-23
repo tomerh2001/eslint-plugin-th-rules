@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.7...v1.1.0) (2024-02-23)
+
+
+### Bug Fixes
+
+*  Remove redundant Docker configuration ([2b1be8f](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/2b1be8f41a1036c8237f689d2addf29beedaedea))
+* Remove Dockerfile and update eslint rule ([63d6d03](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/63d6d033a3614be9a0e132e25ff5eb94b7448505))
+
+
+### Features
+
+* Added a rule to convert unnamed default exports to named default exports based on the file name ([cfda4c1](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/cfda4c16bbba11b281a45deca8ca8742ecab23e9))
+
 ## [1.0.7](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.0.6...v1.0.7) (2024-02-22)
 
 
