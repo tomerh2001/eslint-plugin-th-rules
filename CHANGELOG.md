@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.1...v1.1.2) (2024-02-23)
+
+
+### Bug Fixes
+
+* changed back to CommonJS ([07174fc](https://github.com/tomerh2001/eslint-plugin-no-destruction/commit/07174fce92e3a0b660fe76b4baa862fd0d33ee72))
+
 ## [1.1.1](https://github.com/tomerh2001/eslint-plugin-no-destruction/compare/v1.1.0...v1.1.1) (2024-02-23)
 
 
