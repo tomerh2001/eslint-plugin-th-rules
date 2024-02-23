@@ -1471,12 +1471,12 @@ __metadata:
   linkType: hard
 
 "bun-types@npm:latest":
-  version: 1.0.28
-  resolution: "bun-types@npm:1.0.28"
+  version: 1.0.29
+  resolution: "bun-types@npm:1.0.29"
   dependencies:
     "@types/node": "npm:~20.11.3"
     "@types/ws": "npm:~8.5.10"
-  checksum: 10c0/8643e7258fb0cb805b86a21e3f934614e23a669c7ca5bf3c5784dea1fbfa125349c649f65e530d1b360f980245f7f250c0c2709885c48ef321740d606caa1253
+  checksum: 10c0/e8ef55c4d22c03ddfd3952dadef999dcc0e0b02d7a023b5266da09c95e75812e37f0d0e07c0bca36a81ccb18292f4e72364a1e2c297f0a09a3886130658d8413
   languageName: node
   linkType: hard
 
