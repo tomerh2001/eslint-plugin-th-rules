@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/tomerh2001/eslint-rules-th/compare/v1.3.0...v1.3.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* fixed package name ([4e006ab](https://github.com/tomerh2001/eslint-rules-th/commit/4e006ab95cb8daa4310c43adbdd24c3be82b34b4))
+
 # [1.3.0](https://github.com/tomerh2001/eslint-rules-th/compare/v1.2.0...v1.3.0) (2024-02-23)
 
 
