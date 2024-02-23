@@ -1,7 +1,7 @@
 {
-  "name": "eslint-plugin-no-destruction",
+  "name": "eslint-th",
   "version": "1.1.4",
-  "description": "Prevent object destructions from going out of hand",
+  "description": "A List of custom ESLint rules created by Tomer Horowitz",
   "keywords": [
     "eslint",
     "eslintplugin",
