@@ -8,8 +8,8 @@
     "eslint-plugin"
   ],
   "author": "Tomer Horowitz",
-  "main": "./lib/index.js",
-  "exports": "./lib/index.js",
+  "main": "./src/index.js",
+  "exports": "./src/index.js",
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
