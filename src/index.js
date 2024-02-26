@@ -35,7 +35,7 @@ const recommended = {
 	...basic,
 	env: {
 		node: true,
-		ES2024: true,
+		es2024: true,
 		jest: true,
 	},
 	rules: {

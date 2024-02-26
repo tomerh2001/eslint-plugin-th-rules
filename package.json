@@ -28,21 +28,21 @@
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
-    "@codedependant/semantic-release-docker": "^4.4.0",
+    "@codedependant/semantic-release-docker": "^4.5.1",
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/commit-analyzer": "^11.1.0",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.2.1",
-    "@semantic-release/npm": "^11.0.0",
-    "@semantic-release/release-notes-generator": "^12.0.0",
-    "@types/xo": "^0",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.2",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@types/xo": "^0.39.8",
     "bun-types": "latest",
-    "eslint": "^8.19.0",
-    "eslint-doc-generator": "^1.0.0",
-    "eslint-plugin-eslint-plugin": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-doc-generator": "^1.6.2",
+    "eslint-plugin-eslint-plugin": "^5.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-unicorn": "^51.0.1",
-    "mocha": "^10.0.0",
+    "mocha": "^10.3.0",
     "npm-run-all": "^4.1.5",
     "xo": "^0.57.0"
   },
@@ -50,8 +50,8 @@
     "node": ">= 20.11.0"
   },
   "peerDependencies": {
-    "eslint": ">=7",
-    "typescript": "^5.0.0"
+    "eslint": ">=8.57.0",
+    "typescript": "^5.3.3"
   },
   "license": "ISC",
   "packageManager": "yarn@4.1.0"
