@@ -15,7 +15,7 @@ const requireIndex = require('requireindex');
  * @property {string[]} plugins - The list of plugins.
  * @property {string[]} extends - The list of extended configurations.
  * @property {Object} rules - The rules configuration.
- * @property {Object} envs - The environment configuration.
+ * @property {Object} env - The environment configuration.
  */
 const basic = {
 	plugins: ['th-rules'],
@@ -24,7 +24,7 @@ const basic = {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
 	},
-	envs: {},
+	env: {},
 };
 
 /**
@@ -33,7 +33,7 @@ const basic = {
  */
 const recommended = {
 	...basic,
-	envs: {
+	env: {
 		node: true,
 		ES2024: true,
 		jest: true,
@@ -60,15 +60,15 @@ const all = {
 /**
  * Represents an object containing all React-related configurations.
  * @typedef {Object} allReact
- * @property {Object} envs - The environment configurations.
- * @property {boolean} envs.browser - Indicates if the browser environment is enabled.
+ * @property {Object} env - The environment configurations.
+ * @property {boolean} env.browser - Indicates if the browser environment is enabled.
  * @property {Object} rules - The rule configurations.
  * @property {string} rules['react/no-array-index-key'] - The configuration for the 'react/no-array-index-key' rule.
  * @property {string[]} extends - The list of extended configurations.
  */
 const allReact = {
 	...all,
-	envs: {...all.envs, node: false, browser: true},
+	env: {...all.env, node: false, browser: true},
 	rules: {...all.rules, 'react/no-array-index-key': 'off'},
 	extends: [...all.extends, 'xo-react'],
 };
