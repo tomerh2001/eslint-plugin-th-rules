@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.0...v1.5.1) (2024-02-26)
+
+
+### Bug Fixes
+
+* fixed ([9730e96](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9730e96ff296ccd4afbc278fefd176f2684b89cb))
+
 # [1.5.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.2...v1.5.0) (2024-02-26)
 
 
