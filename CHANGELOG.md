@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.0...v1.4.1) (2024-02-26)
+
+
+### Bug Fixes
+
+* fixed a bug with the no-default-export auto fix ([fabd4bd](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/fabd4bdc51d7290baf6807e8255acdfd90e81f03))
+
 # [1.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.3.2...v1.4.0) (2024-02-23)
 
 
