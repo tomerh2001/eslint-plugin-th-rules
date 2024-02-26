@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.2...v1.5.0) (2024-02-26)
+
+
+### Bug Fixes
+
+* Add ESLint configurations for JSDoc and React ([45b6297](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/45b62978da758e4ebbf62780e74595393c38800b))
+
+
+### Features
+
+* adding basic, recommended and all, also planning to add a recommended-react and recommended-react-native variants in the future ([85e54dd](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/85e54ddabe928aafadb83c4118ff5da390654260))
+
 ## [1.4.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.1...v1.4.2) (2024-02-26)
 
 
