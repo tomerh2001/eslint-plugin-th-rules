@@ -2496,14 +2496,14 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-eslint-plugin@npm:^5.0.0":
-  version: 5.3.0
-  resolution: "eslint-plugin-eslint-plugin@npm:5.3.0"
+  version: 5.4.0
+  resolution: "eslint-plugin-eslint-plugin@npm:5.4.0"
   dependencies:
     eslint-utils: "npm:^3.0.0"
     estraverse: "npm:^5.3.0"
   peerDependencies:
     eslint: ">=7.0.0"
-  checksum: 10c0/3b87df783b52112c07a1a36ffee9115f11fe1b220c83b44a73eb9088a08925d64cf8e324c5ea011d8bf7a4558291400652b9962fb66bc44849795c034a9486bd
+  checksum: 10c0/cb95119380359f1006bb6f76a98f1e93aac19ebc938f92632748b1c02d0292d663842ee38a786c6528d600323002b03d19606c5752c57fa4dff1be9d96113860
   languageName: node
   linkType: hard
 
@@ -2555,32 +2555,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-no-destruction@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "eslint-plugin-no-destruction@workspace:."
-  dependencies:
-    "@codedependant/semantic-release-docker": "npm:^4.4.0"
-    "@semantic-release/changelog": "npm:^6.0.3"
-    "@semantic-release/commit-analyzer": "npm:^11.0.0"
-    "@semantic-release/git": "npm:^10.0.1"
-    "@semantic-release/github": "npm:^9.2.1"
-    "@semantic-release/npm": "npm:^11.0.0"
-    "@semantic-release/release-notes-generator": "npm:^12.0.0"
-    bun-types: "npm:latest"
-    eslint: "npm:^8.19.0"
-    eslint-doc-generator: "npm:^1.0.0"
-    eslint-plugin-eslint-plugin: "npm:^5.0.0"
-    eslint-plugin-node: "npm:^11.1.0"
-    mocha: "npm:^10.0.0"
-    npm-run-all: "npm:^4.1.5"
-    requireindex: "npm:^1.2.0"
-    xo: "npm:^0.57.0"
-  peerDependencies:
-    eslint: ">=7"
-    typescript: ^5.0.0
-  languageName: unknown
-  linkType: soft
-
 "eslint-plugin-no-use-extend-native@npm:^0.5.0":
   version: 0.5.0
   resolution: "eslint-plugin-no-use-extend-native@npm:0.5.0"
@@ -2628,6 +2602,32 @@ __metadata:
   checksum: 10c0/f45d5fc1fcfec6b0cf038a7a65ddd10a25df4fe3f9e1f6b7f0d5100e66f046a26a2492e69ee765dddf461b93c114cf2e1eb18d4970aafa6f385448985c136e09
   languageName: node
   linkType: hard
+
+"eslint-plugin-th-rules@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "eslint-plugin-th-rules@workspace:."
+  dependencies:
+    "@codedependant/semantic-release-docker": "npm:^4.4.0"
+    "@semantic-release/changelog": "npm:^6.0.3"
+    "@semantic-release/commit-analyzer": "npm:^11.0.0"
+    "@semantic-release/git": "npm:^10.0.1"
+    "@semantic-release/github": "npm:^9.2.1"
+    "@semantic-release/npm": "npm:^11.0.0"
+    "@semantic-release/release-notes-generator": "npm:^12.0.0"
+    bun-types: "npm:latest"
+    eslint: "npm:^8.19.0"
+    eslint-doc-generator: "npm:^1.0.0"
+    eslint-plugin-eslint-plugin: "npm:^5.0.0"
+    eslint-plugin-node: "npm:^11.1.0"
+    mocha: "npm:^10.0.0"
+    npm-run-all: "npm:^4.1.5"
+    requireindex: "npm:^1.2.0"
+    xo: "npm:^0.57.0"
+  peerDependencies:
+    eslint: ">=7"
+    typescript: ^5.0.0
+  languageName: unknown
+  linkType: soft
 
 "eslint-plugin-unicorn@npm:^51.0.0":
   version: 51.0.1
