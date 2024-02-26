@@ -51,7 +51,7 @@ This rule checks for:
 
 ### 2. Name-Export Rule
 
-**Rule ID:** `eslint-plugin-th-rules/no-unamed-default-export`
+**Rule ID:** `eslint-plugin-th-rules/no-default-export`
 
 #### Description
 
@@ -65,7 +65,7 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "rules": {
-    "eslint-plugin-th-rules/no-unamed-default-export": "error"
+    "eslint-plugin-th-rules/no-default-export": "error"
   }
 }
 ```
@@ -78,7 +78,7 @@ This rule targets unnamed default exports and automatically generates a named ex
   ],
   "rules": {
     "eslint-plugin-th-rules/no-destructuring": "error",
-    "eslint-plugin-th-rules/no-unamed-default-export": "error"
+    "eslint-plugin-th-rules/no-default-export": "error"
   }
 }
 ```
