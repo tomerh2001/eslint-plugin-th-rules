@@ -17,7 +17,7 @@ To add all of the rules into your project, add the following configuration into 
 
 ```json
 {
-  "extends": ["plugin:eslint-plugin-th-rules/all"]
+  "extends": ["plugin:th-rules/all"]
 }
 ```
 
@@ -25,7 +25,7 @@ To add all of the rules into your project, add the following configuration into 
 
 ### 1. No-Destruction Rule
 
-**Rule ID:** `eslint-plugin-th-rules/no-destructuring`
+**Rule ID:** `th-rules/no-destructuring`
 
 #### Description
 
@@ -44,14 +44,14 @@ This rule checks for:
 ```json
 {
   "rules": {
-    "eslint-plugin-th-rules/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
+    "th-rules/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
   }
 }
 ```
 
 ### 2. Name-Export Rule
 
-**Rule ID:** `eslint-plugin-th-rules/no-default-export`
+**Rule ID:** `th-rules/no-default-export`
 
 #### Description
 
@@ -65,7 +65,7 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "rules": {
-    "eslint-plugin-th-rules/no-default-export": "error"
+    "no-default-export": "error"
   }
 }
 ```
@@ -74,11 +74,11 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "plugins": [
-    "eslint-plugin-th-rules"
+    "th-rules"
   ],
   "rules": {
-    "eslint-plugin-th-rules/no-destructuring": "error",
-    "eslint-plugin-th-rules/no-default-export": "error"
+    "no-destructuring": "error",
+    "no-default-export": "error"
   }
 }
 ```

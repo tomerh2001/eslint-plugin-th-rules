@@ -1,5 +1,5 @@
 const {RuleTester} = require('eslint');
-const rule = require('../../../lib/rules/no-unamed-default-export.js');
+const rule = require('../../../lib/rules/no-default-export.js');
 
 const ruleTester = new RuleTester({
 	parserOptions: {

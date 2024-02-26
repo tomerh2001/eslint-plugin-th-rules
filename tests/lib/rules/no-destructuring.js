@@ -1,5 +1,5 @@
 const {RuleTester} = require('eslint');
-const rule = require('../../../lib/rules/no-destruction.js');
+const rule = require('../../../lib/rules/no-destructuring.js');
 
 const ruleTester = new RuleTester({
 	parserOptions: {
