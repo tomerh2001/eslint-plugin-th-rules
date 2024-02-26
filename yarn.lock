@@ -112,14 +112,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.56.0":
-  version: 8.56.0
-  resolution: "@eslint/js@npm:8.56.0"
-  checksum: 10c0/60b3a1cf240e2479cec9742424224465dc50e46d781da1b7f5ef240501b2d1202c225bd456207faac4b34a64f4765833345bc4ddffd00395e1db40fa8c426f5a
+"@eslint/js@npm:8.57.0":
+  version: 8.57.0
+  resolution: "@eslint/js@npm:8.57.0"
+  checksum: 10c0/9a518bb8625ba3350613903a6d8c622352ab0c6557a59fe6ff6178bf882bf57123f9d92aa826ee8ac3ee74b9c6203fe630e9ee00efb03d753962dcf65ee4bd94
   languageName: node
   linkType: hard
 
-"@humanwhocodes/config-array@npm:^0.11.13":
+"@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
   dependencies:
@@ -2555,32 +2555,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-no-destruction@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "eslint-plugin-no-destruction@workspace:."
-  dependencies:
-    "@codedependant/semantic-release-docker": "npm:^4.4.0"
-    "@semantic-release/changelog": "npm:^6.0.3"
-    "@semantic-release/commit-analyzer": "npm:^11.0.0"
-    "@semantic-release/git": "npm:^10.0.1"
-    "@semantic-release/github": "npm:^9.2.1"
-    "@semantic-release/npm": "npm:^11.0.0"
-    "@semantic-release/release-notes-generator": "npm:^12.0.0"
-    bun-types: "npm:latest"
-    eslint: "npm:^8.19.0"
-    eslint-doc-generator: "npm:^1.0.0"
-    eslint-plugin-eslint-plugin: "npm:^5.0.0"
-    eslint-plugin-node: "npm:^11.1.0"
-    mocha: "npm:^10.0.0"
-    npm-run-all: "npm:^4.1.5"
-    requireindex: "npm:^1.2.0"
-    xo: "npm:^0.57.0"
-  peerDependencies:
-    eslint: ">=7"
-    typescript: ^5.0.0
-  languageName: unknown
-  linkType: soft
-
 "eslint-plugin-no-use-extend-native@npm:^0.5.0":
   version: 0.5.0
   resolution: "eslint-plugin-no-use-extend-native@npm:0.5.0"
@@ -2628,6 +2602,32 @@ __metadata:
   checksum: 10c0/f45d5fc1fcfec6b0cf038a7a65ddd10a25df4fe3f9e1f6b7f0d5100e66f046a26a2492e69ee765dddf461b93c114cf2e1eb18d4970aafa6f385448985c136e09
   languageName: node
   linkType: hard
+
+"eslint-plugin-th-rules@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "eslint-plugin-th-rules@workspace:."
+  dependencies:
+    "@codedependant/semantic-release-docker": "npm:^4.4.0"
+    "@semantic-release/changelog": "npm:^6.0.3"
+    "@semantic-release/commit-analyzer": "npm:^11.0.0"
+    "@semantic-release/git": "npm:^10.0.1"
+    "@semantic-release/github": "npm:^9.2.1"
+    "@semantic-release/npm": "npm:^11.0.0"
+    "@semantic-release/release-notes-generator": "npm:^12.0.0"
+    bun-types: "npm:latest"
+    eslint: "npm:^8.19.0"
+    eslint-doc-generator: "npm:^1.0.0"
+    eslint-plugin-eslint-plugin: "npm:^5.0.0"
+    eslint-plugin-node: "npm:^11.1.0"
+    mocha: "npm:^10.0.0"
+    npm-run-all: "npm:^4.1.5"
+    requireindex: "npm:^1.2.0"
+    xo: "npm:^0.57.0"
+  peerDependencies:
+    eslint: ">=7"
+    typescript: ^5.0.0
+  languageName: unknown
+  linkType: soft
 
 "eslint-plugin-unicorn@npm:^51.0.0":
   version: 51.0.1
@@ -2731,14 +2731,14 @@ __metadata:
   linkType: hard
 
 "eslint@npm:^8.19.0, eslint@npm:^8.53.0":
-  version: 8.56.0
-  resolution: "eslint@npm:8.56.0"
+  version: 8.57.0
+  resolution: "eslint@npm:8.57.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.2.0"
     "@eslint-community/regexpp": "npm:^4.6.1"
     "@eslint/eslintrc": "npm:^2.1.4"
-    "@eslint/js": "npm:8.56.0"
-    "@humanwhocodes/config-array": "npm:^0.11.13"
+    "@eslint/js": "npm:8.57.0"
+    "@humanwhocodes/config-array": "npm:^0.11.14"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@nodelib/fs.walk": "npm:^1.2.8"
     "@ungap/structured-clone": "npm:^1.2.0"
@@ -2774,7 +2774,7 @@ __metadata:
     text-table: "npm:^0.2.0"
   bin:
     eslint: bin/eslint.js
-  checksum: 10c0/2be598f7da1339d045ad933ffd3d4742bee610515cd2b0d9a2b8b729395a01d4e913552fff555b559fccaefd89d7b37632825789d1b06470608737ae69ab43fb
+  checksum: 10c0/00bb96fd2471039a312435a6776fe1fd557c056755eaa2b96093ef3a8508c92c8775d5f754768be6b1dddd09fdd3379ddb231eeb9b6c579ee17ea7d68000a529
   languageName: node
   linkType: hard
 
