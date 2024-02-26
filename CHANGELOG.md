@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.2...v1.5.3) (2024-02-26)
+
+
+### Bug Fixes
+
+* Update devDependencies and peerDependencies in package.json ([5fd3210](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/5fd3210ea359915312fced3f65b57ae3f2a8d2c8))
+
 ## [1.5.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.1...v1.5.2) (2024-02-26)
 
 
