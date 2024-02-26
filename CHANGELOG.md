@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.1...v1.5.2) (2024-02-26)
+
+
+### Bug Fixes
+
+* Update environment configuration in index.js ([277871c](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/277871cc4ff71659fa1e476fd463c39893878797))
+
 ## [1.5.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.0...v1.5.1) (2024-02-26)
 
 
