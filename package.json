@@ -18,6 +18,12 @@
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
+    "eslint-config-jsdoc": "^15.4.0",
+    "eslint-config-xo": "^0.44.0",
+    "eslint-config-xo-react": "^0.27.0",
+    "eslint-plugin-jsdoc": "^48.2.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
@@ -28,6 +34,7 @@
     "@semantic-release/github": "^9.2.1",
     "@semantic-release/npm": "^11.0.0",
     "@semantic-release/release-notes-generator": "^12.0.0",
+    "@types/xo": "^0",
     "bun-types": "latest",
     "eslint": "^8.19.0",
     "eslint-doc-generator": "^1.0.0",
