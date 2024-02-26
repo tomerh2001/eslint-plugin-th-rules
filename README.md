@@ -5,27 +5,23 @@
 [![CodeQL](../../actions/workflows/codeql.yml/badge.svg)](../../actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/eslint-plugin-th-rules/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/eslint-plugin-th-rules)
 
-This repository contains custom ESLint rules to enhance code quality and consistency across projects.
-
-# Custom ESLint Rules
-
 This repository contains custom ESLint rules to enhance code quality and consistency across projects, created by Tomer Horowitz.
 
 ## Configurations
 
 To add all of the rules into your project, add the following configuration into your ESLint configuration file:
 
-```json
+\`\`\`json
 {
   "extends": ["plugin:th-rules/all"]
 }
-```
+\`\`\`
 
 ## Rules
 
-### 1. No-Destruction Rule
+### 1. No-Destructuring Rule
 
-**Rule ID:** `th-rules/no-destructuring`
+**Rule ID:** \`th-rules/no-destructuring\`
 
 #### Description
 
@@ -41,17 +37,17 @@ This rule checks for:
 
 #### Configuration
 
-```json
+\`\`\`json
 {
   "rules": {
     "th-rules/no-destructuring": ["error", { "maximumDestructuredVariables": 2, "maximumLineLength": 100 }]
   }
 }
-```
+\`\`\`
 
-### 2. Name-Export Rule
+### 2. No-Default-Export Rule
 
-**Rule ID:** `th-rules/no-default-export`
+**Rule ID:** \`th-rules/no-default-export\`
 
 #### Description
 
@@ -62,23 +58,27 @@ Converts unnamed default exports to named default exports based on the file name
 This rule targets unnamed default exports and automatically generates a named export based on the file name.
 
 #### Configuration
-```json
+
+\`\`\`json
 {
   "rules": {
-    "no-default-export": "error"
+    "th-rules/no-default-export": "error"
   }
 }
-```
+\`\`\`
 
 ## Installation
-```json
+
+To use these rules in your project, first install the plugin and then add it to your ESLint configuration:
+
+\`\`\`json
 {
   "plugins": [
     "th-rules"
   ],
   "rules": {
-    "no-destructuring": "error",
-    "no-default-export": "error"
+    "th-rules/no-destructuring": "error",
+    "th-rules/no-default-export": "error"
   }
 }
-```
+\`\`\`
