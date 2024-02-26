@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.1...v1.4.2) (2024-02-26)
+
+
+### Bug Fixes
+
+* fixed name of no-destructuring rule ([30ab24a](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/30ab24aec8b84cda665c7fc43920f2625a2f8d83))
+
 ## [1.4.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.4.0...v1.4.1) (2024-02-26)
 
 
