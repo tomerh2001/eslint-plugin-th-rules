@@ -2599,15 +2599,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-eslint-plugin@npm:^5.4.0":
-  version: 5.4.1
-  resolution: "eslint-plugin-eslint-plugin@npm:5.4.1"
+"eslint-plugin-eslint-plugin@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "eslint-plugin-eslint-plugin@npm:6.0.0"
   dependencies:
     eslint-utils: "npm:^3.0.0"
     estraverse: "npm:^5.3.0"
   peerDependencies:
-    eslint: ">=7.0.0"
-  checksum: 10c0/74b281d715146b92806beea441c0ba3e174867a55dae598ed8cfa284bd19030d60d34c1a0c6e9ec95fda73fc18ed18ce6c74da29e2090bf7c243022f9608679b
+    eslint: ">=8.23.0"
+  checksum: 10c0/41e2ac362752566797466a69ac2fed78f93669f12ee7f8db3bda0662e4ecbbaa88dbacbdd2d1509a82209670888ab6df662e5a69a76082045bb137a77222b7c2
   languageName: node
   linkType: hard
 
@@ -2797,7 +2797,7 @@ __metadata:
     eslint-config-xo: "npm:^0.44.0"
     eslint-config-xo-react: "npm:^0.27.0"
     eslint-doc-generator: "npm:^1.6.2"
-    eslint-plugin-eslint-plugin: "npm:^5.4.0"
+    eslint-plugin-eslint-plugin: "npm:^6.0.0"
     eslint-plugin-jsdoc: "npm:^48.2.0"
     eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-react: "npm:^7.33.2"
