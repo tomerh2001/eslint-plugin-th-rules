@@ -37,7 +37,7 @@
     "@semantic-release/release-notes-generator": "^12.1.0",
     "@types/xo": "^0.39.8",
     "bun-types": "latest",
-    "eslint": "^8.57.0",
+    "eslint": "^9.1.0",
     "eslint-doc-generator": "^1.6.2",
     "eslint-plugin-eslint-plugin": "^5.4.0",
     "eslint-plugin-node": "^11.1.0",
