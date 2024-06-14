@@ -33,6 +33,6 @@ const recommended = {
 module.exports = {
 	rules: requireIndex(`${__dirname}/rules`),
 	configs: {
-		base: recommended,
+		recommended,
 	},
 };
