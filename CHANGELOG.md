@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.6.0...v1.6.1) (2024-06-14)
+
+
+### Bug Fixes
+
+* Update eslint-plugin-sonarjs to latest version ([84e41be](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/84e41be6dc48062c64c2a2051dbc7e99865b7d94))
+
 # [1.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.5...v1.6.0) (2024-06-14)
 
 
