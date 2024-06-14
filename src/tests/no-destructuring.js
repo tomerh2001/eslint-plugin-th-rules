@@ -8,7 +8,7 @@ const ruleTester = new RuleTester({
 	},
 });
 
-ruleTester.run('no-destruction', rule, {
+ruleTester.run('no-destructuring', rule, {
 	valid: [
 		{
 			code: 'const { a, b } = obj;',
@@ -35,17 +35,17 @@ ruleTester.run('no-destruction', rule, {
 		{
 			code: 'const { a, b, c } = obj;',
 			options: [{maximumDestructuredVariables: 2, maximumLineLength: 80}],
-			errors: [{message: 'Destruction of more than 2 variables is not allowed'}],
+			errors: [{message: 'destructuring of more than 2 variables is not allowed'}],
 		},
 		{
 			code: 'const { a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z } = obj;',
 			options: [{maximumDestructuredVariables: 3, maximumLineLength: 80}],
-			errors: [{message: 'Destruction of more than 3 variables is not allowed'}, {message: 'Destruction on a line exceeding 80 characters is not allowed'}],
+			errors: [{message: 'destructuring of more than 3 variables is not allowed'}, {message: 'destructuring on a line exceeding 80 characters is not allowed'}],
 		},
 		{
 			code: 'function foo() {\n\t\t\t\t\t\t\tconst { a, b } = obj;\n}',
 			options: [{maximumDestructuredVariables: 3, maximumLineLength: 80}],
-			errors: [{message: 'Destruction at a nesting level above 3 is not allowed, instead saw 7 levels of nesting'}],
+			errors: [{message: 'destructuring at a nesting level above 3 is not allowed, instead saw 7 levels of nesting'}],
 		},
 	],
 });

@@ -52,7 +52,7 @@ To add all of the rules into your project, add the following configuration into 
 
 ## Rules
 
-### 1. No-Destruction Rule
+### 1. No-destructuring Rule
 
 **Rule ID:** `th-rules/no-destructuring`
 

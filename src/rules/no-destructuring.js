@@ -63,7 +63,7 @@ function create(context) {
 			if (tabCount > MAX_TAB_COUNT) {
 				context.report({
 					node,
-					message: `Destruction at a nesting level above ${MAX_TAB_COUNT} is not allowed, instead saw ${tabCount} levels of nesting`,
+					message: `destructuring at a nesting level above ${MAX_TAB_COUNT} is not allowed, instead saw ${tabCount} levels of nesting`,
 				});
 			}
 
@@ -71,7 +71,7 @@ function create(context) {
 			if (node?.id?.properties?.length > MAX_VARIABLES) {
 				context.report({
 					node,
-					message: `Destruction of more than ${MAX_VARIABLES} variables is not allowed`,
+					message: `destructuring of more than ${MAX_VARIABLES} variables is not allowed`,
 				});
 			}
 
@@ -79,7 +79,7 @@ function create(context) {
 			if (lineLength > MAX_LINE_LENGTH) {
 				context.report({
 					node,
-					message: `Destruction on a line exceeding ${MAX_LINE_LENGTH} characters is not allowed`,
+					message: `destructuring on a line exceeding ${MAX_LINE_LENGTH} characters is not allowed`,
 				});
 			}
 		},
