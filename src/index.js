@@ -9,9 +9,17 @@ const base = {
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
-		'unicorn/filename-case': 'off',
 		'unicorn/prefer-module': 'warn',
+		'@typescript-eslint/naming-convention': 'warn',
+		'unicorn/filename-case': 'off',
+		'unicorn/no-array-callback-reference': 'off',
 		'import/extensions': 'off',
+		'@typescript-eslint/consistent-type-definitions': 'off',
+		'unicorn/no-static-only-class': 'off',
+		'@typescript-eslint/no-extraneous-class': 'off',
+		'unicorn/no-await-expression-member': 'off',
+		'@typescript-eslint/no-duplicate-type-constituents': 'off',
+		'new-cap': 'off',
 		camelcase: 'warn',
 	},
 	env: {
