@@ -24,10 +24,6 @@ jobs:
     - name: Install Dependencies
       run: bun i --dev
 
-    # Authenticate with ghcr.io
-    - name: Authenticate with ghcr.io
-      run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
     - name: Setup Node.js environment
       uses: actions/setup-node@v4.0.2
       with:
@@ -39,5 +35,3 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         GH_REPO: ${{ github.server_url }}/${{ github.repository }}
-        DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
-        DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
