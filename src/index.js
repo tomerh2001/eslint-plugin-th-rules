@@ -4,8 +4,9 @@
 'use strict';
 const requireIndex = require('requireindex');
 
-const base = {
-	plugins: ['th-rules'],
+const recommended = {
+	plugins: ['th-rules', 'sonarjs'],
+	extends: ['plugin:sonarjs/recommended-legacy'],
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
@@ -32,6 +33,6 @@ const base = {
 module.exports = {
 	rules: requireIndex(`${__dirname}/rules`),
 	configs: {
-		base,
+		base: recommended,
 	},
 };
