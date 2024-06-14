@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.5...v1.6.0) (2024-06-14)
+
+
+### Features
+
+* Added eslint-plugin-sonarjs to recommended config ([13176f3](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/13176f3ededa543f3b5f05789a5deed6f0f5cdb1))
+
 ## [1.5.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.4...v1.5.5) (2024-06-14)
 
 
