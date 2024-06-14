@@ -1,3 +1,12 @@
+## [1.5.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.3...v1.5.4) (2024-06-14)
+
+
+### Bug Fixes
+
+* removed unused configs ([cbac1d8](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/cbac1d8bb207c612d93f9cd895829fe12368a77d))
+* Update eslint and related dependencies to latest versions ([a39e785](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a39e78548b32ee6edd344166cc406e2139a6dcfd))
+* Update eslint and related dependencies, disable specific rules, and fix linting issues ([69d2814](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/69d281416b8366c670ef9cd9051e39edf49f0731))
+
 ## [1.5.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.5.2...v1.5.3) (2024-02-26)
 
 
