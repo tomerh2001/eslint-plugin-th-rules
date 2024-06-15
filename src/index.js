@@ -4,33 +4,22 @@
 'use strict';
 const requireIndex = require('requireindex');
 
-const recommended = {
+const configs = {};
+configs.recommended = {
 	plugins: ['th-rules', 'sonarjs'],
 	extends: [
-		'plugin:@typescript-eslint/strict-type-checked',
-		'plugin:@typescript-eslint/stylistic-type-checked',
 		'plugin:sonarjs/recommended-legacy',
 	],
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
 		'unicorn/prefer-module': 'warn',
-		'@typescript-eslint/naming-convention': 'warn',
 		'unicorn/filename-case': 'off',
 		'unicorn/no-array-callback-reference': 'off',
 		'import/extensions': 'off',
-		'@typescript-eslint/consistent-type-definitions': 'off',
 		'unicorn/no-static-only-class': 'off',
-		'@typescript-eslint/no-extraneous-class': 'off',
 		'unicorn/no-await-expression-member': 'off',
-		'@typescript-eslint/no-duplicate-type-constituents': 'off',
 		'new-cap': 'off',
-		'@typescript-eslint/no-non-null-assertion': 'off',
-		'@typescript-eslint/require-await': 'off',
-		'@typescript-eslint/no-unsafe-member-access': 'off',
-		'@typescript-eslint/no-unsafe-call': 'off',
-		'@typescript-eslint/no-unsafe-return': 'off',
-		'@typescript-eslint/no-unsafe-argument': 'off',
 		'no-await-in-loop': 'off',
 		camelcase: 'warn',
 	},
@@ -41,9 +30,31 @@ const recommended = {
 	},
 };
 
+for (const configName of Object.keys(configs)) {
+	configs[configName + '-typescript'] = {
+		...configs[configName],
+		extends: [
+			'plugin:@typescript-eslint/strict-type-checked',
+			'plugin:@typescript-eslint/stylistic-type-checked',
+			...configs[configName].extends,
+		],
+		rules: {
+			...configs[configName].rules,
+			'@typescript-eslint/naming-convention': 'warn',
+			'@typescript-eslint/consistent-type-definitions': 'off',
+			'@typescript-eslint/no-extraneous-class': 'off',
+			'@typescript-eslint/no-duplicate-type-constituents': 'off',
+			'@typescript-eslint/no-non-null-assertion': 'off',
+			'@typescript-eslint/require-await': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+		},
+	};
+}
+
 module.exports = {
 	rules: requireIndex(`${__dirname}/rules`),
-	configs: {
-		recommended,
-	},
+	configs,
 };
