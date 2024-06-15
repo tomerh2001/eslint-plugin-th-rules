@@ -25,6 +25,13 @@ const recommended = {
 		'unicorn/no-await-expression-member': 'off',
 		'@typescript-eslint/no-duplicate-type-constituents': 'off',
 		'new-cap': 'off',
+		'@typescript-eslint/no-non-null-assertion': 'off',
+		'@typescript-eslint/require-await': 'off',
+		'@typescript-eslint/no-unsafe-member-access': 'off',
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-return': 'off',
+		'@typescript-eslint/no-unsafe-argument': 'off',
+		'no-await-in-loop': 'off',
 		camelcase: 'warn',
 	},
 	env: {
