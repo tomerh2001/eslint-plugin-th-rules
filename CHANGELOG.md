@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.6.1...v1.7.0) (2024-06-15)
+
+
+### Features
+
+* Add eslint-plugin-github to recommended config ([f502310](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/f50231096d48d007f24e069c89495cc2b6de8222))
+
 ## [1.6.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.6.0...v1.6.1) (2024-06-14)
 
 
