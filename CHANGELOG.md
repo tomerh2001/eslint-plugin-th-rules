@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.8.1...v1.9.0) (2024-06-15)
+
+
+### Features
+
+* created separate configs for typescript and non-typescript configs ([13f17df](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/13f17dfad0182c9437e38a51adb37c1b15153d71))
+
 ## [1.8.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.8.0...v1.8.1) (2024-06-15)
 
 
