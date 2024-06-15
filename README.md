@@ -11,45 +11,6 @@ This repository contains custom ESLint rules to enhance code quality and consist
 
 This repository contains custom ESLint rules to enhance code quality and consistency across projects, created by Tomer Horowitz.
 
-## Configurations
-
-### All
-To add all of the rules into your project, add the following configuration into your ESLint configuration file:
-
-```json
-{
-  "extends": ["plugin:th-rules/all"]
-}
-```
-
-### All React
-```json
-{
-  "extends": ["plugin:th-rules/all-react"]
-}
-```
-
-### All React Native
-```json
-{
-  "extends": ["plugin:th-rules/all-react-native"]
-}
-```
-
-### Recommended
-```json
-{
-  "extends": ["plugin:th-rules/recommended"]
-}
-```
-
-### Basic
-```json
-{
-  "extends": ["plugin:th-rules/basic"]
-}
-```
-
 ## Rules
 
 ### 1. No-destructuring Rule
@@ -94,19 +55,6 @@ This rule targets unnamed default exports and automatically generates a named ex
 ```json
 {
   "rules": {
-    "no-default-export": "error"
-  }
-}
-```
-
-## Installation
-```json
-{
-  "plugins": [
-    "th-rules"
-  ],
-  "rules": {
-    "no-destructuring": "error",
     "no-default-export": "error"
   }
 }
