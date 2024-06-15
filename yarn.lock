@@ -158,7 +158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.5.0":
+"@eslint/js@npm:9.5.0, @eslint/js@npm:^9.5.0":
   version: 9.5.0
   resolution: "@eslint/js@npm:9.5.0"
   checksum: 10c0/dacf51ec2d5b4c8d1315d21a0ff761235d9e39b2391cb945138c58dc512a6c18949c40b644235f5c4fdf5b637ef8f881214acc496dddf46b718529bf22af42ac
@@ -874,6 +874,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/eslint__js@npm:^8.42.3":
+  version: 8.42.3
+  resolution: "@types/eslint__js@npm:8.42.3"
+  dependencies:
+    "@types/eslint": "npm:*"
+  checksum: 10c0/ccc5180b92155929a089ffb03ed62625216dcd5e46dd3197c6f82370ce8b52c7cb9df66c06b0a3017995409e023bc9eafe5a3f009e391960eacefaa1b62d9a56
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:*, @types/estree@npm:^1.0.5":
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
@@ -950,7 +959,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^7.1.1":
+"@typescript-eslint/eslint-plugin@npm:7.13.0, @typescript-eslint/eslint-plugin@npm:^7.1.1":
   version: 7.13.0
   resolution: "@typescript-eslint/eslint-plugin@npm:7.13.0"
   dependencies:
@@ -973,7 +982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^7.1.1":
+"@typescript-eslint/parser@npm:7.13.0, @typescript-eslint/parser@npm:^7.1.1":
   version: 7.13.0
   resolution: "@typescript-eslint/parser@npm:7.13.0"
   dependencies:
@@ -3019,12 +3028,14 @@ __metadata:
   resolution: "eslint-plugin-th-rules@workspace:."
   dependencies:
     "@codedependant/semantic-release-docker": "npm:^5.0.3"
+    "@eslint/js": "npm:^9.5.0"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.0"
     "@semantic-release/git": "npm:^10.0.1"
     "@semantic-release/github": "npm:^10.0.6"
     "@semantic-release/npm": "npm:^12.0.1"
     "@semantic-release/release-notes-generator": "npm:^14.0.0"
+    "@types/eslint__js": "npm:^8.42.3"
     "@types/requireindex": "npm:^1.2.4"
     "@types/xo": "npm:^0.39.8"
     bun-types: "npm:latest"
@@ -3044,6 +3055,8 @@ __metadata:
     mocha: "npm:^10.4.0"
     npm-run-all: "npm:^4.1.5"
     requireindex: "npm:^1.2.0"
+    typescript: "npm:^5.4.5"
+    typescript-eslint: "npm:^7.13.0"
     xo: "npm:^0.58.0"
   peerDependencies:
     eslint: ">=9.5.0"
@@ -7901,7 +7914,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.2":
+"typescript-eslint@npm:^7.13.0":
+  version: 7.13.0
+  resolution: "typescript-eslint@npm:7.13.0"
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:7.13.0"
+    "@typescript-eslint/parser": "npm:7.13.0"
+    "@typescript-eslint/utils": "npm:7.13.0"
+  peerDependencies:
+    eslint: ^8.56.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/ad067868ede764d411f4933285faca0d41c7e3ca439d7aac032ed78db7703e9842f5bbad4344004fa876a3577cda3c56b0716897f94a0d1aec00a90d6c0d3990
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^5.4.2, typescript@npm:^5.4.5":
   version: 5.4.5
   resolution: "typescript@npm:5.4.5"
   bin:
@@ -7911,7 +7940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.4.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.4.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.4.5#optional!builtin<compat/typescript>":
   version: 5.4.5
   resolution: "typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"
   bin:

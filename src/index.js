@@ -6,7 +6,11 @@ const requireIndex = require('requireindex');
 
 const recommended = {
 	plugins: ['th-rules', 'sonarjs'],
-	extends: ['plugin:sonarjs/recommended-legacy'],
+	extends: [
+		'plugin:@typescript-eslint/strict-type-checked',
+		'plugin:@typescript-eslint/stylistic-type-checked',
+		'plugin:sonarjs/recommended-legacy',
+	],
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
