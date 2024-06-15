@@ -5,8 +5,8 @@
 const requireIndex = require('requireindex');
 
 const recommended = {
-	plugins: ['th-rules', 'github', 'sonarjs'],
-	extends: ['plugin:github/recommended', 'plugin:sonarjs/recommended-legacy'],
+	plugins: ['th-rules', 'sonarjs'],
+	extends: ['plugin:sonarjs/recommended-legacy'],
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',

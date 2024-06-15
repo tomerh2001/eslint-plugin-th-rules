@@ -21,7 +21,6 @@
     "eslint-config-jsdoc": "^15.4.0",
     "eslint-config-xo": "^0.45.0",
     "eslint-config-xo-react": "^0.27.0",
-    "eslint-plugin-github": "^5.0.1",
     "eslint-plugin-jsdoc": "^48.2.12",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
