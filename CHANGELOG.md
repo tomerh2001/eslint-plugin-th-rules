@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.7.0...v1.8.0) (2024-06-15)
+
+
+### Bug Fixes
+
+* Remove eslint-plugin-github from recommended config ([989a59f](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/989a59f47ff67864499a8ee7f34354feccae71a9))
+
+
+### Features
+
+* Added typescript-eslint strict rules ([be91f38](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/be91f38d1f2a1f452d0b92755d58ce728b544066))
+
 # [1.7.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.6.1...v1.7.0) (2024-06-15)
 
 
