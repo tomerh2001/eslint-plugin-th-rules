@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.8.0...v1.8.1) (2024-06-15)
+
+
+### Bug Fixes
+
+* Disable TypeScript ESLint strict rules and unsafe checks ([bf186fb](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/bf186fbc8216a520b59e24e7861c47ee0f281680))
+
 # [1.8.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.7.0...v1.8.0) (2024-06-15)
 
 
