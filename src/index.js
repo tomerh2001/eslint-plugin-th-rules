@@ -9,6 +9,7 @@ configs.recommended = {
 	plugins: ['th-rules', 'sonarjs'],
 	extends: [
 		'plugin:sonarjs/recommended-legacy',
+		'plugin:security/recommended-legacy',
 	],
 	rules: {
 		'th-rules/no-destructuring': 'error',

@@ -854,6 +854,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/eslint-plugin-security@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/eslint-plugin-security@npm:3.0.0"
+  dependencies:
+    "@types/eslint": "npm:*"
+  checksum: 10c0/70d9a8344d75ae447afa004847f8cea57ee78436572410b2c5f73fb6252e5024f777e4e749f17e1099428244510ae4e6c255677bb9d83612c22df28e3c2da391
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:*, @types/eslint@npm:^8.44.6":
   version: 8.56.3
   resolution: "@types/eslint@npm:8.56.3"
@@ -3014,6 +3023,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-security@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "eslint-plugin-security@npm:3.0.1"
+  dependencies:
+    safe-regex: "npm:^2.1.1"
+  checksum: 10c0/6b85feabe389b73e0a5961abfeac79214d61699249c990c9a66628a5e45870b49f1ab0be63223dfd75c4046ff9632f42a963790616f66e2c6d59b6c24643c5e0
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-sonarjs@npm:^1.0.3":
   version: 1.0.3
   resolution: "eslint-plugin-sonarjs@npm:1.0.3"
@@ -3035,6 +3053,7 @@ __metadata:
     "@semantic-release/github": "npm:^10.0.6"
     "@semantic-release/npm": "npm:^12.0.1"
     "@semantic-release/release-notes-generator": "npm:^14.0.0"
+    "@types/eslint-plugin-security": "npm:^3.0.0"
     "@types/eslint__js": "npm:^8.42.3"
     "@types/requireindex": "npm:^1.2.4"
     "@types/xo": "npm:^0.39.8"
@@ -3050,6 +3069,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.34.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-react-native: "npm:^4.1.0"
+    eslint-plugin-security: "npm:^3.0.1"
     eslint-plugin-sonarjs: "npm:^1.0.3"
     eslint-plugin-unicorn: "npm:^54.0.0"
     mocha: "npm:^10.4.0"
@@ -6878,7 +6898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regexp-tree@npm:^0.1.27":
+"regexp-tree@npm:^0.1.27, regexp-tree@npm:~0.1.1":
   version: 0.1.27
   resolution: "regexp-tree@npm:0.1.27"
   bin:
@@ -7100,6 +7120,15 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-regex: "npm:^1.1.4"
   checksum: 10c0/900bf7c98dc58f08d8523b7012b468e4eb757afa624f198902c0643d7008ba777b0bdc35810ba0b758671ce887617295fb742b3f3968991b178ceca54cb07603
+  languageName: node
+  linkType: hard
+
+"safe-regex@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "safe-regex@npm:2.1.1"
+  dependencies:
+    regexp-tree: "npm:~0.1.1"
+  checksum: 10c0/53eb5d3ecf4b3c0954dff465eb179af4d2f5f77f74ba7b57489adbc4fa44454c3d391f37379cd28722d9ac6fa5b70be3f4645d4bd25df395fd99b934f6ec9265
   languageName: node
   linkType: hard
 

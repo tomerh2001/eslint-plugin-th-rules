@@ -25,6 +25,7 @@
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-security": "^3.0.1",
     "eslint-plugin-sonarjs": "^1.0.3",
     "requireindex": "^1.2.0"
   },
@@ -37,6 +38,7 @@
     "@semantic-release/github": "^10.0.6",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.0",
+    "@types/eslint-plugin-security": "^3.0.0",
     "@types/eslint__js": "^8.42.3",
     "@types/requireindex": "^1.2.4",
     "@types/xo": "^0.39.8",
