@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.9.0...v1.10.0) (2024-08-02)
+
+
+### Features
+
+* Added eslint-plugin-security ([37ec7d1](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/37ec7d1267c18452199fa9a4c5810f1eb1246201))
+
 # [1.9.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.8.1...v1.9.0) (2024-06-15)
 
 
