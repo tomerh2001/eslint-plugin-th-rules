@@ -30,7 +30,7 @@ configs.recommended = {
 		'no-comments/disallowComments': [
 			'error',
 			{
-				allow: ['TODO', 'FIXME', 'NOTE', 'DEBUG'],
+				allow: ['eslint-disable', 'TODO', 'FIXME', 'NOTE', 'DEBUG'],
 			},
 		],
 
