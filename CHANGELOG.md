@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.10.0...v1.11.0) (2024-08-19)
+
+
+### Features
+
+* added no comments ([8fcc0b7](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/8fcc0b7f7d0e0866584d478093aa835cf55acef1))
+
 # [1.10.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.9.0...v1.10.0) (2024-08-02)
 
 
