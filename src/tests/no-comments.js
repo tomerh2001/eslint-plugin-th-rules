@@ -8,7 +8,7 @@ const ruleTester = new RuleTester({
   parser: require.resolve('@babel/eslint-parser'),
 });
 
-ruleTester.run('no-disallowed-comments', rule, {
+ruleTester.run('no-comments', rule, {
   valid: [
     {
       code: `

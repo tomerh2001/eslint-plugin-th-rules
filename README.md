@@ -59,3 +59,35 @@ This rule targets unnamed default exports and automatically generates a named ex
   }
 }
 ```
+### 3. No-Disallowed-Comments Rule
+
+**Rule ID:** `th-rules/no-disallowed-comments`
+
+#### Description
+
+This rule disallows comments unless they match specified allowed patterns. It ensures that only relevant and permitted comments are present in the codebase, such as TODOs, warnings, JSDoc comments, ESLint directives, etc.
+
+#### Rule Details
+
+By default, the following comments are allowed:
+
+- TODO, WARNING, ERROR, INFO (case-insensitive).
+- ESLint directives like `/* eslint-disable */`.
+- JSDoc comments (any comment starting with `/**`).
+
+You can also configure additional patterns to allow or disallow specific types of comments.
+
+#### Configuration
+
+```json
+{
+  "rules": {
+    "th-rules/no-disallowed-comments": [
+      "error",
+      {
+        "allow": ["keep", "important"],
+        "disallow": ["deprecated", "hack"]
+      }
+    ]
+  }
+}

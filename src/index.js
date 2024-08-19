@@ -27,6 +27,8 @@ configs.recommended = {
 		'unicorn/no-await-expression-member': 'off',
 		'new-cap': 'off',
 		'no-await-in-loop': 'off',
+		'n/file-extension-in-import': 'off',
+		'import/no-cycle': 'off',
 		camelcase: 'warn',
 	},
 	env: {
@@ -37,7 +39,7 @@ configs.recommended = {
 };
 
 for (const configName of Object.keys(configs)) {
-	configs[configName + '-typescript'] = {
+	configs[`${configName}-typescript`] = {
 		...configs[configName],
 		extends: [
 			'plugin:@typescript-eslint/strict-type-checked',
