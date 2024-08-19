@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.0...v1.13.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* Update named-functions rule to enforce named function declarations ([e2c9b5d](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/e2c9b5d5f96030278b2900adbf940363c4648bdd))
+
 # [1.13.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.12.0...v1.13.0) (2024-08-19)
 
 
