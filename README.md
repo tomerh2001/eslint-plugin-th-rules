@@ -59,9 +59,9 @@ This rule targets unnamed default exports and automatically generates a named ex
   }
 }
 ```
-### 3. No-Disallowed-Comments Rule
+### 3. No-Comments Rule
 
-**Rule ID:** `th-rules/no-disallowed-comments`
+**Rule ID:** `th-rules/no-comments`
 
 #### Description
 
@@ -82,7 +82,7 @@ You can also configure additional patterns to allow or disallow specific types o
 ```json
 {
   "rules": {
-    "th-rules/no-disallowed-comments": [
+    "th-rules/no-comments": [
       "error",
       {
         "allow": ["keep", "important"],
