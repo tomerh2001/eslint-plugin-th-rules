@@ -20,6 +20,7 @@ This repository contains custom ESLint rules to enhance code quality and consist
 
 | Name                                                 | Description                                                                      | 💼                                  | 🔧 |
 | :--------------------------------------------------- | :------------------------------------------------------------------------------- | :---------------------------------- | :- |
+| [named-functions](docs/rules/named-functions.md)     | Enforce top-level functions to be named functions                                | ✅ ![badge-recommended-typescript][] | 🔧 |
 | [no-comments](docs/rules/no-comments.md)             | Disallow comments except for specified allowed patterns.                         | ✅ ![badge-recommended-typescript][] | 🔧 |
 | [no-default-export](docs/rules/no-default-export.md) | Convert unnamed default exports to named default exports based on the file name. | ✅ ![badge-recommended-typescript][] | 🔧 |
 | [no-destructuring](docs/rules/no-destructuring.md)   | Disallow destructuring that does not meet certain conditions                     | ✅ ![badge-recommended-typescript][] |    |
