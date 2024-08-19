@@ -2920,6 +2920,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-no-comments@npm:^1.1.10":
+  version: 1.1.10
+  resolution: "eslint-plugin-no-comments@npm:1.1.10"
+  checksum: 10c0/75549d56ccc73b7a1ead94efbca80610b6c74a417dc2a3436b87ea938d50eb208977d0ed4a43674f2794cee1d1e8446d07ccdffb76468d05bed8213a0ad61de4
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-no-use-extend-native@npm:^0.5.0":
   version: 0.5.0
   resolution: "eslint-plugin-no-use-extend-native@npm:0.5.0"
@@ -3065,6 +3072,7 @@ __metadata:
     eslint-doc-generator: "npm:^1.7.1"
     eslint-plugin-eslint-plugin: "npm:^6.1.0"
     eslint-plugin-jsdoc: "npm:^48.2.12"
+    eslint-plugin-no-comments: "npm:^1.1.10"
     eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-react: "npm:^7.34.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"

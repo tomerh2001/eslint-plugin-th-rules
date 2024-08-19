@@ -6,7 +6,11 @@ const requireIndex = require('requireindex');
 
 const configs = {};
 configs.recommended = {
-	plugins: ['th-rules', 'sonarjs'],
+	plugins: [
+		'th-rules',
+		'sonarjs',
+		'no-comments',
+	],
 	extends: [
 		'plugin:sonarjs/recommended-legacy',
 		'plugin:security/recommended-legacy',
@@ -23,6 +27,13 @@ configs.recommended = {
 		'new-cap': 'off',
 		'no-await-in-loop': 'off',
 		camelcase: 'warn',
+		'no-comments/disallowComments': [
+			'error',
+			{
+				allow: ['TODO', 'FIXME', 'NOTE', 'DEBUG'],
+			},
+		],
+
 	},
 	env: {
 		node: true,
