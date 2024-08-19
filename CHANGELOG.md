@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.12.0...v1.13.0) (2024-08-19)
+
+
+### Features
+
+* Add named-functions rule to recommended and recommended-typescript configs ([3f88f76](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/3f88f76460d7bce934f83da68c555c9795fdfe92))
+
 # [1.12.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.4...v1.12.0) (2024-08-19)
 
 
