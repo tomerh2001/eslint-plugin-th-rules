@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.0...v1.11.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* allow eslint-disable comments ([e210edd](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/e210edd0510a9b4575953d3ee039f8d70ec3ef89))
+
 # [1.11.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.10.0...v1.11.0) (2024-08-19)
 
 
