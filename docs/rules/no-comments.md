@@ -17,11 +17,11 @@
 
 <!-- end auto-generated rule options list -->
 
-#### Description
+## Description
 
 This rule disallows comments unless they match specified allowed patterns. It ensures that only relevant and permitted comments are present in the codebase, such as TODOs, warnings, JSDoc comments, ESLint directives, etc.
 
-#### Rule Details
+## Rule Details
 
 By default, the following comments are allowed:
 
@@ -31,7 +31,7 @@ By default, the following comments are allowed:
 
 You can also configure additional patterns to allow or disallow specific types of comments.
 
-#### Usage
+## Usage
 
 ```json
 {

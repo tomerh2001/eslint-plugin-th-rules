@@ -15,11 +15,11 @@
 
 <!-- end auto-generated rule options list -->
 
-#### Description
+## Description
 
 This rule disallows destructuring that does not meet certain conditions, aiming to prevent overly complex destructuring patterns and ensure code readability.
 
-#### Rule Details
+## Rule Details
 
 This rule checks for:
 
@@ -27,7 +27,7 @@ This rule checks for:
 - Destructuring of more than the specified maximum number of variables (default is 2).
 - Destructuring on a line exceeding the specified maximum line length (default is 100 characters).
 
-#### Usage
+## Usage
 
 ```json
 {

@@ -6,15 +6,15 @@
 
 <!-- end auto-generated rule header -->
 
-#### Description
+## Description
 
 Converts unnamed default exports to named default exports based on the file name. This rule helps maintain consistency in export names and facilitates easier identification of components or modules.
 
-#### Rule Details
+## Rule Details
 
 This rule targets unnamed default exports and automatically generates a named export based on the file name.
 
-#### Usage
+## Usage
 ```json
 {
   "rules": {
