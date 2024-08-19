@@ -25,7 +25,3 @@ This repository contains custom ESLint rules to enhance code quality and consist
 | [no-destructuring](docs/rules/no-destructuring.md)   | Disallow destructuring that does not meet certain conditions                     | ✅ ![badge-recommended-typescript][] |    |
 
 <!-- end auto-generated rules list -->
-
-### 1. No-destructuring Rule
-
-**Rule ID:** `th-rules/no-destructuring`
