@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.4...v1.12.0) (2024-08-19)
+
+
+### Features
+
+* created no-comments rule ([82dda49](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/82dda49f7f4708b68b8a4bd81e5af3ca84519a43))
+
 ## [1.11.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.3...v1.11.4) (2024-08-19)
 
 
