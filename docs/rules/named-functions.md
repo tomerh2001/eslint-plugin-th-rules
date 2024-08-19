@@ -1,4 +1,4 @@
-# Enforce top-level functions to be named functions (`th-rules/named-functions`)
+# Enforce top-level functions to be named function declarations (`th-rules/named-functions`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-typescript`.
 
