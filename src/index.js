@@ -30,7 +30,7 @@ configs.recommended = {
 		'no-comments/disallowComments': [
 			'error',
 			{
-				allow: ['^/\\*\\*(?:[\\s\\S]*?)\\*/$', 'eslint-disable', 'global', 'TODO', 'FIXME', 'NOTE', 'DEBUG'],
+				allow: ['^\\*\\*', 'eslint-disable', 'global', 'TODO', 'FIXME', 'NOTE', 'DEBUG'],
 			},
 		],
 
