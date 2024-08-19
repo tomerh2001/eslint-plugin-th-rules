@@ -12,6 +12,7 @@ const meta = {
 type: 'problem',
 docs: {
     description: 'Disallow comments except for specified allowed patterns.',
+    url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-comments.md'
 },
 fixable: 'code',
 schema: [

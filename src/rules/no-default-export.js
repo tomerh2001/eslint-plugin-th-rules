@@ -6,6 +6,7 @@ const meta = {
 	type: 'suggestion',
 	docs: {
 		description: 'Convert unnamed default exports to named default exports based on the file name.',
+		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-default-export.md'
 	},
 	fixable: 'code',
 	schema: [],
