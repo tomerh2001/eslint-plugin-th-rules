@@ -1,3 +1,10 @@
+## [1.11.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.2...v1.11.3) (2024-08-19)
+
+
+### Bug Fixes
+
+* Update regex pattern for disallowed comments ([afa6799](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/afa679935417a2df008b111b06c8f4ebff7a1691))
+
 ## [1.11.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.11.1...v1.11.2) (2024-08-19)
 
 
