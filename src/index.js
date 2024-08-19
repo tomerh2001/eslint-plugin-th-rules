@@ -18,6 +18,7 @@ configs.recommended = {
 	rules: {
 		'th-rules/no-destructuring': 'error',
 		'th-rules/no-default-export': 'error',
+		'th-rules/no-comments': 'error',
 		'unicorn/prefer-module': 'warn',
 		'unicorn/filename-case': 'off',
 		'unicorn/no-array-callback-reference': 'off',
@@ -27,13 +28,6 @@ configs.recommended = {
 		'new-cap': 'off',
 		'no-await-in-loop': 'off',
 		camelcase: 'warn',
-		'no-comments/disallowComments': [
-			'error',
-			{
-				allow: ['^\\*\\*', 'eslint-disable', 'global', 'TODO', 'FIXME', 'NOTE', 'DEBUG'],
-			},
-		],
-
 	},
 	env: {
 		node: true,

@@ -18,11 +18,11 @@
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.25.1",
     "eslint-config-jsdoc": "^15.4.0",
     "eslint-config-xo": "^0.46.0",
     "eslint-config-xo-react": "^0.27.0",
     "eslint-plugin-jsdoc": "^50.2.2",
-    "eslint-plugin-no-comments": "^1.1.10",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-native": "^4.1.0",

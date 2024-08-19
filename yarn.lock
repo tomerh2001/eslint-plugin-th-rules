@@ -22,6 +22,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/eslint-parser@npm:^7.25.1":
+  version: 7.25.1
+  resolution: "@babel/eslint-parser@npm:7.25.1"
+  dependencies:
+    "@nicolo-ribaudo/eslint-scope-5-internals": "npm:5.1.1-v1"
+    eslint-visitor-keys: "npm:^2.1.0"
+    semver: "npm:^6.3.1"
+  peerDependencies:
+    "@babel/core": ^7.11.0
+    eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
+  checksum: 10c0/9f98351b32edfced9e6308a80ad69af1210d9c9780f19339cb286d0c9be0a9afac80d1df3b3793112e720675ce5b927920b19454d0f48ddf8370d08ab62d0dc2
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.22.20":
   version: 7.22.20
   resolution: "@babel/helper-validator-identifier@npm:7.22.20"
@@ -235,6 +249,15 @@ __metadata:
   dependencies:
     "@sinclair/typebox": "npm:^0.27.8"
   checksum: 10c0/b329e89cd5f20b9278ae1233df74016ebf7b385e0d14b9f4c1ad18d096c4c19d1e687aa113a9c976b16ec07f021ae53dea811fb8c1248a50ac34fbe009fdf6be
+  languageName: node
+  linkType: hard
+
+"@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1":
+  version: 5.1.1-v1
+  resolution: "@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1"
+  dependencies:
+    eslint-scope: "npm:5.1.1"
+  checksum: 10c0/75dda3e623b8ad7369ca22552d6beee337a814b2d0e8a32d23edd13fcb65c8082b32c5d86e436f3860dd7ade30d91d5db55d4ef9a08fb5a976c718ecc0d88a74
   languageName: node
   linkType: hard
 
@@ -3148,13 +3171,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-no-comments@npm:^1.1.10":
-  version: 1.1.10
-  resolution: "eslint-plugin-no-comments@npm:1.1.10"
-  checksum: 10c0/75549d56ccc73b7a1ead94efbca80610b6c74a417dc2a3436b87ea938d50eb208977d0ed4a43674f2794cee1d1e8446d07ccdffb76468d05bed8213a0ad61de4
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-no-use-extend-native@npm:^0.5.0":
   version: 0.5.0
   resolution: "eslint-plugin-no-use-extend-native@npm:0.5.0"
@@ -3289,6 +3305,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eslint-plugin-th-rules@workspace:."
   dependencies:
+    "@babel/eslint-parser": "npm:^7.25.1"
     "@codedependant/semantic-release-docker": "npm:^5.0.3"
     "@eslint/js": "npm:^9.9.0"
     "@semantic-release/changelog": "npm:^6.0.3"
@@ -3309,7 +3326,6 @@ __metadata:
     eslint-doc-generator: "npm:^1.7.1"
     eslint-plugin-eslint-plugin: "npm:^6.2.0"
     eslint-plugin-jsdoc: "npm:^50.2.2"
-    eslint-plugin-no-comments: "npm:^1.1.10"
     eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-react: "npm:^7.35.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
@@ -3388,7 +3404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:^5.1.1":
+"eslint-scope@npm:5.1.1, eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
   dependencies:
@@ -3445,7 +3461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^2.0.0":
+"eslint-visitor-keys@npm:^2.0.0, eslint-visitor-keys@npm:^2.1.0":
   version: 2.1.0
   resolution: "eslint-visitor-keys@npm:2.1.0"
   checksum: 10c0/9f0e3a2db751d84067d15977ac4b4472efd6b303e369e6ff241a99feac04da758f46d5add022c33d06b53596038dbae4b4aceb27c7e68b8dfc1055b35e495787
