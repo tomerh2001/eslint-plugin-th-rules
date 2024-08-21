@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.2...v1.13.3) (2024-08-21)
+
+
+### Bug Fixes
+
+* removed named functions ([a1c87b0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a1c87b02dbb478d953f972bc95df3a2888b5e28b))
+
 ## [1.13.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.1...v1.13.2) (2024-08-19)
 
 
