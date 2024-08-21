@@ -719,8 +719,8 @@ __metadata:
   linkType: hard
 
 "@semantic-release/github@npm:^10.1.6":
-  version: 10.1.6
-  resolution: "@semantic-release/github@npm:10.1.6"
+  version: 10.1.7
+  resolution: "@semantic-release/github@npm:10.1.7"
   dependencies:
     "@octokit/core": "npm:^6.0.0"
     "@octokit/plugin-paginate-rest": "npm:^11.0.0"
@@ -740,7 +740,7 @@ __metadata:
     url-join: "npm:^5.0.0"
   peerDependencies:
     semantic-release: ">=20.1.0"
-  checksum: 10c0/c2e4585d66c71c85b374913492a7dc1efcf81c52ddb23db0e3095214b988326c6e1feaa8be8d1e971ec91bac254bbf49dcb5052db92adf9291b87fedd99683df
+  checksum: 10c0/608e5aa8d01bb9f83a13dfaf21f50703b0bdb9b82fb201e58b73fc613a0a3c49086c5a3c56b445cc824d6d3be524d4de407c80ccfabbdd7b2f057c789f51192e
   languageName: node
   linkType: hard
 
@@ -3301,7 +3301,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-th-rules@npm:^1.11.4, eslint-plugin-th-rules@workspace:.":
+"eslint-plugin-th-rules@npm:^1.12.0, eslint-plugin-th-rules@workspace:.":
   version: 0.0.0-use.local
   resolution: "eslint-plugin-th-rules@workspace:."
   dependencies:
@@ -3332,7 +3332,7 @@ __metadata:
     eslint-plugin-react-native: "npm:^4.1.0"
     eslint-plugin-security: "npm:^3.0.1"
     eslint-plugin-sonarjs: "npm:^1.0.4"
-    eslint-plugin-th-rules: "npm:^1.11.4"
+    eslint-plugin-th-rules: "npm:^1.12.0"
     eslint-plugin-unicorn: "npm:^55.0.0"
     mocha: "npm:^10.7.3"
     npm-run-all: "npm:^4.1.5"
