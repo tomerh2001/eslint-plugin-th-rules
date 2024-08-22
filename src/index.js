@@ -9,7 +9,6 @@ configs.recommended = {
 	plugins: [
 		'th-rules',
 		'sonarjs',
-		'no-comments',
 	],
 	extends: [
 		'plugin:sonarjs/recommended-legacy',
