@@ -1,3 +1,10 @@
+## [1.13.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.3...v1.13.4) (2024-08-22)
+
+
+### Bug Fixes
+
+* Remove no-comments from plugins list ([e3df83f](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/e3df83ff4e6a0497058b4080bb884d340f58fc13))
+
 ## [1.13.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.2...v1.13.3) (2024-08-21)
 
 
