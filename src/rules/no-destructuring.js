@@ -20,7 +20,7 @@ const meta = {
 		description: 'Disallow destructuring that does not meet certain conditions',
 		category: 'Possible Errors',
 		recommended: true,
-		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-destructuring.md'
+		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-destructuring.md',
 	},
 	schema: [
 		{

@@ -4,36 +4,37 @@
 'use strict';
 const requireIndex = require('requireindex');
 
-const configs = {};
-configs.recommended = {
-	plugins: [
-		'th-rules',
-		'sonarjs',
-	],
-	extends: [
-		'plugin:sonarjs/recommended-legacy',
-		'plugin:security/recommended-legacy',
-	],
-	rules: {
-		'th-rules/no-destructuring': 'error',
-		'th-rules/no-default-export': 'error',
-		'th-rules/no-comments': 'error',
-		'unicorn/prefer-module': 'warn',
-		'unicorn/filename-case': 'off',
-		'unicorn/no-array-callback-reference': 'off',
-		'import/extensions': 'off',
-		'unicorn/no-static-only-class': 'off',
-		'unicorn/no-await-expression-member': 'off',
-		'new-cap': 'off',
-		'no-await-in-loop': 'off',
-		'n/file-extension-in-import': 'off',
-		'import/no-cycle': 'off',
-		camelcase: 'warn',
-	},
-	env: {
-		node: true,
-		es2024: true,
-		jest: true,
+const configs = {
+	recommended: {
+		plugins: [
+			'th-rules',
+			'sonarjs',
+		],
+		extends: [
+			'plugin:sonarjs/recommended-legacy',
+			'plugin:security/recommended-legacy',
+		],
+		rules: {
+			'th-rules/no-destructuring': 'error',
+			'th-rules/no-default-export': 'error',
+			'th-rules/no-comments': 'error',
+			'unicorn/prefer-module': 'warn',
+			'unicorn/filename-case': 'off',
+			'unicorn/no-array-callback-reference': 'off',
+			'import/extensions': 'off',
+			'unicorn/no-static-only-class': 'off',
+			'unicorn/no-await-expression-member': 'off',
+			'new-cap': 'off',
+			'no-await-in-loop': 'off',
+			'n/file-extension-in-import': 'off',
+			'import/no-cycle': 'off',
+			camelcase: 'warn',
+		},
+		env: {
+			node: true,
+			es2024: true,
+			jest: true,
+		},
 	},
 };
 
@@ -57,6 +58,17 @@ for (const configName of Object.keys(configs)) {
 			'@typescript-eslint/no-unsafe-call': 'off',
 			'@typescript-eslint/no-unsafe-return': 'off',
 			'@typescript-eslint/no-unsafe-argument': 'off',
+		},
+	};
+	configs[`${configName}-react`] = {
+		...configs[configName],
+		extends: [
+			'plugin:react/recommended',
+			'plugin:react-hooks/recommended',
+			...configs[configName].extends,
+		],
+		rules: {
+			...configs[configName].rules,
 		},
 	};
 }

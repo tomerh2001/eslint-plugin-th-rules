@@ -1,6 +1,6 @@
 # Disallow destructuring that does not meet certain conditions (`th-rules/no-destructuring`)
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-typescript`.
+💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
 
 <!-- end auto-generated rule header -->
 
