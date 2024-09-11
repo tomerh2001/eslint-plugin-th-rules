@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.4...v1.14.0) (2024-09-11)
+
+
+### Features
+
+* Added `recommended-react` config ([2238f59](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/2238f59649a1a3ad7368aa6a2feaca0e98391d2f))
+
 ## [1.13.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.13.3...v1.13.4) (2024-08-22)
 
 
