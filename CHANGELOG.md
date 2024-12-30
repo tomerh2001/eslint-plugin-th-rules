@@ -1,3 +1,10 @@
+## [1.15.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.4...v1.15.5) (2024-12-30)
+
+
+### Bug Fixes
+
+* enforce naming conventions for top-level functions and improve error messages ([c50194d](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/c50194d3ad4c2ef98387d3bbee8d06a30e2aa458))
+
 ## [1.15.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.3...v1.15.4) (2024-12-30)
 
 

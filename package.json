@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-th-rules",
-  "version": "1.15.4",
+  "version": "1.15.5",
   "description": "A List of custom ESLint rules created by Tomer Horowitz",
   "keywords": [
     "eslint",
