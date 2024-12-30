@@ -1,3 +1,10 @@
+## [1.15.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.2...v1.15.3) (2024-12-30)
+
+
+### Bug Fixes
+
+* enhance top-level functions rule to handle arrow and function expressions ([0bdcc2c](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/0bdcc2cbe2bd9e790ca2965001c786e3a8518a60))
+
 ## [1.15.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.1...v1.15.2) (2024-12-30)
 
 
