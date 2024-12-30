@@ -1,3 +1,10 @@
+## [1.15.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.3...v1.15.4) (2024-12-30)
+
+
+### Bug Fixes
+
+* improve top-level functions rule to support single-expression functions ([da75c58](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/da75c5823445b54eac9ab6cc7717e007e8a797a6))
+
 ## [1.15.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.2...v1.15.3) (2024-12-30)
 
 
