@@ -49,7 +49,7 @@
     "eslint-plugin-eslint-plugin": "^6.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-sonarjs": "^3.0.1",
-    "eslint-plugin-th-rules": "1.14.1",
+    "eslint-plugin-th-rules": "1.15.6",
     "eslint-plugin-unicorn": "^56.0.1",
     "mocha": "^11.0.1",
     "npm-run-all": "^4.1.5",

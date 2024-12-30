@@ -4420,9 +4420,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-th-rules@npm:1.14.1":
-  version: 1.14.1
-  resolution: "eslint-plugin-th-rules@npm:1.14.1"
+"eslint-plugin-th-rules@npm:1.15.6":
+  version: 1.15.6
+  resolution: "eslint-plugin-th-rules@npm:1.15.6"
   dependencies:
     "@babel/eslint-parser": "npm:^7.25.9"
     eslint-config-jsdoc: "npm:^15.4.0"
@@ -4438,7 +4438,7 @@ __metadata:
   peerDependencies:
     eslint: ">=9.17.0"
     typescript: ^5.7.2
-  checksum: 10c0/1dccd3682fc42f75f1b546220d5f09362ca6e64c11c9adacde12936c4bcb7f17fbae4ccba71a7ef2fe94c895f7989347b0615503b25fcd2000742c7b99f251b2
+  checksum: 10c0/fa905351da8172e055b38e31a39605c1449c6865b893fa5006c0fca7ecb55358b964f2d49bcd6bb651f8fc7702465fdfcee6f37e066964de35fc202c2093a86b
   languageName: node
   linkType: hard
 
@@ -4473,7 +4473,7 @@ __metadata:
     eslint-plugin-react-native: "npm:^5.0.0"
     eslint-plugin-security: "npm:^3.0.1"
     eslint-plugin-sonarjs: "npm:^3.0.1"
-    eslint-plugin-th-rules: "npm:1.14.1"
+    eslint-plugin-th-rules: "npm:1.15.6"
     eslint-plugin-unicorn: "npm:^56.0.1"
     mocha: "npm:^11.0.1"
     npm-run-all: "npm:^4.1.5"
