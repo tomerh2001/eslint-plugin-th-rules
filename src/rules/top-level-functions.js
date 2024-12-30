@@ -17,22 +17,35 @@ function create(context) {
 				return;
 			}
 
-			if (!(node.init && (node.init.type === 'ArrowFunctionExpression' || node.init.type === 'FunctionExpression'))) {
-				return;
+			const sourceCode = context.getSourceCode();
+
+			if (node.init && node.init.type === 'ArrowFunctionExpression') {
+				const functionName = node.id.name;
+				const functionText = sourceCode.getText(node.init);
+
+				context.report({
+					node: node.init,
+					message: 'Top-level functions must be named/regular functions.',
+					fix(fixer) {
+						const fixedCode = `function ${functionName}${functionText.slice(functionText.indexOf('('))}`;
+						return fixer.replaceText(node.parent, fixedCode);
+					},
+				});
 			}
 
-			const sourceCode = context.getSourceCode();
-			const functionText = sourceCode.getText(node.init);
-			const functionName = node.id.name;
+			if (node.init && node.init.type === 'FunctionExpression') {
+				const functionName = node.id.name;
+				const functionText = sourceCode.getText(node.init);
 
-			context.report({
-				node: node.init,
-				message: 'Top-level functions must be named/regular functions.',
-				fix(fixer) {
-					const fixedCode = `function ${functionName}${functionText.slice(functionText.indexOf('('))}`;
-					return fixer.replaceText(node, fixedCode);
-				},
-			});
+				context.report({
+					node: node.init,
+					message: 'Top-level functions must be named/regular functions.',
+					fix(fixer) {
+						const fixedCode = `function ${functionName}${functionText.slice(functionText.indexOf('('))}`;
+						return fixer.replaceText(node.parent, fixedCode);
+					},
+				});
+			}
 		},
 
 		FunctionDeclaration(node) {
@@ -48,6 +61,7 @@ function create(context) {
 						const functionName = 'defaultFunction';
 						const sourceCode = context.getSourceCode();
 						const functionText = sourceCode.getText(node);
+
 						const fixedCode = functionText.replace('function (', `function ${functionName}(`);
 
 						return fixer.replaceText(node, fixedCode);
