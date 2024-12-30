@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.0...v1.15.1) (2024-12-30)
+
+
+### Bug Fixes
+
+* enable top-level functions rule in ESLint configuration ([ce694ad](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/ce694ad302388f13e04af8e3d951c8cf00c0603f))
+
 # [1.15.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.14.1...v1.15.0) (2024-12-30)
 
 
