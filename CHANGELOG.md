@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.14.1...v1.15.0) (2024-12-30)
+
+
+### Features
+
+* add top-level functions rule and update ESLint configuration ([49e5ebb](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/49e5ebbf597615e508a8b0067d8ca263d73f0469))
+
 ## [1.14.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.14.0...v1.14.1) (2024-12-30)
 
 
