@@ -7,10 +7,6 @@
 
 This repository contains custom ESLint rules to enhance code quality and consistency across projects.
 
-# Custom ESLint Rules
-
-This repository contains custom ESLint rules to enhance code quality and consistency across projects, created by Tomer Horowitz.
-
 ## Rules
 <!-- begin auto-generated rules list -->
 
