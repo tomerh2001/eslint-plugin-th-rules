@@ -18,6 +18,7 @@ const configs = {
 			'th-rules/no-destructuring': 'error',
 			'th-rules/no-default-export': 'error',
 			'th-rules/no-comments': 'error',
+			'th-rules/top-level-functions': 'error',
 			'unicorn/prefer-module': 'warn',
 			'unicorn/filename-case': 'off',
 			'unicorn/no-array-callback-reference': 'off',
