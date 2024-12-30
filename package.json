@@ -61,5 +61,5 @@
     "typescript": "^5.7.2"
   },
   "license": "ISC",
-  "packageManager": "yarn@4.4.0"
+  "packageManager": "yarn@4.6.0"
 }
