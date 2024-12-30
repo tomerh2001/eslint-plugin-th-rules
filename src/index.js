@@ -29,6 +29,11 @@ const configs = {
 			'n/file-extension-in-import': 'off',
 			'import/no-cycle': 'off',
 			camelcase: 'warn',
+			'sonarjs/mouse-events-a11y': 'off',
+			'sonarjs/no-unstable-nested-components': 'off',
+			'unicorn/prefer-global-this': 'off',
+			'unicorn/no-thenable': 'off',
+			'sonarjs/no-clear-text-protocols': 'off',
 		},
 		env: {
 			node: true,
@@ -69,6 +74,7 @@ for (const configName of Object.keys(configs)) {
 		],
 		rules: {
 			...configs[configName].rules,
+			'n/prefer-global/process': 'off',
 		},
 	};
 }
