@@ -1,3 +1,10 @@
+## [1.15.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.5...v1.15.6) (2024-12-30)
+
+
+### Bug Fixes
+
+* enhance top-level functions rule to support async and export keywords ([cca9ceb](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/cca9cebe77fa01820048a55c444e55bd297b883c))
+
 ## [1.15.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.4...v1.15.5) (2024-12-30)
 
 
