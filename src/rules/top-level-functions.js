@@ -27,7 +27,13 @@ function create(context) {
 					node: node.init,
 					message: 'Top-level functions must be named/regular functions.',
 					fix(fixer) {
-						const fixedCode = `function ${functionName}${functionText.slice(functionText.indexOf('('))}`;
+						const isSingleExpression = node.init.body.type !== 'BlockStatement';
+						const functionBody = isSingleExpression
+							? `{ return ${functionText.slice(functionText.indexOf('=>') + 3)}; }`
+							: functionText.slice(functionText.indexOf('{'));
+						const functionParameters = functionText.slice(0, functionText.indexOf('=>')).trim();
+
+						const fixedCode = `function ${functionName}${functionParameters} ${functionBody}`;
 						return fixer.replaceText(node.parent, fixedCode);
 					},
 				});
@@ -61,7 +67,6 @@ function create(context) {
 						const functionName = 'defaultFunction';
 						const sourceCode = context.getSourceCode();
 						const functionText = sourceCode.getText(node);
-
 						const fixedCode = functionText.replace('function (', `function ${functionName}(`);
 
 						return fixer.replaceText(node, fixedCode);
