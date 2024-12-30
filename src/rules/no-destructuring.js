@@ -60,7 +60,6 @@ function create(context) {
 				return;
 			}
 
-			// Check for the number of destructured variables and the nesting level
 			if (tabCount > MAX_TAB_COUNT) {
 				context.report({
 					node,
@@ -68,7 +67,6 @@ function create(context) {
 				});
 			}
 
-			// Check for the number of destructured variables
 			if (node?.id?.properties?.length > MAX_VARIABLES) {
 				context.report({
 					node,
@@ -76,7 +74,6 @@ function create(context) {
 				});
 			}
 
-			// Check for the line length
 			if (lineLength > MAX_LINE_LENGTH) {
 				context.report({
 					node,

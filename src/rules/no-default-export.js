@@ -17,11 +17,11 @@ function create(context) {
 		return fileName.replaceAll(/^\w|[A-Z]|\b\w|\s+/g, (match, index) => {
 			if (match === ' ') {
 				return '';
-			} // Remove spaces
+			}
 
 			if (index === 0) {
 				return match.toLowerCase();
-			} // Lowercase the first character
+			}
 
 			return match.toUpperCase();
 		})
@@ -30,12 +30,10 @@ function create(context) {
 
 	return {
 		ExportDefaultDeclaration(node) {
-			// If the export declaration is an identifier (e.g., a variable name), it's considered named.
 			if (node.declaration.type === 'Identifier') {
 				return;
 			}
 
-			// Existing check for function or class declarations that are named
 			if (node.declaration.id) {
 				return;
 			}

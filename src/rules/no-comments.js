@@ -5,7 +5,7 @@ const allowedPatterns = [
 	/warning/i, // Allow WARNING (case-insensitive)
 	/error/i, // Allow ERROR (case-insensitive)
 	/info/i, // Allow INFO (case-insensitive)
-	/^\s*eslint-(disable|enable|env|globals|ignore|directive)/, // Allow ESLint directives
+	/^\s*eslint-(disable|enable|env|globals|ignore|directive)/,
 ];
 
 const meta = {
@@ -47,26 +47,23 @@ function create(context) {
 	function isCommentAllowed(comment) {
 		const text = comment.value.trim();
 
-		// Check if the comment is a valid JSDoc comment
 		if (comment.type === 'Block' && comment.value.startsWith('*')) {
-			return true; // Allow any JSDoc-style block comment (/** ... */)
+			return true;
 		}
 
-		// Check if the comment matches any allowed pattern
 		for (const pattern of [...allowedPatterns, ...userAllowedPatterns]) {
 			if (pattern.test(text)) {
 				return true;
 			}
 		}
 
-		// Check if the comment matches any disallowed pattern
 		for (const pattern of userDisallowedPatterns) {
 			if (pattern.test(text)) {
 				return false;
 			}
 		}
 
-		return false; // Disallow by default if no match
+		return false;
 	}
 
 	return {
