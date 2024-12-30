@@ -1,16 +1,5 @@
 /* eslint-disable unicorn/prefer-module */
 
-/**
- * @type {Object}
- * @property {string} type - The type of the rule, in this case, 'suggestion'.
- * @property {Object} docs - Documentation related to the rule.
- * @property {string} docs.description - A brief description of the rule.
- * @property {string} docs.category - The category of the rule, 'Stylistic Issues'.
- * @property {boolean} docs.recommended - Indicates if the rule is recommended.
- * @property {string} docs.url - The URL to the documentation of the rule.
- * @property {string} fixable - Indicates if the rule is fixable, 'code'.
- * @property {Array} schema - The schema for the rule options.
- */
 const meta = {
 	type: 'suggestion',
 	docs: {
@@ -29,10 +18,13 @@ const meta = {
  * @param {string} funcName - The name of the new function.
  * @param {ArrowFunctionExpression} arrowNode - The ArrowFunctionExpression node.
  * @param {import('eslint').SourceCode} sourceCode - The ESLint SourceCode object.
- * @param {boolean} isExport - Whether or not this function is exported.
+ * @param {boolean} isExport - Whether or not this function is exported (e.g., `export const foo = ...`).
  * @returns {string} The replacement code.
  */
 function buildArrowFunctionReplacement(functionName, arrowNode, sourceCode, isExport) {
+	const asyncKeyword = arrowNode.async ? 'async ' : '';
+	const exportKeyword = isExport ? 'export ' : '';
+
 	const parametersText = arrowNode.params.map(parameter => sourceCode.getText(parameter)).join(', ');
 
 	let bodyText;
@@ -43,8 +35,7 @@ function buildArrowFunctionReplacement(functionName, arrowNode, sourceCode, isEx
 		bodyText = `{ return ${expressionText}; }`;
 	}
 
-	const exportKeyword = isExport ? 'export ' : '';
-	return `${exportKeyword}function ${functionName}(${parametersText}) ${bodyText}`;
+	return `${exportKeyword}${asyncKeyword}function ${functionName}(${parametersText}) ${bodyText}`;
 }
 
 /**
@@ -57,36 +48,41 @@ function buildArrowFunctionReplacement(functionName, arrowNode, sourceCode, isEx
  * @returns {string} The replacement code.
  */
 function buildFunctionExpressionReplacement(functionName, functionExprNode, sourceCode, isExport) {
+	const asyncKeyword = functionExprNode.async ? 'async ' : '';
+	const exportKeyword = isExport ? 'export ' : '';
+
 	const parametersText = functionExprNode.params.map(parameter => sourceCode.getText(parameter)).join(', ');
 	const bodyText = sourceCode.getText(functionExprNode.body);
 
-	const exportKeyword = isExport ? 'export ' : '';
-	return `${exportKeyword}function ${functionName}(${parametersText}) ${bodyText}`;
+	return `${exportKeyword}${asyncKeyword}function ${functionName}(${parametersText}) ${bodyText}`;
 }
 
 /**
- * Build a replacement for an anonymous top-level FunctionDeclaration.
+ * Build a replacement for an anonymous top-level FunctionDeclaration (including async).
  *
  * @param {import('eslint').SourceCode} sourceCode
  * @param {import('estree').FunctionDeclaration} node
  * @param {string} [funcName='defaultFunction']
+ * @param {boolean} [isExport=false]
  */
-function buildAnonymousFunctionDeclarationReplacement(sourceCode, node, functionName = 'defaultFunction') {
+function buildAnonymousFunctionDeclarationReplacement(sourceCode, node, functionName = 'defaultFunction', isExport = false) {
 	const originalText = sourceCode.getText(node);
+	const asyncKeyword = node.async ? 'async ' : '';
+	const exportKeyword = isExport ? 'export ' : '';
 
-	const fixedText = originalText.replace(
-		/^(\s*function\s*)\(/,
-		`$1${functionName}(`,
-	);
-	return fixedText;
+	let replaced = originalText;
+	const asyncFunctionRegex = /^\s*async\s+function\s*\(/;
+	const functionRegex = /^\s*function\s*\(/;
+
+	replaced = asyncFunctionRegex.test(replaced) ? replaced.replace(asyncFunctionRegex, `async function ${functionName}(`) : replaced.replace(functionRegex, `function ${functionName}(`);
+
+	if (isExport && !replaced.trimStart().startsWith('export')) {
+		replaced = `${exportKeyword}${replaced}`;
+	}
+
+	return replaced;
 }
 
-/**
- * ESLint rule to enforce naming conventions for top-level functions.
- *
- * @param {Object} context - The rule context provided by ESLint.
- * @returns {Object} An object containing visitor methods for AST nodes.
- */
 function create(context) {
 	const sourceCode = context.getSourceCode();
 
@@ -129,7 +125,10 @@ function create(context) {
 							isExport,
 						);
 
-						return fixer.replaceText(grandParent.type === 'Program' ? declParent : grandParent, replacement);
+						return fixer.replaceText(
+							isExport ? grandParent : declParent,
+							replacement,
+						);
 					},
 				});
 			} else if (node.init.type === 'FunctionExpression') {
@@ -143,7 +142,10 @@ function create(context) {
 							sourceCode,
 							isExport,
 						);
-						return fixer.replaceText(grandParent.type === 'Program' ? declParent : grandParent, replacement);
+						return fixer.replaceText(
+							isExport ? grandParent : declParent,
+							replacement,
+						);
 					},
 				});
 			}
@@ -156,7 +158,8 @@ function create(context) {
 
 			const parent = node.parent;
 
-			const isTopLevel = parent.type === 'Program'
+			const isTopLevel
+				= parent.type === 'Program'
 				|| parent.type === 'ExportNamedDeclaration'
 				|| parent.type === 'ExportDefaultDeclaration';
 
@@ -164,15 +167,24 @@ function create(context) {
 				return;
 			}
 
+			const isExport
+				= parent.type === 'ExportNamedDeclaration'
+				|| parent.type === 'ExportDefaultDeclaration';
+
 			context.report({
 				node,
 				message: 'Top-level anonymous function declarations must be named.',
 				fix(fixer) {
 					const newName = 'defaultFunction';
-					const replacement = buildAnonymousFunctionDeclarationReplacement(sourceCode, node, newName);
+					const replacement = buildAnonymousFunctionDeclarationReplacement(
+						sourceCode,
+						node,
+						newName,
+						isExport,
+					);
 
 					return fixer.replaceText(
-						parent.type === 'Program' ? node : parent,
+						isExport ? parent : node,
 						replacement,
 					);
 				},
