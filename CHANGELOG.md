@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.1...v1.15.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* implement top-level functions rule with tests for ESLint ([c19c451](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/c19c4515b66b314cc327ef84c674a1324ad7d204))
+
 ## [1.15.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.0...v1.15.1) (2024-12-30)
 
 
