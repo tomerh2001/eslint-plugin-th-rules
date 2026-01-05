@@ -1,19 +1,5 @@
 const MAX_TAB_COUNT = 3;
 
-/**
- * Represents the metadata for the "no-destructuring" ESLint rule.
- *
- * @type {Object}
- * @property {string} type - The type of the rule.
- * @property {Object} docs - The documentation for the rule.
- * @property {string} docs.description - The description of the rule.
- * @property {string} docs.category - The category of the rule.
- * @property {boolean} docs.recommended - Indicates if the rule is recommended.
- * @property {Object[]} schema - The schema for the rule options.
- * @property {Object} schema[].properties - The properties of the rule options.
- * @property {number} schema[].properties.maximumDestructuredVariables - The maximum number of destructured variables allowed.
- * @property {number} schema[].properties.maximumLineLength - The maximum line length allowed.
- */
 const meta = {
 	type: 'problem',
 	docs: {
@@ -26,67 +12,103 @@ const meta = {
 		{
 			type: 'object',
 			properties: {
-				maximumDestructuredVariables: {
-					type: 'integer',
-					minimum: 0,
-				},
-				maximumLineLength: {
-					type: 'integer',
-					minimum: 0,
-				},
+				maximumDestructuredVariables: {type: 'integer', minimum: 0},
+				maximumLineLength: {type: 'integer', minimum: 0},
 			},
 			additionalProperties: false,
 		},
 	],
 };
 
-/**
- * Creates an ESLint rule that checks for excessive destructuring in variable declarations.
- * @param {Object} context - The ESLint rule context.
- * @returns {Object} - The ESLint rule object.
- */
 function create(context) {
-	const MAX_VARIABLES = context?.options[0]?.maximumDestructuredVariables || 2;
-	const MAX_LINE_LENGTH = context?.options[0]?.maximumLineLength || 100;
+	const MAX_VARIABLES = context?.options?.[0]?.maximumDestructuredVariables ?? 2;
+	const MAX_LINE_LENGTH = context?.options?.[0]?.maximumLineLength ?? 100;
+
+	const sourceCode = context.getSourceCode();
+
+	function reportIfNeeded(patternNode, reportNode = patternNode) {
+		if (!patternNode || patternNode.type !== 'ObjectPattern' || !patternNode.loc) {
+			return;
+		}
+
+		const lineText = sourceCode.lines[patternNode.loc.start.line - 1] ?? '';
+		const indentCount = lineText.search(/\S|$/);
+
+		const propertyCount = patternNode.properties?.length ?? 0;
+
+		const startLine = patternNode.loc.start.line;
+		const endLine = patternNode.loc.end.line;
+		let maxSpannedLineLength = 0;
+		for (let i = startLine; i <= endLine; i++) {
+			const t = sourceCode.lines[i - 1] ?? '';
+			if (t.length > maxSpannedLineLength) {
+				maxSpannedLineLength = t.length;
+			}
+		}
+
+		if (indentCount > MAX_TAB_COUNT) {
+			context.report({
+				node: reportNode,
+				message: `destructuring at a nesting level above ${MAX_TAB_COUNT} is not allowed, instead saw ${indentCount} levels of nesting`,
+			});
+		}
+
+		if (propertyCount > MAX_VARIABLES) {
+			context.report({
+				node: reportNode,
+				message: `destructuring of more than ${MAX_VARIABLES} variables is not allowed`,
+			});
+		}
+
+		if (maxSpannedLineLength > MAX_LINE_LENGTH) {
+			context.report({
+				node: reportNode,
+				message: `destructuring on a line exceeding ${MAX_LINE_LENGTH} characters is not allowed`,
+			});
+		}
+	}
+
+	function checkParameters(parameters) {
+		for (const p of parameters || []) {
+			if (!p) {
+				continue;
+			}
+
+			if (p.type === 'AssignmentPattern') {
+				reportIfNeeded(p.left, p);
+				continue;
+			}
+
+			reportIfNeeded(p, p);
+		}
+	}
 
 	return {
+
 		VariableDeclarator(node) {
-			const sourceCode = context.getSourceCode();
-			const line = sourceCode.lines[node.loc.start.line - 1];
-			const lineLength = line.length;
-			const tabCount = line.search(/\S|$/);
+			reportIfNeeded(node?.id, node);
+		},
 
-			if (node?.id?.type !== 'ObjectPattern') {
-				return;
-			}
+		FunctionDeclaration(node) {
+			checkParameters(node.params);
+		},
+		FunctionExpression(node) {
+			checkParameters(node.params);
+		},
+		ArrowFunctionExpression(node) {
+			checkParameters(node.params);
+		},
 
-			if (tabCount > MAX_TAB_COUNT) {
-				context.report({
-					node,
-					message: `destructuring at a nesting level above ${MAX_TAB_COUNT} is not allowed, instead saw ${tabCount} levels of nesting`,
-				});
+		MethodDefinition(node) {
+			if (node?.value?.params) {
+				checkParameters(node.value.params);
 			}
+		},
 
-			if (node?.id?.properties?.length > MAX_VARIABLES) {
-				context.report({
-					node,
-					message: `destructuring of more than ${MAX_VARIABLES} variables is not allowed`,
-				});
-			}
-
-			if (lineLength > MAX_LINE_LENGTH) {
-				context.report({
-					node,
-					message: `destructuring on a line exceeding ${MAX_LINE_LENGTH} characters is not allowed`,
-				});
-			}
+		TSDeclareFunction(node) {
+			checkParameters(node.params);
 		},
 	};
 }
 
-const rule = {
-	meta,
-	create,
-};
-
-module.exports = rule;
+module.exports = {meta, create};
