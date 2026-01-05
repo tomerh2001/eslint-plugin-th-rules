@@ -69,7 +69,6 @@ function create(context) {
 	}
 
 	return {
-
 		TSTypeAliasDeclaration(node) {
 			reportIfNotDts(node);
 		},

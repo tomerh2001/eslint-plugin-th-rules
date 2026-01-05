@@ -19,6 +19,7 @@ const configs = {
 			'th-rules/no-default-export': 'error',
 			'th-rules/no-comments': 'error',
 			'th-rules/top-level-functions': 'error',
+			'th-rules/styles-in-styles-file': 'error',
 			'th-rules/types-in-dts': 'error',
 			'unicorn/prefer-module': 'warn',
 			'unicorn/filename-case': 'off',
@@ -73,6 +74,7 @@ for (const configName of Object.keys(configs)) {
 			'plugin:react/recommended',
 			'plugin:react-hooks/recommended',
 			...configs[configName].extends,
+
 		],
 		rules: {
 			...configs[configName].rules,

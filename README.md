@@ -14,13 +14,14 @@ This repository contains custom ESLint rules to enhance code quality and consist
 ✅ Set in the `recommended` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                     | Description                                                                            | 💼                                                               | 🔧 |
-| :------------------------------------------------------- | :------------------------------------------------------------------------------------- | :--------------------------------------------------------------- | :- |
-| [no-comments](docs/rules/no-comments.md)                 | Disallow comments except for specified allowed patterns.                               | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [no-default-export](docs/rules/no-default-export.md)     | Convert unnamed default exports to named default exports based on the file name.       | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [no-destructuring](docs/rules/no-destructuring.md)       | Disallow destructuring that does not meet certain conditions                           | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
-| [top-level-functions](docs/rules/top-level-functions.md) | Require all top-level functions to be named/regular functions.                         | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [types-in-dts](docs/rules/types-in-dts.md)               | Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
+| Name                                                         | Description                                                                               | 💼                                                               | 🔧 |
+| :----------------------------------------------------------- | :---------------------------------------------------------------------------------------- | :--------------------------------------------------------------- | :- |
+| [no-comments](docs/rules/no-comments.md)                     | Disallow comments except for specified allowed patterns.                                  | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
+| [no-default-export](docs/rules/no-default-export.md)         | Convert unnamed default exports to named default exports based on the file name.          | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
+| [no-destructuring](docs/rules/no-destructuring.md)           | Disallow destructuring that does not meet certain conditions                              | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
+| [styles-in-styles-file](docs/rules/styles-in-styles-file.md) | Require React-Native StyleSheet.create(...) to be placed in a .styles.ts/.styles.tsx file | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
+| [top-level-functions](docs/rules/top-level-functions.md)     | Require all top-level functions to be named/regular functions.                            | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
+| [types-in-dts](docs/rules/types-in-dts.md)                   | Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files    | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
 
 <!-- end auto-generated rules list -->
 
