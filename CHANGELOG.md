@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.16.0...v1.17.0) (2026-01-05)
+
+
+### Features
+
+* add 'styles-in-styles-file' rule to enforce React-Native styles in dedicated files ([eca8af0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/eca8af0850aa197a35fb47cf08a9f04839a6a3cb))
+
 # [1.16.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.6...v1.16.0) (2026-01-05)
 
 
