@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.17.0...v1.17.1) (2026-01-05)
+
+
+### Bug Fixes
+
+* improve style file validation messages and simplify code structure ([5c165b4](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/5c165b4fcbc103df752e7c56f988c725dae6a62c))
+
 # [1.17.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.16.0...v1.17.0) (2026-01-05)
 
 
