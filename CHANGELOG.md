@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.0...v1.19.1) (2026-01-05)
+
+
+### Bug Fixes
+
+* remove jsdoc plugin from recommended configs and clean up extends ([de220ac](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/de220acd3d0c80340c7ee9b5bc2bfe2967c1c4c5))
+
 # [1.19.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.18.0...v1.19.0) (2026-01-05)
 
 
