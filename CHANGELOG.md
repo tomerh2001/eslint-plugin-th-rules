@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.6...v1.16.0) (2026-01-05)
+
+
+### Features
+
+* add new rule 'types-in-dts' to enforce TypeScript type declarations in .d.ts files ([00c4769](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/00c4769f9a025642f7c72023df1dea82dbf33e72))
+
 ## [1.15.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.15.5...v1.15.6) (2024-12-30)
 
 
