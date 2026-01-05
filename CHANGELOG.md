@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.18.0...v1.19.0) (2026-01-05)
+
+
+### Features
+
+* Added force for jsdoc in recommended configs ([6729b7a](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/6729b7a4804f8a63356aff9e2ceef57119b7075d))
+
 # [1.18.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.17.1...v1.18.0) (2026-01-05)
 
 
