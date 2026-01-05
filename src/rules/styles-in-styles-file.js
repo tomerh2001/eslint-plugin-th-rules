@@ -10,19 +10,11 @@ const meta = {
 		{
 			type: 'object',
 			properties: {
-				/**
-				 * Allowed style file suffixes. Defaults:
-				 * [".styles.ts", ".styles.tsx"]
-				 */
 				allowedSuffixes: {
 					type: 'array',
 					items: {type: 'string', minLength: 1},
 					minItems: 1,
 				},
-
-				/**
-				 * If true, also flag `StyleSheet.compose(...)` (optional).
-				 */
 				includeCompose: {type: 'boolean'},
 			},
 			additionalProperties: false,
@@ -30,7 +22,7 @@ const meta = {
 	],
 	messages: {
 		moveStyles:
-			'React-Native styles must be moved to a .styles.ts/.styles.tsx file (for example "{{filename}}.styles.ts").',
+			'React-Native styles{{target}} must be defined in a dedicated styles file ({{suffixes}}). Current file: "{{filename}}".',
 	},
 };
 
@@ -56,18 +48,62 @@ function create(context) {
 		const object = callee.object;
 		const property = callee.property;
 
-		const isStyleSheet
-			= object
-			&& object.type === 'Identifier'
-			&& object.name === 'StyleSheet';
+		return (
+			object?.type === 'Identifier'
+			&& object.name === 'StyleSheet'
+			&& !callee.computed
+			&& property?.type === 'Identifier'
+			&& property.name === memberName
+		);
+	}
 
-		const isMember
-			= !callee.computed
-			&& property
-			&& property.type === 'Identifier'
-			&& property.name === memberName;
+	/**
+	 * Try to infer the “name” of the style object, e.g.:
+	 *   const styles = StyleSheet.create(...)      -> "styles"
+	 *   styles = StyleSheet.create(...)            -> "styles"
+	 *   exports.styles = StyleSheet.create(...)    -> "exports.styles"
+	 */
+	function getAssignmentTargetName(callNode) {
+		const p = callNode.parent;
 
-		return isStyleSheet && isMember;
+		if (p?.type === 'VariableDeclarator') {
+			const id = p.id;
+			if (id?.type === 'Identifier') {
+				return id.name;
+			}
+
+			return null;
+		}
+
+		if (p?.type === 'AssignmentExpression') {
+			const left = p.left;
+
+			if (left?.type === 'Identifier') {
+				return left.name;
+			}
+
+			if (left?.type === 'MemberExpression' && !left.computed) {
+				const object = left.object;
+				const property = left.property;
+
+				const objectName
+					= object?.type === 'Identifier'
+						? object.name
+						: (object?.type === 'ThisExpression'
+							? 'this'
+							: null);
+
+				const propertyName = property?.type === 'Identifier' ? property.name : null;
+
+				if (objectName && propertyName) {
+					return `${objectName}.${propertyName}`;
+				}
+			}
+
+			return null;
+		}
+
+		return null;
 	}
 
 	function report(node) {
@@ -76,12 +112,16 @@ function create(context) {
 			return;
 		}
 
+		const targetName = getAssignmentTargetName(node);
+		const target = targetName ? ` "${targetName}"` : '';
+
 		context.report({
 			node,
 			messageId: 'moveStyles',
 			data: {
 				filename,
 				suffixes: allowedSuffixes.join(' or '),
+				target,
 			},
 		});
 	}
@@ -100,7 +140,4 @@ function create(context) {
 	};
 }
 
-module.exports = {
-	meta,
-	create,
-};
+module.exports = {meta, create};
