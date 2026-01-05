@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.1...v1.19.2) (2026-01-05)
+
+
+### Bug Fixes
+
+* clean up JSDoc comments and improve code readability in no-destructuring rule ([f7c2547](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/f7c2547e71d41d19c874b1713c62bed25018803c))
+
 ## [1.19.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.0...v1.19.1) (2026-01-05)
 
 
