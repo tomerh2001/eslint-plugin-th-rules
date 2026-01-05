@@ -1,6 +1,8 @@
-# Disallow comments except for specified allowed patterns (`th-rules/no-comments`)
+# th-rules/no-comments
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
+📝 Disallow comments except for specified allowed patterns.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

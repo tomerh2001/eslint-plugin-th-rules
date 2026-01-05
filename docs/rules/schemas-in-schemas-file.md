@@ -1,6 +1,8 @@
-# Require Zod schema declarations to be placed in a .schemas.ts file (`th-rules/schemas-in-schemas-file`)
+# th-rules/schemas-in-schemas-file
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
+📝 Require Zod schema declarations to be placed in a .schemas.ts file.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
 <!-- end auto-generated rule header -->
 

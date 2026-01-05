@@ -9,10 +9,12 @@ const configs = {
 		plugins: [
 			'th-rules',
 			'sonarjs',
+			'jsdoc',
 		],
 		extends: [
 			'plugin:sonarjs/recommended-legacy',
 			'plugin:security/recommended-legacy',
+			'plugin:jsdoc/recommended',
 		],
 		rules: {
 			'th-rules/no-destructuring': 'error',
@@ -22,6 +24,7 @@ const configs = {
 			'th-rules/styles-in-styles-file': 'error',
 			'th-rules/schemas-in-schemas-file': 'error',
 			'th-rules/types-in-dts': 'error',
+
 			'unicorn/prefer-module': 'warn',
 			'unicorn/filename-case': 'off',
 			'unicorn/no-array-callback-reference': 'off',
@@ -53,7 +56,10 @@ for (const configName of Object.keys(configs)) {
 		extends: [
 			'plugin:@typescript-eslint/strict-type-checked',
 			'plugin:@typescript-eslint/stylistic-type-checked',
-			...configs[configName].extends,
+
+			...configs[configName].extends
+				.filter(x => x !== 'plugin:jsdoc/recommended'),
+			'plugin:jsdoc/recommended-typescript',
 		],
 		rules: {
 			...configs[configName].rules,
@@ -69,13 +75,13 @@ for (const configName of Object.keys(configs)) {
 			'@typescript-eslint/no-unsafe-argument': 'off',
 		},
 	};
+
 	configs[`${configName}-react`] = {
 		...configs[configName],
 		extends: [
 			'plugin:react/recommended',
 			'plugin:react-hooks/recommended',
 			...configs[configName].extends,
-
 		],
 		rules: {
 			...configs[configName].rules,

@@ -1,6 +1,8 @@
-# Require all top-level functions to be named/regular functions (`th-rules/top-level-functions`)
+# th-rules/top-level-functions
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
+📝 Require all top-level functions to be named/regular functions.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

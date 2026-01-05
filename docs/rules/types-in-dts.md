@@ -1,6 +1,8 @@
-# Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files (`th-rules/types-in-dts`)
+# th-rules/types-in-dts
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
+📝 Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
 <!-- end auto-generated rule header -->
 

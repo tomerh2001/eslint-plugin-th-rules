@@ -12,17 +12,19 @@ This repository contains custom ESLint rules to enhance code quality and consist
 
 💼 Configurations enabled in.\
 ✅ Set in the `recommended` configuration.\
+⚛️ Set in the `recommended-react` configuration.\
+🟦 Set in the `recommended-typescript` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                             | Description                                                                            | 💼                                                               | 🔧 |
-| :--------------------------------------------------------------- | :------------------------------------------------------------------------------------- | :--------------------------------------------------------------- | :- |
-| [no-comments](docs/rules/no-comments.md)                         | Disallow comments except for specified allowed patterns.                               | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [no-default-export](docs/rules/no-default-export.md)             | Convert unnamed default exports to named default exports based on the file name.       | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [no-destructuring](docs/rules/no-destructuring.md)               | Disallow destructuring that does not meet certain conditions                           | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
-| [schemas-in-schemas-file](docs/rules/schemas-in-schemas-file.md) | Require Zod schema declarations to be placed in a .schemas.ts file                     | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
-| [styles-in-styles-file](docs/rules/styles-in-styles-file.md)     | Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file          | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
-| [top-level-functions](docs/rules/top-level-functions.md)         | Require all top-level functions to be named/regular functions.                         | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] | 🔧 |
-| [types-in-dts](docs/rules/types-in-dts.md)                       | Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files | ✅ ![badge-recommended-react][] ![badge-recommended-typescript][] |    |
+| Name                                                             | Description                                                                            | 💼      | 🔧 |
+| :--------------------------------------------------------------- | :------------------------------------------------------------------------------------- | :------ | :- |
+| [no-comments](docs/rules/no-comments.md)                         | Disallow comments except for specified allowed patterns.                               | ✅ ⚛️ 🟦 | 🔧 |
+| [no-default-export](docs/rules/no-default-export.md)             | Convert unnamed default exports to named default exports based on the file name.       | ✅ ⚛️ 🟦 | 🔧 |
+| [no-destructuring](docs/rules/no-destructuring.md)               | Disallow destructuring that does not meet certain conditions                           | ✅ ⚛️ 🟦 |    |
+| [schemas-in-schemas-file](docs/rules/schemas-in-schemas-file.md) | Require Zod schema declarations to be placed in a .schemas.ts file                     | ✅ ⚛️ 🟦 |    |
+| [styles-in-styles-file](docs/rules/styles-in-styles-file.md)     | Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file          | ✅ ⚛️ 🟦 |    |
+| [top-level-functions](docs/rules/top-level-functions.md)         | Require all top-level functions to be named/regular functions.                         | ✅ ⚛️ 🟦 | 🔧 |
+| [types-in-dts](docs/rules/types-in-dts.md)                       | Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files | ✅ ⚛️ 🟦 |    |
 
 <!-- end auto-generated rules list -->
 

@@ -1,6 +1,8 @@
-# Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file (`th-rules/styles-in-styles-file`)
+# th-rules/styles-in-styles-file
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
+📝 Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
 <!-- end auto-generated rule header -->
 
