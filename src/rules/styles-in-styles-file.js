@@ -1,7 +1,7 @@
 const meta = {
 	type: 'problem',
 	docs: {
-		description: 'Require React-Native StyleSheet.create(...) to be placed in a .styles.ts/.styles.tsx file',
+		description: 'Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file',
 		category: 'Stylistic Issues',
 		recommended: false,
 		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/styles-in-styles-file.md',
@@ -22,13 +22,13 @@ const meta = {
 	],
 	messages: {
 		moveStyles:
-			'React-Native styles{{target}} must be defined in a dedicated styles file ({{suffixes}}). Current file: "{{filename}}".',
+			'React-Native styles must be defined in a dedicated styles file ({{suffixes}}).',
 	},
 };
 
 function create(context) {
 	const options = context.options?.[0] ?? {};
-	const allowedSuffixes = options.allowedSuffixes ?? ['.styles.ts', '.styles.tsx'];
+	const allowedSuffixes = options.allowedSuffixes ?? ['.styles.ts'];
 	const includeCompose = Boolean(options.includeCompose);
 
 	function isAllowedStyleFile(filename) {

@@ -22,7 +22,7 @@ const meta = {
 	],
 	messages: {
 		moveToDts:
-			'Type declarations must be moved to a .d.ts file (for example "{{filename}}.d.ts").',
+			'Type declarations must be moved to a .d.ts file.',
 	},
 };
 

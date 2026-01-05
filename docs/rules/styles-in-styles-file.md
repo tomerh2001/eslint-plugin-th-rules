@@ -1,11 +1,10 @@
-<pre>
-# Require React-Native StyleSheet.create(...) to be placed in a .styles.ts/.styles.tsx file (`th-rules/styles-in-styles-file`)
+# Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file (`th-rules/styles-in-styles-file`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, `recommended-react`, `recommended-typescript`.
 
 <!-- end auto-generated rule header -->
 
-This rule enforces that React-Native stylesheet declarations created via `StyleSheet.create(...)` live in a dedicated styles file, typically ending with `.styles.ts` or `.styles.tsx`.
+This rule enforces that React-Native stylesheet declarations created via `StyleSheet.create(...)` live in a dedicated styles file, typically ending with `.styles.ts`.
 
 In practice, this prevents implementation/component files from containing large style objects, and encourages consistent separation of concerns.
 
@@ -19,7 +18,7 @@ Keeping styles in dedicated files:
 
 ## What the rule reports
 
-The rule reports any `StyleSheet.create(...)` call in files whose names do **not** match one of the allowed suffixes (by default, `.styles.ts` and `.styles.tsx`).
+The rule reports any `StyleSheet.create(...)` call in files whose names do **not** match one of the allowed suffixes (by default, `.styles.ts`).
 
 Optionally, it can also report `StyleSheet.compose(...)` calls.
 
@@ -100,7 +99,6 @@ An array of filename suffixes that are allowed to contain `StyleSheet.create(...
 
 Default:
 - `.styles.ts`
-- `.styles.tsx`
 
 Example:
 
@@ -108,7 +106,7 @@ Example:
 {
   "rules": {
     "th-rules/styles-in-styles-file": ["error", {
-      "allowedSuffixes": [".styles.ts", ".styles.tsx", ".native-styles.ts"]
+      "allowedSuffixes": [".styles.ts", ".native-styles.ts"]
     }]
   }
 }
@@ -139,4 +137,3 @@ Example:
   - other styling systems (e.g., styled-components, Tamagui, Emotion),
   - calls to other `StyleSheet.*` helpers (e.g., `flatten`, `hairlineWidth`).
 - The rule is filename-based. If ESLint is invoked with `<input>` (stdin), the rule will treat it as not being an allowed styles file.
-</pre>
