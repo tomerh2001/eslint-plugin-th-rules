@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.17.1...v1.18.0) (2026-01-05)
+
+
+### Features
+
+* add 'schemas-in-schemas-file' rule to enforce Zod schema declarations in dedicated files ([92b54a0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/92b54a0b9ca4197c4e92c268d7d0cf0f8efc83cf))
+
 ## [1.17.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.17.0...v1.17.1) (2026-01-05)
 
 
