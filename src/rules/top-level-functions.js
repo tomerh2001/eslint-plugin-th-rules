@@ -67,7 +67,6 @@ function buildFunctionExpressionReplacement(functionName, functionExprNode, sour
  */
 function buildAnonymousFunctionDeclarationReplacement(sourceCode, node, functionName = 'defaultFunction', isExport = false) {
 	const originalText = sourceCode.getText(node);
-	const asyncKeyword = node.async ? 'async ' : '';
 	const exportKeyword = isExport ? 'export ' : '';
 
 	let replaced = originalText;

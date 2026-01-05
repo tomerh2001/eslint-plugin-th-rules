@@ -40,9 +40,6 @@ function myFunction() {
 }
 ```
 
-## Options
-
-This rule has no options.
 
 ## When Not To Use It
 
