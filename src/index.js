@@ -69,7 +69,6 @@ const baseRecommended = {
 		'th-rules/schemas-in-schemas-file': 'error',
 		'th-rules/types-in-dts': 'error',
 
-		'unicorn/prefer-module': 'warn',
 		'unicorn/filename-case': 'off',
 		'unicorn/no-array-callback-reference': 'off',
 		'import/extensions': 'off',

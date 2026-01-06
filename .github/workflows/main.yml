@@ -3,16 +3,16 @@ name: Semantic Versioning
 on:
   push:
     branches:
-      - main # or master, or whichever branch you want this to run on
+    - main
 
 jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
 
     steps:
     - name: Checkout
@@ -20,15 +20,18 @@ jobs:
 
     - name: Setup Bun
       uses: oven-sh/setup-bun@v1
-    
-    - name: Install Dependencies
-      run: bun i --dev
 
     - name: Setup Node.js environment
-      uses: actions/setup-node@v4.0.2
+      uses: actions/setup-node@v4
       with:
-        node-version: "20.x"
-    
+        node-version: "22.x"
+
+    - name: Install Dependencies
+      run: bun install --dev
+
+    - name: Verify ESLint flat configs
+      run: node ./scripts/verify.mjs
+
     - name: Semantic Release
       run: bunx semantic-release
       env:
