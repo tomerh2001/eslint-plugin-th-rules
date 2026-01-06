@@ -6,8 +6,7 @@
 
 const requireIndex = require('requireindex');
 const globals = require('globals');
-const sonarjs = require('eslint-plugin-sonarjs');
-const security = require('eslint-plugin-security');
+const {FlatCompat} = require('@eslint/eslintrc');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const tseslint = require('typescript-eslint');
@@ -21,14 +20,14 @@ const plugin = {
 const asArray = value => (Array.isArray(value) ? value : [value]);
 const flatConfigs = (...items) => items.flatMap(element => asArray(element));
 
+// Converts legacy "extends"/eslintrc configs into flat config objects
+const compat = new FlatCompat({
+	baseDirectory: __dirname,
+});
+
 const baseRecommended = {
 	plugins: {
 		'th-rules': plugin,
-
-		// Only include plugin objects you reference directly in rules/settings.
-		security,
-		react: reactPlugin,
-		'react-hooks': reactHooks,
 	},
 	languageOptions: {
 		ecmaVersion: 2024,
@@ -71,8 +70,8 @@ const baseRecommended = {
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 plugin.configs.recommended = flatConfigs(
-	sonarjs.configs.recommended,
-	security.configs.recommended,
+	// These are legacy configs -> convert them
+	compat.extends('plugin:sonarjs/recommended-legacy', 'plugin:security/recommended-legacy'),
 	baseRecommended,
 );
 
@@ -83,7 +82,6 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 	{
 		languageOptions: {
 			parserOptions: {
-				// Typescript-eslint typed linting
 				projectService: true,
 			},
 		},
@@ -104,8 +102,13 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 
 plugin.configs['recommended-react'] = flatConfigs(
 	plugin.configs.recommended,
+
+	// React: flat config supported
 	reactPlugin.configs?.flat?.recommended ?? reactPlugin.configs?.recommended,
+
+	// React-hooks: if you suspect this is legacy in your version, swap to compat.extends('plugin:react-hooks/recommended')
 	reactHooks.configs?.['recommended-latest'] ?? reactHooks.configs?.recommended,
+
 	{
 		rules: {
 			'n/prefer-global/process': 'off',
