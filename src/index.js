@@ -1,5 +1,4 @@
 /* eslint-disable import-x/order */
-/* eslint-disable import-x/no-extraneous-dependencies */
 /* eslint-disable n/no-path-concat */
 /* eslint-disable unicorn/prefer-module */
 
@@ -12,9 +11,6 @@ const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const tseslint = require('typescript-eslint');
 
-// Plugins referenced by rule names in this config
-const unicornPlugin = require('eslint-plugin-unicorn');
-const importPlugin = require('eslint-plugin-import');
 const nPlugin = require('eslint-plugin-n');
 const sonarjsPlugin = require('eslint-plugin-sonarjs');
 const securityPlugin = require('eslint-plugin-security');
@@ -39,8 +35,6 @@ const baseRecommended = {
 		'th-rules': plugin,
 
 		// Third-party plugins used by rule names below
-		unicorn: unicornPlugin,
-		import: importPlugin,
 		n: nPlugin,
 		sonarjs: sonarjsPlugin,
 		security: securityPlugin,
