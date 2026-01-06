@@ -1,3 +1,4 @@
+/* eslint-disable import-x/no-extraneous-dependencies */
 /* eslint-disable n/no-path-concat */
 /* eslint-disable unicorn/prefer-module */
 
@@ -16,9 +17,15 @@ const plugin = {
 	configs: {},
 };
 
+// Flattens configs so we never embed arrays inside arrays (avoids "Unexpected key '0'")
+const asArray = value => (Array.isArray(value) ? value : [value]);
+const flatConfigs = (...items) => items.flatMap(element => asArray(element));
+
 const baseRecommended = {
 	plugins: {
 		'th-rules': plugin,
+
+		// Only include plugin objects you reference directly in rules/settings.
 		security,
 		react: reactPlugin,
 		'react-hooks': reactHooks,
@@ -62,20 +69,21 @@ const baseRecommended = {
 	},
 };
 
-/** @type {import('eslint').Linter.Config[]} */
-plugin.configs.recommended = [
+/** @type {import('eslint').Linter.FlatConfig[]} */
+plugin.configs.recommended = flatConfigs(
 	sonarjs.configs.recommended,
 	security.configs.recommended,
 	baseRecommended,
-];
+);
 
-plugin.configs['recommended-typescript'] = [
-	...plugin.configs.recommended,
+plugin.configs['recommended-typescript'] = flatConfigs(
+	plugin.configs.recommended,
 	tseslint.configs.strictTypeChecked,
 	tseslint.configs.stylisticTypeChecked,
 	{
 		languageOptions: {
 			parserOptions: {
+				// Typescript-eslint typed linting
 				projectService: true,
 			},
 		},
@@ -92,17 +100,17 @@ plugin.configs['recommended-typescript'] = [
 			'@typescript-eslint/no-unsafe-argument': 'off',
 		},
 	},
-];
+);
 
-plugin.configs['recommended-react'] = [
-	...plugin.configs.recommended,
-	reactPlugin.configs.flat.recommended,
-	reactHooks.configs['recommended-latest'] ?? reactHooks.configs.recommended,
+plugin.configs['recommended-react'] = flatConfigs(
+	plugin.configs.recommended,
+	reactPlugin.configs?.flat?.recommended ?? reactPlugin.configs?.recommended,
+	reactHooks.configs?.['recommended-latest'] ?? reactHooks.configs?.recommended,
 	{
 		rules: {
 			'n/prefer-global/process': 'off',
 		},
 	},
-];
+);
 
 module.exports = plugin;
