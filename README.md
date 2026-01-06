@@ -22,7 +22,6 @@ This repository contains custom ESLint rules to enhance code quality and consist
 | [no-default-export](docs/rules/no-default-export.md)             | Convert unnamed default exports to named default exports based on the file name.       | ✅ ⚛️ 🟦 | 🔧 |
 | [no-destructuring](docs/rules/no-destructuring.md)               | Disallow destructuring that does not meet certain conditions                           | ✅ ⚛️ 🟦 |    |
 | [schemas-in-schemas-file](docs/rules/schemas-in-schemas-file.md) | Require Zod schema declarations to be placed in a .schemas.ts file                     | ✅ ⚛️ 🟦 |    |
-| [styles-in-styles-file](docs/rules/styles-in-styles-file.md)     | Require React-Native StyleSheet.create(...) to be placed in a .styles.ts file          | ✅ ⚛️ 🟦 |    |
 | [top-level-functions](docs/rules/top-level-functions.md)         | Require all top-level functions to be named/regular functions.                         | ✅ ⚛️ 🟦 | 🔧 |
 | [types-in-dts](docs/rules/types-in-dts.md)                       | Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files | ✅ ⚛️ 🟦 |    |
 

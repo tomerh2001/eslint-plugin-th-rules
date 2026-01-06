@@ -19,7 +19,6 @@ const configs = {
 			'th-rules/no-default-export': 'error',
 			'th-rules/no-comments': 'error',
 			'th-rules/top-level-functions': 'error',
-			'th-rules/styles-in-styles-file': 'error',
 			'th-rules/schemas-in-schemas-file': 'error',
 			'th-rules/types-in-dts': 'error',
 			'unicorn/prefer-module': 'warn',
