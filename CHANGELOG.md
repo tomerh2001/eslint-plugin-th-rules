@@ -1,3 +1,10 @@
+## [1.20.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.2...v1.20.3) (2026-01-06)
+
+
+### Bug Fixes
+
+* update dependencies in yarn.lock ([2059b35](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/2059b3503efb1515843d822f3d386d58666b1864))
+
 ## [1.20.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.1...v1.20.2) (2026-01-06)
 
 
