@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.0...v1.20.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* fixed xo errors ([633d5e0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/633d5e08a22feddaecf925bc685798bc23ea795c))
+
 # [1.20.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.3...v1.20.0) (2026-01-06)
 
 
