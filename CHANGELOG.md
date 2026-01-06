@@ -1,3 +1,10 @@
+## [1.19.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.2...v1.19.3) (2026-01-06)
+
+
+### Bug Fixes
+
+* remove styles-in-styles-file rule and update configs ([e6779c2](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/e6779c2d6bf367fc9474c0ded5977b0a03ad159f))
+
 ## [1.19.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.1...v1.19.2) (2026-01-05)
 
 
