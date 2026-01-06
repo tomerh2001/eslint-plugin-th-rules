@@ -1,3 +1,10 @@
+## [1.20.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.4...v1.20.5) (2026-01-06)
+
+
+### Bug Fixes
+
+* update GitHub Actions workflow and add ESLint verification script ([9e3c40e](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9e3c40ee1c5500589e5463d997c832165666e6f6))
+
 ## [1.20.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.3...v1.20.4) (2026-01-06)
 
 
