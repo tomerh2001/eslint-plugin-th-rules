@@ -1,3 +1,10 @@
+## [1.20.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.5...v1.20.6) (2026-01-06)
+
+
+### Bug Fixes
+
+* remove unused eslint-disable comments and plugins from index.js ([9303787](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/930378752cdd44442eda4c020c1d325769aad562))
+
 ## [1.20.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.4...v1.20.5) (2026-01-06)
 
 
