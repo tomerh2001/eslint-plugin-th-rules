@@ -62,6 +62,7 @@ const baseRecommended = {
 	},
 };
 
+/** @type {import('eslint').Linter.Config[]} */
 plugin.configs.recommended = [
 	sonarjs.configs.recommended,
 	security.configs.recommended,
