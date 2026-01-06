@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.1...v1.20.2) (2026-01-06)
+
+
+### Bug Fixes
+
+* refactor config handling to use flatConfigs for better structure ([22d64f2](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/22d64f20a5d5b64ae0676d6afcd87e2790f5ef4f))
+
 ## [1.20.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.0...v1.20.1) (2026-01-06)
 
 
