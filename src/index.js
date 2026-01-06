@@ -1,3 +1,4 @@
+/* eslint-disable import-x/order */
 /* eslint-disable import-x/no-extraneous-dependencies */
 /* eslint-disable n/no-path-concat */
 /* eslint-disable unicorn/prefer-module */
@@ -10,6 +11,13 @@ const {FlatCompat} = require('@eslint/eslintrc');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const tseslint = require('typescript-eslint');
+
+// Plugins referenced by rule names in this config
+const unicornPlugin = require('eslint-plugin-unicorn');
+const importPlugin = require('eslint-plugin-import');
+const nPlugin = require('eslint-plugin-n');
+const sonarjsPlugin = require('eslint-plugin-sonarjs');
+const securityPlugin = require('eslint-plugin-security');
 
 const plugin = {
 	rules: requireIndex(`${__dirname}/rules`),
@@ -27,10 +35,23 @@ const compat = new FlatCompat({
 
 const baseRecommended = {
 	plugins: {
+		// Local rules
 		'th-rules': plugin,
+
+		// Third-party plugins used by rule names below
+		unicorn: unicornPlugin,
+		import: importPlugin,
+		n: nPlugin,
+		sonarjs: sonarjsPlugin,
+		security: securityPlugin,
+
+		// Included so consumers can use react/react-hooks rules as well
+		react: reactPlugin,
+		'react-hooks': reactHooks,
 	},
 	languageOptions: {
 		ecmaVersion: 2024,
+		sourceType: 'module',
 		globals: {
 			...globals.node,
 			...globals.es2024,
@@ -70,15 +91,18 @@ const baseRecommended = {
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 plugin.configs.recommended = flatConfigs(
-	// These are legacy configs -> convert them
+	// Legacy configs -> convert them
 	compat.extends('plugin:sonarjs/recommended-legacy', 'plugin:security/recommended-legacy'),
 	baseRecommended,
 );
 
 plugin.configs['recommended-typescript'] = flatConfigs(
 	plugin.configs.recommended,
+
+	// Typescript-eslint exports flat configs (arrays of flat config objects)
 	tseslint.configs.strictTypeChecked,
 	tseslint.configs.stylisticTypeChecked,
+
 	{
 		languageOptions: {
 			parserOptions: {
@@ -103,11 +127,10 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 plugin.configs['recommended-react'] = flatConfigs(
 	plugin.configs.recommended,
 
-	// React: flat config supported
-	reactPlugin.configs?.flat?.recommended ?? reactPlugin.configs?.recommended,
-
-	// React-hooks: if you suspect this is legacy in your version, swap to compat.extends('plugin:react-hooks/recommended')
-	reactHooks.configs?.['recommended-latest'] ?? reactHooks.configs?.recommended,
+	// IMPORTANT: Always use compat here so we never accidentally inject eslintrc-style
+	// { plugins: ["react"] } into flat config (which causes the exact error you hit).
+	compat.extends('plugin:react/recommended'),
+	compat.extends('plugin:react-hooks/recommended'),
 
 	{
 		rules: {
