@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.3...v1.20.0) (2026-01-06)
+
+
+### Features
+
+* **eslint:** :boom: migrated to ESLint flat configs ([0af8a5e](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/0af8a5e49026af3145924363949cdb2978886dbf))
+
 ## [1.19.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.19.2...v1.19.3) (2026-01-06)
 
 
