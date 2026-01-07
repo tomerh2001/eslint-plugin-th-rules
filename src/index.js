@@ -10,6 +10,7 @@ const {FlatCompat} = require('@eslint/eslintrc');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const tseslint = require('typescript-eslint');
+const lodashPlugin = require('eslint-plugin-lodash');
 
 const nPlugin = require('eslint-plugin-n');
 const sonarjsPlugin = require('eslint-plugin-sonarjs');
@@ -38,6 +39,7 @@ const baseRecommended = {
 		n: nPlugin,
 		sonarjs: sonarjsPlugin,
 		security: securityPlugin,
+		lodash: lodashPlugin,
 
 		// Included so consumers can use react/react-hooks rules as well
 		react: reactPlugin,
@@ -54,6 +56,7 @@ const baseRecommended = {
 	},
 	settings: {
 		react: {version: 'detect'},
+		lodash: {version: 4, pragma: '_'},
 	},
 	rules: {
 		'th-rules/no-destructuring': 'error',
@@ -85,7 +88,7 @@ const baseRecommended = {
 /** @type {import('eslint').Linter.FlatConfig[]} */
 plugin.configs.recommended = flatConfigs(
 	// Legacy configs -> convert them
-	compat.extends('plugin:sonarjs/recommended-legacy', 'plugin:security/recommended-legacy'),
+	compat.extends('plugin:sonarjs/recommended-legacy', 'plugin:security/recommended-legacy', 'plugin:lodash/recommended'),
 	baseRecommended,
 );
 

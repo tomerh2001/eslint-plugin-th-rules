@@ -3840,6 +3840,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-lodash@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "eslint-plugin-lodash@npm:8.0.0"
+  dependencies:
+    lodash: "npm:^4.17.21"
+  peerDependencies:
+    eslint: ">=9.0.0"
+  checksum: 10c0/7850aa39e44db6bf3590460b6b7fcdbb41dfbfcfda8f20d04d12e09127154e86811c8c9c291151d214422daa5aa50812525569ff58837c53c0e93c1ebb8cbc54
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-n@npm:^17.21.0, eslint-plugin-n@npm:^17.23.1":
   version: 17.23.1
   resolution: "eslint-plugin-n@npm:17.23.1"
@@ -4068,6 +4079,7 @@ __metadata:
     eslint-plugin-eslint-plugin: "npm:^7.2.0"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsdoc: "npm:^61.5.0"
+    eslint-plugin-lodash: "npm:^8.0.0"
     eslint-plugin-n: "npm:^17.23.1"
     eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-react: "npm:^7.37.5"
@@ -6292,7 +6304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.13.1, lodash@npm:^4.17.4":
+"lodash@npm:^4.13.1, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
