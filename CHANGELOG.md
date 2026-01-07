@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.1...v2.0.2) (2026-01-07)
+
+
+### Bug Fixes
+
+* update 'recommended-react' config to use 'plugin:react/jsx-runtime' ([25a1ef1](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/25a1ef18ce70104e8bb4521f265157270db79896))
+
 ## [2.0.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.0...v2.0.1) (2026-01-07)
 
 
