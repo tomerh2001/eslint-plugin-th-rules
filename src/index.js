@@ -82,6 +82,8 @@ const baseRecommended = {
 		'unicorn/prefer-global-this': 'off',
 		'unicorn/no-thenable': 'off',
 		'sonarjs/no-clear-text-protocols': 'off',
+
+		'lodash/import-scope': [2, 'full'],
 	},
 };
 
