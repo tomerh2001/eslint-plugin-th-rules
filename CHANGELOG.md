@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.21.0...v2.0.0) (2026-01-07)
+
+
+### Features
+
+* moved to flat ESLint config ([4b8df27](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/4b8df27d291afad906e2527c96b707c2703c64a3))
+
+
+### BREAKING CHANGES
+
+* moved to flat ESLint config
+
 # [1.21.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.6...v1.21.0) (2026-01-07)
 
 
