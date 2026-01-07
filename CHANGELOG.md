@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.0...v2.0.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* modify 'lodash/import-scope' rule in base recommended configuration ([4add1ee](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/4add1ee31f966875bc8c848328676819548a21fe))
+
 # [2.0.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.21.0...v2.0.0) (2026-01-07)
 
 
