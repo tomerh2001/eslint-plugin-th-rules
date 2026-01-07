@@ -124,12 +124,9 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 
 plugin.configs['recommended-react'] = flatConfigs(
 	plugin.configs.recommended,
-
-	// IMPORTANT: Always use compat here so we never accidentally inject eslintrc-style
-	// { plugins: ["react"] } into flat config (which causes the exact error you hit).
 	compat.extends('plugin:react/recommended'),
+	compat.extends('plugin:react/jsx-runtime'),
 	compat.extends('plugin:react-hooks/recommended'),
-
 	{
 		rules: {
 			'n/prefer-global/process': 'off',
