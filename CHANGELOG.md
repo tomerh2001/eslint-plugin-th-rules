@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.6...v1.21.0) (2026-01-07)
+
+
+### Features
+
+* add eslint-plugin-lodash as a dependency and integrate it into the configuration ([6d32f3d](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/6d32f3d3dde6dab55cfcd13a7c85146c61eaf522))
+
 ## [1.20.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v1.20.5...v1.20.6) (2026-01-06)
 
 
