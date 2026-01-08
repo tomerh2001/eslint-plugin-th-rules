@@ -130,6 +130,7 @@ plugin.configs['recommended-react'] = flatConfigs(
 	{
 		rules: {
 			'n/prefer-global/process': 'off',
+			'react-hooks/set-state-in-effect': 'off',
 		},
 	},
 );
