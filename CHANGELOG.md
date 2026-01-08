@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.3...v2.0.4) (2026-01-08)
+
+
+### Bug Fixes
+
+* disable 'security/detect-unsafe-regex' rule in base recommended configuration ([9e8489c](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9e8489cc627fb6de8884f5c95375165a0416e1c1))
+
 ## [2.0.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.2...v2.0.3) (2026-01-08)
 
 
