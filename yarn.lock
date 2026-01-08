@@ -4030,25 +4030,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-th-rules@npm:1.19.3":
-  version: 1.19.3
-  resolution: "eslint-plugin-th-rules@npm:1.19.3"
+"eslint-plugin-th-rules@npm:1.21.0":
+  version: 1.21.0
+  resolution: "eslint-plugin-th-rules@npm:1.21.0"
   dependencies:
     "@babel/eslint-parser": "npm:^7.28.5"
+    "@eslint/eslintrc": "npm:^3.3.3"
     eslint-config-jsdoc: "npm:^15.4.0"
     eslint-config-xo: "npm:^0.49.0"
     eslint-config-xo-react: "npm:^0.29.0"
+    eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsdoc: "npm:^61.5.0"
+    eslint-plugin-lodash: "npm:^8.0.0"
+    eslint-plugin-n: "npm:^17.23.1"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^7.0.1"
     eslint-plugin-react-native: "npm:^5.0.0"
     eslint-plugin-security: "npm:^3.0.1"
     eslint-plugin-sonarjs: "npm:^3.0.5"
+    eslint-plugin-unicorn: "npm:^62.0.0"
+    globals: "npm:^17.0.0"
     requireindex: "npm:^1.2.0"
-  peerDependencies:
-    eslint: ">=9.17.0"
-    typescript: ^5.7.2
-  checksum: 10c0/8201bc41048d7194571244c9f218521b95e24defc5bdd4187033f6974a8242cedcd9c6f13a6edc7e21b0a4c215791bdb2254802f4d3e5af4cc0b2a96a3b51582
+  checksum: 10c0/2ba70c4fee7d270d8e35bc036c4301cf40e7478aace67f04a82d77117b3198c5efdd4ed7a6adf52bc173fb29989ca2ef3a76be3365b7e21a3c3017618bd608e0
   languageName: node
   linkType: hard
 
@@ -4087,7 +4090,7 @@ __metadata:
     eslint-plugin-react-native: "npm:^5.0.0"
     eslint-plugin-security: "npm:^3.0.1"
     eslint-plugin-sonarjs: "npm:^3.0.5"
-    eslint-plugin-th-rules: "npm:1.19.3"
+    eslint-plugin-th-rules: "npm:1.21.0"
     eslint-plugin-unicorn: "npm:^62.0.0"
     globals: "npm:^17.0.0"
     mocha: "npm:^11.7.5"
