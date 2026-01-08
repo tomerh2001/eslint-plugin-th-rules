@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.2...v2.0.3) (2026-01-08)
+
+
+### Bug Fixes
+
+* update dependencies for improved compatibility ([9415af9](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9415af9ac3ad24fcd606b7ed5455bf307c55fb69))
+
 ## [2.0.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.1...v2.0.2) (2026-01-07)
 
 
