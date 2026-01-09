@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.4...v2.1.0) (2026-01-09)
+
+
+### Features
+
+* migrate to ES module syntax and update dependencies; remove unused config ([b225e2c](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/b225e2c0260152009c011a5b445ed2c67f665ce5))
+
 ## [2.0.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.0.3...v2.0.4) (2026-01-08)
 
 
