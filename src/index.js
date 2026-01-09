@@ -4,44 +4,41 @@
 
 'use strict';
 
-const requireIndex = require('requireindex');
-const globals = require('globals');
-const {FlatCompat} = require('@eslint/eslintrc');
-const reactPlugin = require('eslint-plugin-react');
-const reactHooks = require('eslint-plugin-react-hooks');
-const tseslint = require('typescript-eslint');
-const lodashPlugin = require('eslint-plugin-lodash');
+import requireIndex from 'requireindex';
+import {node, es2024, jest} from 'globals';
+import {FlatCompat} from '@eslint/eslintrc';
+import {toArray} from 'lodash';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import {configs as _configs} from 'typescript-eslint';
+import lodashPlugin from 'eslint-plugin-lodash';
 
-const nPlugin = require('eslint-plugin-n');
-const sonarjsPlugin = require('eslint-plugin-sonarjs');
-const securityPlugin = require('eslint-plugin-security');
+import nPlugin from 'eslint-plugin-n';
+import sonarjsPlugin from 'eslint-plugin-sonarjs';
+import securityPlugin from 'eslint-plugin-security';
 
 const plugin = {
 	rules: requireIndex(`${__dirname}/rules`),
 	configs: {},
 };
 
-// Flattens configs so we never embed arrays inside arrays (avoids "Unexpected key '0'")
-const asArray = value => (Array.isArray(value) ? value : [value]);
-const flatConfigs = (...items) => items.flatMap(element => asArray(element));
+function flatConfigs(...items) {
+	return items.flatMap(element => toArray(element));
+}
 
-// Converts legacy "extends"/eslintrc configs into flat config objects
 const compat = new FlatCompat({
 	baseDirectory: __dirname,
 });
 
 const baseRecommended = {
 	plugins: {
-		// Local rules
 		'th-rules': plugin,
 
-		// Third-party plugins used by rule names below
 		n: nPlugin,
 		sonarjs: sonarjsPlugin,
 		security: securityPlugin,
 		lodash: lodashPlugin,
 
-		// Included so consumers can use react/react-hooks rules as well
 		react: reactPlugin,
 		'react-hooks': reactHooks,
 	},
@@ -49,9 +46,9 @@ const baseRecommended = {
 		ecmaVersion: 2024,
 		sourceType: 'module',
 		globals: {
-			...globals.node,
-			...globals.es2024,
-			...globals.jest,
+			...node,
+			...es2024,
+			...jest,
 		},
 	},
 	settings: {
@@ -74,6 +71,7 @@ const baseRecommended = {
 		'new-cap': 'off',
 		'no-await-in-loop': 'off',
 		'n/file-extension-in-import': 'off',
+		'n/prefer-global/buffer': 'off',
 		'import/no-cycle': 'off',
 		camelcase: 'warn',
 
@@ -88,18 +86,16 @@ const baseRecommended = {
 };
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
-plugin.configs.recommended = flatConfigs(
-	// Legacy configs -> convert them
+export const recommended = plugin.configs.recommended = flatConfigs(
 	compat.extends('plugin:sonarjs/recommended-legacy', 'plugin:security/recommended-legacy', 'plugin:lodash/recommended'),
 	baseRecommended,
 );
 
-plugin.configs['recommended-typescript'] = flatConfigs(
+export const recommendedTypescript = plugin.configs['recommended-typescript'] = flatConfigs(
 	plugin.configs.recommended,
 
-	// Typescript-eslint exports flat configs (arrays of flat config objects)
-	tseslint.configs.strictTypeChecked,
-	tseslint.configs.stylisticTypeChecked,
+	_configs.strictTypeChecked,
+	_configs.stylisticTypeChecked,
 
 	{
 		languageOptions: {
@@ -122,7 +118,7 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 	},
 );
 
-plugin.configs['recommended-react'] = flatConfigs(
+export const recommendedReact = plugin.configs['recommended-react'] = flatConfigs(
 	plugin.configs.recommended,
 	compat.extends('plugin:react/recommended'),
 	compat.extends('plugin:react/jsx-runtime'),
@@ -135,4 +131,4 @@ plugin.configs['recommended-react'] = flatConfigs(
 	},
 );
 
-module.exports = plugin;
+export default plugin;

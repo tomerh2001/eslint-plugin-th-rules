@@ -34,6 +34,7 @@
     "eslint-plugin-sonarjs": "^3.0.5",
     "eslint-plugin-unicorn": "^62.0.0",
     "globals": "^17.0.0",
+    "lodash": "^4.17.21",
     "requireindex": "^1.2.0"
   },
   "devDependencies": {
@@ -47,6 +48,7 @@
     "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/eslint-plugin-security": "^3.0.0",
     "@types/eslint__js": "^9.14.0",
+    "@types/lodash": "^4",
     "@types/requireindex": "^1.2.4",
     "@types/xo": "^0.39.9",
     "bun-types": "latest",
@@ -54,7 +56,7 @@
     "eslint-doc-generator": "^3.0.2",
     "eslint-plugin-eslint-plugin": "^7.2.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-th-rules": "1.19.3",
+    "eslint-plugin-th-rules": "2.0.4",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3",
