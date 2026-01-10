@@ -65,7 +65,6 @@ const baseRecommended = {
 		'th-rules/top-level-functions': 'error',
 		'th-rules/schemas-in-schemas-file': 'error',
 		'th-rules/types-in-dts': 'error',
-
 		'unicorn/filename-case': 'off',
 		'unicorn/no-array-callback-reference': 'off',
 		'import/extensions': 'off',
@@ -78,7 +77,6 @@ const baseRecommended = {
 		'n/prefer-global/process': 'off',
 		'import/no-cycle': 'off',
 		camelcase: 'warn',
-
 		'sonarjs/mouse-events-a11y': 'off',
 		'sonarjs/no-unstable-nested-components': 'off',
 		'unicorn/prefer-global-this': 'off',
@@ -86,6 +84,11 @@ const baseRecommended = {
 		'sonarjs/no-clear-text-protocols': 'off',
 		'security/detect-unsafe-regex': 'off',
 		'lodash/import-scope': [2, 'full'],
+		'@typescript-eslint/ban-types': 'off',
+		'@typescript-eslint/naming-convention': 'off',
+		'@typescript-eslint/no-restricted-types': 'off',
+		'import-x/extensions': 'off',
+		'lodash/chaining': ['error', 'implicit'],
 	},
 };
 
@@ -110,7 +113,6 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 			},
 		},
 		rules: {
-			'@typescript-eslint/naming-convention': 'warn',
 			'@typescript-eslint/consistent-type-definitions': 'off',
 			'@typescript-eslint/no-extraneous-class': 'off',
 			'@typescript-eslint/no-duplicate-type-constituents': 'off',
