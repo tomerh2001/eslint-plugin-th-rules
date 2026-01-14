@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.5.1...v2.6.0) (2026-01-14)
+
+
+### Features
+
+* add prefer-explicit-nil-or-empty-check rule and update dependencies ([c8fb3da](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/c8fb3da5be98caf0c31a50fa72f16b07e410eff6))
+
 ## [2.5.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.5.0...v2.5.1) (2026-01-14)
 
 
