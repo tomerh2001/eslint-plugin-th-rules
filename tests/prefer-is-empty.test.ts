@@ -1,4 +1,4 @@
-const {RuleTester} = require('eslint');
+const {RuleTester} = require('@typescript-eslint/rule-tester');
 const rule = require('../src/rules/prefer-is-empty');
 
 const ruleTester = new RuleTester({});

@@ -115,6 +115,7 @@ plugin.configs['recommended-typescript'] = flatConfigs(
 			},
 		},
 		rules: {
+			'th-rules/prefer-explicit-nil-or-empty-check': 'off',
 			'@typescript-eslint/consistent-type-definitions': 'off',
 			'@typescript-eslint/no-extraneous-class': 'off',
 			'@typescript-eslint/no-duplicate-type-constituents': 'off',
