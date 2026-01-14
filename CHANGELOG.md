@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.4.0...v2.5.0) (2026-01-14)
+
+
+### Features
+
+* add prefer-is-empty rule to enforce _.isEmpty over length comparisons and update documentation ([5bc671f](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/5bc671f35599d69a5a1432d173df408082da2db6))
+
 # [2.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.3.0...v2.4.0) (2026-01-14)
 
 
