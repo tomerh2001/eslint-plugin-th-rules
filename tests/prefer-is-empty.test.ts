@@ -7,20 +7,71 @@ ruleTester.run('prefer-is-empty', rule, {
 	valid: [
 		'_.isEmpty(values);',
 		'!_.isEmpty(values);',
-		'values.length === 0;',
-		'values.length <= 0;',
-		'values.length < 1;',
 		'Array.isArray(values);',
 		'values.size > 0;', // Non-length property
 	],
 
 	invalid: [
 		{
+			code: 'values.length === 0;',
+			errors: [
+				{
+					message:
+						'Use _.isEmpty(values) instead of checking values.length === 0',
+					suggestions: [
+						{
+							desc: 'Replace with _.isEmpty(values)',
+							output: '_.isEmpty(values);',
+						},
+					],
+				},
+			],
+		},
+
+		{
+			code: 'values.length < 1;',
+			errors: [
+				{
+					message:
+						'Use _.isEmpty(values) instead of checking values.length < 1',
+					suggestions: [
+						{
+							desc: 'Replace with _.isEmpty(values)',
+							output: '_.isEmpty(values);',
+						},
+					],
+				},
+			],
+		},
+
+		{
+			code: 'values.length <= 0;',
+			errors: [
+				{
+					message:
+						'Use _.isEmpty(values) instead of checking values.length <= 0',
+					suggestions: [
+						{
+							desc: 'Replace with _.isEmpty(values)',
+							output: '_.isEmpty(values);',
+						},
+					],
+				},
+			],
+		},
+
+		{
 			code: 'values.length > 0;',
 			errors: [
 				{
 					message:
 						'Use _.isEmpty(values) instead of checking values.length > 0',
+					suggestions: [
+						{
+							desc: 'Replace with !_.isEmpty(values)',
+							output: '!_.isEmpty(values);',
+						},
+					],
 				},
 			],
 		},
@@ -31,16 +82,12 @@ ruleTester.run('prefer-is-empty', rule, {
 				{
 					message:
 						'Use _.isEmpty(values) instead of checking values.length >= 1',
-				},
-			],
-		},
-
-		{
-			code: 'values.length != 0;',
-			errors: [
-				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length != 0',
+					suggestions: [
+						{
+							desc: 'Replace with !_.isEmpty(values)',
+							output: '!_.isEmpty(values);',
+						},
+					],
 				},
 			],
 		},
@@ -51,6 +98,12 @@ ruleTester.run('prefer-is-empty', rule, {
 				{
 					message:
 						'Use _.isEmpty(values) instead of checking values.length !== 0',
+					suggestions: [
+						{
+							desc: 'Replace with !_.isEmpty(values)',
+							output: '!_.isEmpty(values);',
+						},
+					],
 				},
 			],
 		},
@@ -61,6 +114,28 @@ ruleTester.run('prefer-is-empty', rule, {
 				{
 					message:
 						'Use _.isEmpty(items) instead of checking items.length > 0',
+					suggestions: [
+						{
+							desc: 'Replace with !_.isEmpty(items)',
+							output: 'if (!_.isEmpty(items)) {}',
+						},
+					],
+				},
+			],
+		},
+
+		{
+			code: '0 === items.length;',
+			errors: [
+				{
+					message:
+						'Use _.isEmpty(items) instead of checking items.length === 0',
+					suggestions: [
+						{
+							desc: 'Replace with _.isEmpty(items)',
+							output: '_.isEmpty(items);',
+						},
+					],
 				},
 			],
 		},
