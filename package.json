@@ -14,7 +14,6 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
-    "test": "xo && mocha tests --recursive",
     "update:eslint-docs": "eslint-doc-generator --config-emoji \"recommended,✅\" --config-emoji \"recommended-react,⚛️\" --config-emoji \"recommended-typescript,🟦\""
   },
   "dependencies": {
@@ -34,6 +33,7 @@
     "eslint-plugin-sonarjs": "^3.0.5",
     "eslint-plugin-unicorn": "^62.0.0",
     "globals": "^17.0.0",
+    "jest": "^30.2.0",
     "lodash": "^4.17.21",
     "requireindex": "^1.2.0"
   },

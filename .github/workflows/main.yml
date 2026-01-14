@@ -32,6 +32,9 @@ jobs:
     - name: Verify ESLint flat configs
       run: node ./scripts/verify.mjs
 
+    - name: Run Tests
+      run: bun test
+
     - name: Semantic Release
       run: bunx semantic-release
       env:
