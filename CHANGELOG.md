@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.6.0...v2.6.1) (2026-01-14)
+
+
+### Bug Fixes
+
+* refactor prefer-explicit-nil-or-empty-check rule and add tests for implicit checks ([d153066](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/d1530664708cf31025d5ebf1b92f6b68401c5448))
+
 # [2.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.5.1...v2.6.0) (2026-01-14)
 
 
