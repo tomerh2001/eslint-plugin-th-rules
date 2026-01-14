@@ -27,8 +27,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with _.isNil(foo)',
-							output: '_.isNil(foo);',
+							desc: 'Replace with !_.isNil(foo)',
+							output: '!_.isNil(foo);',
 						},
 					],
 				},
@@ -42,8 +42,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with _.isNil(bar)',
-							output: 'const x = _.isNil(bar);',
+							desc: 'Replace with !_.isNil(bar)',
+							output: 'const x = !_.isNil(bar);',
 						},
 					],
 				},
@@ -57,8 +57,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with _.isNil(value)',
-							output: '_.isNil(value);',
+							desc: 'Replace with !_.isNil(value)',
+							output: '!_.isNil(value);',
 						},
 					],
 				},
@@ -72,8 +72,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsEmpty',
 					suggestions: [
 						{
-							desc: 'Replace with _.isEmpty([])',
-							output: '_.isEmpty([]);',
+							desc: 'Replace with !_.isEmpty([])',
+							output: '!_.isEmpty([]);',
 						},
 					],
 				},

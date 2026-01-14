@@ -2,7 +2,7 @@ const meta = {
 	type: 'problem',
 	docs: {
 		description:
-    'Disallow Boolean(value) or !!value. Enforce _.isNil(value) for scalar values and _.isEmpty(value) for strings, arrays, and objects.',
+			'Disallow Boolean(value) or !!value. Enforce explicit checks: !_.isNil(value) for scalar values and !_.isEmpty(value) for strings, arrays, and objects.',
 		category: 'Best Practices',
 		recommended: true,
 		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-boolean-coercion.md',
@@ -11,9 +11,9 @@ const meta = {
 	schema: [],
 	messages: {
 		useIsEmpty:
-      'Boolean coercion is not allowed. Use _.isEmpty(value) for strings, arrays, and objects.',
+			'Boolean coercion is not allowed. Use !_.isEmpty(value) for strings, arrays, and objects.',
 		useIsNil:
-      'Boolean coercion is not allowed. Use _.isNil(value) for scalar values.',
+			'Boolean coercion is not allowed. Use !_.isNil(value) for scalar values.',
 	},
 };
 
@@ -51,7 +51,6 @@ function create(context) {
 		}
 
 		const type = checker.getTypeAtLocation(tsNode);
-
 		const typeString = checker.typeToString(type);
 
 		return (
@@ -67,7 +66,7 @@ function create(context) {
 		return (
 			node.type === 'ArrayExpression'
 			|| node.type === 'ObjectExpression'
-			|| node.type === 'Literal' && typeof node.value === 'string'
+			|| (node.type === 'Literal' && typeof node.value === 'string')
 		);
 	}
 
@@ -77,7 +76,7 @@ function create(context) {
 				|| isCollectionLikeByTS(valueNode);
 
 		const suggestedFn = isCollection ? '_.isEmpty' : '_.isNil';
-		const replacement = `${suggestedFn}(${sourceCode.getText(valueNode)})`;
+		const replacement = `!${suggestedFn}(${sourceCode.getText(valueNode)})`;
 
 		context.report({
 			node,
