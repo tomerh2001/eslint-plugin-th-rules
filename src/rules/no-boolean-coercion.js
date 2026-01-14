@@ -2,13 +2,19 @@ const meta = {
 	type: 'problem',
 	docs: {
 		description:
-			'Disallow Boolean(variable) or !!variable and enforce explicit _.isNil / _.isEmpty checks',
+    'Disallow Boolean(value) or !!value. Enforce _.isNil(value) for scalar values and _.isEmpty(value) for strings, arrays, and objects.',
 		category: 'Best Practices',
 		recommended: true,
 		url: 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-boolean-coercion.md',
 	},
 	hasSuggestions: true,
 	schema: [],
+	messages: {
+		useIsEmpty:
+      'Boolean coercion is not allowed. Use _.isEmpty(value) for strings, arrays, and objects.',
+		useIsNil:
+      'Boolean coercion is not allowed. Use _.isNil(value) for scalar values.',
+	},
 };
 
 function create(context) {
@@ -75,8 +81,7 @@ function create(context) {
 
 		context.report({
 			node,
-			message:
-				'Boolean coercion is not allowed. Use an explicit null/empty check instead.',
+			messageId: isCollection ? 'useIsEmpty' : 'useIsNil',
 			suggest: [
 				{
 					desc: `Replace with ${replacement}`,
