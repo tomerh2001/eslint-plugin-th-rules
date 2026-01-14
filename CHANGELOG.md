@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.3.0...v2.4.0) (2026-01-14)
+
+
+### Features
+
+* fixed git tags ([822f503](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/822f5033769f89fabbd6cf7177ccef74311ec2e5))
+
 # [2.2.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.1.1...v2.2.0) (2026-01-14)
 
 
