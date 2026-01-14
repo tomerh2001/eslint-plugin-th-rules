@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.7.0...v2.7.1) (2026-01-14)
+
+
+### Bug Fixes
+
+* update no-boolean-coercion rule to enforce explicit checks with negation ([a9e7752](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a9e77524035efbd023330168e2d070a6419cde70))
+
 # [2.7.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.6.1...v2.7.0) (2026-01-14)
 
 
