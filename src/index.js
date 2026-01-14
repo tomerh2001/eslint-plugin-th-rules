@@ -67,7 +67,6 @@ const baseRecommended = {
 		'th-rules/types-in-dts': 'error',
 		'th-rules/no-boolean-coercion': 'error',
 		'th-rules/prefer-is-empty': 'error',
-		'th-rules/prefer-explicit-nil-or-empty-check': 'off',
 		'unicorn/filename-case': 'off',
 		'unicorn/no-array-callback-reference': 'off',
 		'import/extensions': 'off',
