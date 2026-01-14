@@ -1,7 +1,12 @@
 const {RuleTester} = require('@typescript-eslint/rule-tester');
 const rule = require('../src/rules/no-boolean-coercion');
 
-const ruleTester = new RuleTester({});
+const ruleTester = new RuleTester({
+	languageOptions: {
+		ecmaVersion: 2020,
+		sourceType: 'module',
+	},
+});
 
 ruleTester.run('no-boolean-coercion', rule, {
 	valid: [

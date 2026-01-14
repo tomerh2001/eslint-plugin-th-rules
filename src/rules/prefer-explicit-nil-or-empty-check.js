@@ -1,7 +1,3 @@
-'use strict';
-
-const ts = require('typescript');
-
 const meta = {
 	type: 'problem',
 	docs: {
@@ -13,38 +9,23 @@ const meta = {
 	},
 	hasSuggestions: true,
 	schema: [],
-	requiresTypeChecking: true,
 };
 
 function create(context) {
 	const sourceCode = context.getSourceCode();
-	const {parserServices} = context;
 
-	// Safety: rule is disabled if type info is unavailable
-	if (!parserServices?.program || !parserServices.esTreeNodeToTSNodeMap) {
-		return {};
+	function isBooleanLiteral(node) {
+		return node.type === 'Literal' && typeof node.value === 'boolean';
 	}
 
-	const checker = parserServices.program.getTypeChecker();
+	function isUnaryNot(node) {
+		return node.type === 'UnaryExpression' && node.operator === '!';
+	}
 
 	function isImplicitTruthyTarget(node) {
 		return (
 			node.type === 'Identifier'
 			|| node.type === 'MemberExpression'
-		);
-	}
-
-	function isBooleanType(node) {
-		const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-		if (!tsNode) {
-			return false;
-		}
-
-		const type = checker.getTypeAtLocation(tsNode);
-
-		return (
-			(type.flags & ts.TypeFlags.Boolean) !== 0
-			|| (type.flags & ts.TypeFlags.BooleanLiteral) !== 0
 		);
 	}
 
@@ -62,51 +43,57 @@ function create(context) {
 		context.report({
 			node,
 			message:
-				'Avoid implicit truthy/falsy checks on non-boolean values; use _.isNil or _.isEmpty instead',
+				'Implicit truthy/falsy check on a non-boolean value is not allowed; use explicit _.isNil or _.isEmpty checks',
 			suggest: [
 				{
 					desc: `Replace with ${isNilExpr}`,
-					fix(fixer) {
-						return fixer.replaceText(node, isNilExpr);
-					},
+					fix: fixer => fixer.replaceText(node, isNilExpr),
 				},
 				{
 					desc: `Replace with ${isEmptyExpr}`,
-					fix(fixer) {
-						return fixer.replaceText(node, isEmptyExpr);
-					},
+					fix: fixer => fixer.replaceText(node, isEmptyExpr),
 				},
 			],
 		});
 	}
 
+	function checkTestExpression(node) {
+		// If (dataObject)
+		if (isImplicitTruthyTarget(node)) {
+			report(node, node, true);
+			return;
+		}
+
+		// If (!dataObject)
+		if (
+			isUnaryNot(node)
+			&& isImplicitTruthyTarget(node.argument)
+			&& !isBooleanLiteral(node.argument)
+		) {
+			report(node, node.argument, false);
+		}
+	}
+
 	return {
 		IfStatement(node) {
-			const {test} = node;
+			checkTestExpression(node.test);
+		},
 
-			// If (!value)
-			if (test.type === 'UnaryExpression' && test.operator === '!') {
-				const arg = test.argument;
+		WhileStatement(node) {
+			checkTestExpression(node.test);
+		},
 
-				if (!isImplicitTruthyTarget(arg)) {
-					return;
-				}
+		DoWhileStatement(node) {
+			checkTestExpression(node.test);
+		},
 
-				if (isBooleanType(arg)) {
-					return;
-				}
+		ConditionalExpression(node) {
+			checkTestExpression(node.test);
+		},
 
-				report(test, arg, true);
-				return;
-			}
-
-			// If (value)
-			if (isImplicitTruthyTarget(test)) {
-				if (isBooleanType(test)) {
-					return;
-				}
-
-				report(test, test, false);
+		LogicalExpression(node) {
+			if (node.operator === '&&' || node.operator === '||') {
+				checkTestExpression(node.left);
 			}
 		},
 	};
