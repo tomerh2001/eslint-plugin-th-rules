@@ -1,6 +1,6 @@
 # th-rules/no-boolean-coercion
 
-📝 Disallow Boolean(variable) or !!variable and enforce explicit _.isNil / _.isEmpty checks.
+📝 Disallow Boolean(value) or !!value. Enforce _.isNil(value) for scalar values and _.isEmpty(value) for strings, arrays, and objects.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
