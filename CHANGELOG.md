@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.1.1...v2.2.0) (2026-01-14)
+
+
+### Bug Fixes
+
+* enhance no-boolean-coercion rule with detailed messages and update tests ([686d620](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/686d6204bd46f757a4490656521b1094f3e3237e))
+
+
+### Features
+
+* created new rule no-boolean-coercion ([f9b0803](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/f9b08039f6275e363da10e8e3ca49fb75ad2e48a))
+
 ## [2.1.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.1.0...v2.1.1) (2026-01-10)
 
 
