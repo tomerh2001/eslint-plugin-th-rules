@@ -5,19 +5,153 @@
 [![CodeQL](../../actions/workflows/codeql.yml/badge.svg)](../../actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/tomerh2001/eslint-plugin-th-rules/badge)](https://securityscorecards.dev/viewer/?uri=github.com/tomerh2001/eslint-plugin-th-rules)
 
-This repository contains custom ESLint rules to enhance code quality and consistency across projects.
+A set of custom ESLint rules designed to improve code quality, enforce consistency, and introduce development conventions across TypeScript, React, and JavaScript projects.
+
+This plugin provides:
+
+- Custom rules unique to this repository  
+- Recommended flat configs that bundle th-rules with popular third-party plugins  
+- Advanced composable config layers for consumers who want fine-grained control  
+
+---
+
+# Installation
+
+```bash
+npm install --save-dev eslint-plugin-th-rules
+```
+
+This plugin requires ESLint Flat Config (ESLint 8.21+).
+
+---
+
+# Usage
+
+The plugin exposes three public recommended configurations.
+
+These are the presets most users should consume.
+
+## Recommended (Full Opinionated)
+
+Includes:
+
+- All th-rules
+- External plugins (lodash, n, sonarjs, security)
+- Opinionated rule settings for externals
+
+```js
+// eslint.config.js
+import thRules from "eslint-plugin-th-rules";
+
+export default [
+  ...thRules.configs.recommended
+];
+```
+
+## Recommended + TypeScript
+
+Recommended plus full strict/stylistic TypeScript configurations.
+
+```js
+import thRules from "eslint-plugin-th-rules";
+
+export default [
+  ...thRules.configs["recommended-typescript"]
+];
+```
+
+## Recommended + React
+
+Recommended plus:
+
+- eslint-plugin-react
+- eslint-plugin-react-hooks
+- JSX Runtime rules
+
+```js
+import thRules from "eslint-plugin-th-rules";
+
+export default [
+  ...thRules.configs["recommended-react"]
+];
+```
+
+---
+
+# Advanced Composition (Optional)
+
+If you want total control, you may import internal composition layers.
+
+These layers are intentionally not included in `configs`, because they are not presets but building blocks.
+
+```js
+import {
+  coreBase,
+  externalsBase,
+  externalsOpinionated,
+  coreTypescript,
+  coreReact
+} from "eslint-plugin-th-rules";
+```
+
+### Only use th-rules
+
+```js
+export default [
+  ...coreBase
+];
+```
+
+### Add external plugins (unstyled)
+
+```js
+export default [
+  ...coreBase,
+  ...externalsBase
+];
+```
+
+### Add external plugins + th-rules opinions
+
+```js
+export default [
+  ...coreBase,
+  ...externalsBase,
+  ...externalsOpinionated
+];
+```
+
+### Add TypeScript or React extensions
+
+```js
+export default [
+  ...coreBase,
+  ...externalsBase,
+  ...externalsOpinionated,
+  ...coreTypescript,
+  ...coreReact
+];
+```
+
+---
+
+# Auto-Generated Rule Documentation
+
+The following section is generated via `eslint-doc-generator`.  
+Do not edit below this line.
 
 ## Rules
+
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\
 ✅ Set in the `recommended` configuration.\
 ⚛️ Set in the `recommended-react` configuration.\
 🟦 Set in the `recommended-typescript` configuration.\
-🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+🔧 Automatically fixable by the `--fix` CLI option.\
+💡 Manually fixable by editor suggestions.
 
-| Name                                                             | Description                                                                                                                         | 💼      | 🔧 | 💡 |
+| Name                                                             | Description                                                                                                                         | 💼      | 🔧 | 💡 |
 | :--------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------ | :- | :- |
 | [no-boolean-coercion](docs/rules/no-boolean-coercion.md)         | Disallow Boolean(value) or !!value. Enforce _.isNil(value) for scalar values and _.isEmpty(value) for strings, arrays, and objects. | ✅ ⚛️ 🟦 |    | 💡 |
 | [no-comments](docs/rules/no-comments.md)                         | Disallow comments except for specified allowed patterns.                                                                            | ✅ ⚛️ 🟦 | 🔧 |    |
@@ -30,3 +164,29 @@ This repository contains custom ESLint rules to enhance code quality and consist
 
 <!-- end auto-generated rules list -->
 
+---
+
+# Updating Documentation
+
+Auto-generate rule docs:
+
+```bash
+npm run update:eslint-docs
+```
+
+Recommended command:
+
+```json
+"update:eslint-docs": "eslint-doc-generator \
+  --config-emoji \"recommended,✅\" \
+  --config-emoji \"recommended-react,⚛️\" \
+  --config-emoji \"recommended-typescript,🟦\""
+```
+
+Internal layers (`core-*`, `externals-*`) are not included because they are not presets.
+
+---
+
+# License
+
+MIT
