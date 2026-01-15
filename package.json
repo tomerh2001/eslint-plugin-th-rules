@@ -8,12 +8,20 @@
     "eslint-plugin"
   ],
   "author": "Tomer Horowitz",
-  "main": "./src/index.js",
-  "exports": "./src/index.js",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
   "scripts": {
-    "lint": "npm-run-all \"lint:*\"",
-    "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
-    "lint:js": "eslint .",
+    "build": "tsc",
     "update:eslint-docs": "eslint-doc-generator --config-emoji \"recommended,✅\" --config-emoji \"recommended-react,⚛️\" --config-emoji \"recommended-typescript,🟦\""
   },
   "dependencies": {

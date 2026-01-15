@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
-        "sonarjs"
+        "sonarjs",
+        "TSES"
     ],
     "conventionalCommits.scopes": [
         "eslint"

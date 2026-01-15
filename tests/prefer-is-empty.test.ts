@@ -1,5 +1,5 @@
-const {RuleTester} = require('@typescript-eslint/rule-tester');
-const rule = require('../src/rules/prefer-is-empty');
+import {RuleTester} from '@typescript-eslint/rule-tester';
+import rule from '../src/rules/prefer-is-empty.js';
 
 const ruleTester = new RuleTester({
 	languageOptions: {
@@ -17,15 +17,25 @@ ruleTester.run('prefer-is-empty', rule, {
 	],
 
 	invalid: [
+		// Values.length === 0
 		{
 			code: 'values.length === 0;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length === 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '===',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with _.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '===',
+								value: 0,
+							},
 							output: '_.isEmpty(values);',
 						},
 					],
@@ -33,15 +43,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// Values.length < 1
 		{
 			code: 'values.length < 1;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length < 1',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '<',
+						value: 1,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with _.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '<',
+								value: 1,
+							},
 							output: '_.isEmpty(values);',
 						},
 					],
@@ -49,15 +69,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// Values.length <= 0
 		{
 			code: 'values.length <= 0;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length <= 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '<=',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with _.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '<=',
+								value: 0,
+							},
 							output: '_.isEmpty(values);',
 						},
 					],
@@ -65,15 +95,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// Values.length > 0 (NEGATIVE check)
 		{
 			code: 'values.length > 0;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length > 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '>',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with !_.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '>',
+								value: 0,
+							},
 							output: '!_.isEmpty(values);',
 						},
 					],
@@ -81,15 +121,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// Values.length >= 1
 		{
 			code: 'values.length >= 1;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length >= 1',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '>=',
+						value: 1,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with !_.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '>=',
+								value: 1,
+							},
 							output: '!_.isEmpty(values);',
 						},
 					],
@@ -97,15 +147,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// Values.length !== 0
 		{
 			code: 'values.length !== 0;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(values) instead of checking values.length !== 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'values',
+						operator: '!==',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with !_.isEmpty(values)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'values',
+								operator: '!==',
+								value: 0,
+							},
 							output: '!_.isEmpty(values);',
 						},
 					],
@@ -113,15 +173,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// If (items.length > 0) {}
 		{
 			code: 'if (items.length > 0) {}',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(items) instead of checking items.length > 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'items',
+						operator: '>',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with !_.isEmpty(items)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'items',
+								operator: '>',
+								value: 0,
+							},
 							output: 'if (!_.isEmpty(items)) {}',
 						},
 					],
@@ -129,15 +199,25 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
+		// 0 === items.length
 		{
 			code: '0 === items.length;',
 			errors: [
 				{
-					message:
-						'Use _.isEmpty(items) instead of checking items.length === 0',
+					messageId: 'useIsEmpty',
+					data: {
+						collection: 'items',
+						operator: '===',
+						value: 0,
+					},
 					suggestions: [
 						{
-							desc: 'Replace with _.isEmpty(items)',
+							messageId: 'useIsEmpty',
+							data: {
+								collection: 'items',
+								operator: '===',
+								value: 0,
+							},
 							output: '_.isEmpty(items);',
 						},
 					],

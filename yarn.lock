@@ -5139,6 +5139,8 @@ __metadata:
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.52.0"
     xo: "npm:^1.2.3"
+  peerDependencies:
+    eslint: ^9.0.0
   languageName: unknown
   linkType: soft
 

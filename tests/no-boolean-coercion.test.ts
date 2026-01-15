@@ -1,5 +1,5 @@
-const {RuleTester} = require('@typescript-eslint/rule-tester');
-const rule = require('../src/rules/no-boolean-coercion');
+import {RuleTester} from '@typescript-eslint/rule-tester';
+import rule from '../src/rules/no-boolean-coercion.js';
 
 const ruleTester = new RuleTester({
 	languageOptions: {
@@ -27,7 +27,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with !_.isNil(foo)',
+							messageId: 'useIsNil',
+							data: {collection: 'foo'},
 							output: '!_.isNil(foo);',
 						},
 					],
@@ -42,7 +43,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with !_.isNil(bar)',
+							messageId: 'useIsNil',
+							data: {collection: 'bar'},
 							output: 'const x = !_.isNil(bar);',
 						},
 					],
@@ -57,7 +59,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsNil',
 					suggestions: [
 						{
-							desc: 'Replace with !_.isNil(value)',
+							messageId: 'useIsNil',
+							data: {collection: 'value'},
 							output: '!_.isNil(value);',
 						},
 					],
@@ -72,7 +75,8 @@ ruleTester.run('no-boolean-coercion', rule, {
 					messageId: 'useIsEmpty',
 					suggestions: [
 						{
-							desc: 'Replace with !_.isEmpty([])',
+							messageId: 'useIsEmpty',
+							data: {collection: '[]'},
 							output: '!_.isEmpty([]);',
 						},
 					],
