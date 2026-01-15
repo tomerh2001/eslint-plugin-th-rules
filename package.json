@@ -17,9 +17,6 @@
   "engines": {
     "node": ">=18"
   },
-  "peerDependencies": {
-    "eslint": "^9.39.2"
-  },
   "scripts": {
     "build": "tsc",
     "update:eslint-docs": "eslint-doc-generator --config-emoji \"recommended,✅\" --config-emoji \"recommended-react,⚛️\" --config-emoji \"recommended-typescript,🟦\""
@@ -60,11 +57,13 @@
     "@types/node": "^25.0.9",
     "@types/requireindex": "^1.2.4",
     "@types/xo": "^0.39.9",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
     "@typescript-eslint/rule-tester": "^8.53.0",
     "bun-types": "latest",
     "eslint": "^9.39.2",
     "eslint-doc-generator": "^3.0.2",
-    "eslint-plugin-eslint-plugin": "^7.2.0",
+    "eslint-plugin-eslint-plugin": "^7.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-th-rules": "2.7.1",
     "jest": "^30.2.0",

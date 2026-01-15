@@ -1,12 +1,10 @@
-import {RuleTester} from '@typescript-eslint/rule-tester';
-import rule from '../src/rules/prefer-is-empty.js';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-const ruleTester = new RuleTester({
-	languageOptions: {
-		ecmaVersion: 2020,
-		sourceType: 'module',
-	},
-});
+import {RuleTester} from '@typescript-eslint/rule-tester';
+import rule from '../src/rules/prefer-is-empty';
+
+const ruleTester = new RuleTester({});
 
 ruleTester.run('prefer-is-empty', rule, {
 	valid: [

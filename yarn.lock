@@ -2082,7 +2082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:8.53.0":
+"@typescript-eslint/eslint-plugin@npm:8.53.0, @typescript-eslint/eslint-plugin@npm:^8.53.0":
   version: 8.53.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.53.0"
   dependencies:
@@ -2102,7 +2102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.53.0, @typescript-eslint/parser@npm:^8.37.0":
+"@typescript-eslint/parser@npm:8.53.0, @typescript-eslint/parser@npm:^8.37.0, @typescript-eslint/parser@npm:^8.53.0":
   version: 8.53.0
   resolution: "@typescript-eslint/parser@npm:8.53.0"
   dependencies:
@@ -4127,7 +4127,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-eslint-plugin@npm:^7.2.0":
+"eslint-plugin-eslint-plugin@npm:^7.3.0":
   version: 7.3.0
   resolution: "eslint-plugin-eslint-plugin@npm:7.3.0"
   dependencies:
@@ -4429,6 +4429,8 @@ __metadata:
     "@types/node": "npm:^25.0.9"
     "@types/requireindex": "npm:^1.2.4"
     "@types/xo": "npm:^0.39.9"
+    "@typescript-eslint/eslint-plugin": "npm:^8.53.0"
+    "@typescript-eslint/parser": "npm:^8.53.0"
     "@typescript-eslint/rule-tester": "npm:^8.53.0"
     bun-types: "npm:latest"
     eslint: "npm:^9.39.2"
@@ -4436,7 +4438,7 @@ __metadata:
     eslint-config-xo: "npm:^0.49.0"
     eslint-config-xo-react: "npm:^0.29.0"
     eslint-doc-generator: "npm:^3.0.2"
-    eslint-plugin-eslint-plugin: "npm:^7.2.0"
+    eslint-plugin-eslint-plugin: "npm:^7.3.0"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsdoc: "npm:^62.0.0"
     eslint-plugin-lodash: "npm:^8.0.0"
@@ -4459,8 +4461,6 @@ __metadata:
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.53.0"
     xo: "npm:^1.2.3"
-  peerDependencies:
-    eslint: ^9.39.2
   languageName: unknown
   linkType: soft
 

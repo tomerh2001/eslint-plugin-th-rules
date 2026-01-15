@@ -2,11 +2,11 @@
   "compilerOptions": {
     "noEmit": false,
     "outDir": "dist",
-    "module": "node16",
+    "module": "nodenext",
     "target": "es2022",
     "declaration": true,
     "skipLibCheck": true,
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
   },
-  "include": ["src", "tests"]
+  "include": ["src"]
 }
