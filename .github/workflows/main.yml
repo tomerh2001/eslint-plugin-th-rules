@@ -18,25 +18,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
-
     - name: Setup Node.js environment
       uses: actions/setup-node@v4
       with:
         node-version: "22.x"
 
     - name: Install Dependencies
-      run: bun install --dev
+      run: yarn
 
     - name: Verify ESLint flat configs
       run: node ./scripts/verify.mjs
 
     - name: Run Tests
-      run: bun test
+      run: yarn jest
+
+    - name: Run Build
+      run: yarn build
 
     - name: Semantic Release
-      run: bunx semantic-release
+      run: yarn semantic-release
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
