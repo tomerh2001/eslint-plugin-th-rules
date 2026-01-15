@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import rule from '../src/rules/no-boolean-coercion';
+import rule from '../../src/rules/no-boolean-coercion';
 
 const ruleTester = new RuleTester();
 

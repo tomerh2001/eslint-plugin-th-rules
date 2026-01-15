@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import rule from '../src/rules/no-destructuring';
+import rule from '../../src/rules/no-destructuring';
 
 const ruleTester = new RuleTester({});
 

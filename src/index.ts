@@ -1,4 +1,4 @@
-import plugin, {rules} from './plugin.js';
+import {rules} from './plugin';
 
 // Public bundles
 import {recommended} from './configs/bundles/recommended.js';

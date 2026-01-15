@@ -3,7 +3,7 @@
 
 import * as path from 'node:path';
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import rule from '../src/rules/types-in-dts';
+import rule from '../../src/rules/types-in-dts';
 
 const ruleTester = new RuleTester({});
 
