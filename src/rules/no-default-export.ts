@@ -1,4 +1,4 @@
-import path from 'node:path';
+import * as path from 'node:path';
 import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
 export default ESLintUtils.RuleCreator(() =>
@@ -20,34 +20,38 @@ export default ESLintUtils.RuleCreator(() =>
 
 	create(context) {
 		function generateExportNameFromFileName(fileName: string): string {
-			return fileName
-				.replaceAll(/^\w|[A-Z]|\b\w|\s+/g, (match, index) => {
-					if (match === ' ') {
-						return '';
-					}
+			// Remove all invalid characters, replace with spaces
+			const cleaned = fileName.replaceAll(/[^a-zA-Z\d]+/g, ' ');
 
-					if (index === 0) {
-						return match.toLowerCase();
-					}
+			// Split into tokens
+			const parts = cleaned
+				.trim()
+				.split(/\s+/g)
+				.filter(Boolean);
 
-					return match.toUpperCase();
-				})
-				.replaceAll(/[-_<>\\. ]/g, '');
+			if (parts.length === 0) {
+				return 'defaultExport';
+			}
+
+			// Build camelCase
+			const [first, ...rest] = parts;
+
+			return (
+				first.charAt(0).toLowerCase() + first.slice(1)
+			) + rest
+				.map(p => p.charAt(0).toUpperCase() + p.slice(1))
+				.join('');
 		}
 
 		return {
 			ExportDefaultDeclaration(node: TSESTree.ExportDefaultDeclaration) {
-				// 1. If already an identifier default export → skip
+				// 1. skip `export default Foo`
 				if (node.declaration.type === 'Identifier') {
 					return;
 				}
 
-				// 2. If the declaration already has a name → skip
-				// (e.g. function Foo() {})
-				if (
-					'id' in node.declaration
-					&& node.declaration.id != null
-				) {
+				// 2. skip named function/class: `export default function Foo() {}`
+				if ('id' in node.declaration && node.declaration.id != null) {
 					return;
 				}
 
@@ -58,13 +62,11 @@ export default ESLintUtils.RuleCreator(() =>
 				context.report({
 					node,
 					messageId: 'unnamed',
-
 					fix(fixer) {
 						const sourceCode = context.getSourceCode();
 						const declText = sourceCode.getText(node.declaration);
 
 						const replacement = `const ${exportName} = ${declText};\nexport default ${exportName};`;
-
 						return fixer.replaceText(node, replacement);
 					},
 				});
