@@ -1,6 +1,6 @@
 # th-rules/top-level-functions
 
-📝 Require all top-level functions to be named/regular functions.
+📝 Require all top-level functions to be named regular functions.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommended-react`, 🟦 `recommended-typescript`.
 
