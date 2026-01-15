@@ -1,3 +1,21 @@
+# [3.0.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.8.0...v3.0.0) (2026-01-15)
+
+
+### Bug Fixes
+
+* correct command syntax for running tests in CI workflow ([bd526b0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/bd526b0db1c53b2d5dede7228aca477b4b5429d6))
+* correct command syntax for running tests in CI workflow ([12c4bb0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/12c4bb06e408525a4193370e0d14091b0f9eb51d))
+
+
+### Features
+
+* update TypeScript configuration and remove unused files ([255b4d5](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/255b4d55c82e97ccd354a70f41957d216f1da3af))
+
+
+### BREAKING CHANGES
+
+* Upgraded all project to typescript and modernized the codebase
+
 # [2.8.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.7.1...v2.8.0) (2026-01-15)
 
 
