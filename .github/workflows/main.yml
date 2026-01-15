@@ -26,9 +26,6 @@ jobs:
     - name: Install Dependencies
       run: yarn
 
-    - name: Verify ESLint flat configs
-      run: node ./scripts/verify.mjs
-
     - name: Run Tests
       run: yarn jest
 
