@@ -1,3 +1,27 @@
+# [2.8.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.7.1...v2.8.0) (2026-01-15)
+
+
+### Bug Fixes
+
+* update import statement for rules to include file extension ([b5fe322](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/b5fe3220d37307bc28e5944649903aca31b8ad1e))
+* update test command to include 'tests' argument ([ea7a879](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/ea7a8798078efb0610c1505e3361b6116714efe0))
+
+
+### Features
+
+* add tests for no-boolean-coercion and no-comments rules; update TypeScript configuration and dependencies ([60e2bb5](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/60e2bb5d6c94b10019d73eea863d5fd224b220ac))
+* add tests for no-destructuring rule with valid and invalid cases ([7d1c2c2](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/7d1c2c2e76d73d7084fa50490a8a48ce4fbd4c82))
+* add tests for schemas-in-schemas-file rule with valid and invalid cases ([7b4813e](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/7b4813e7429ff5c3943196b8ca1b17dca709d62c))
+* add tests for top-level-functions rule with valid and invalid cases ([1cd5b71](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/1cd5b717f42d66c51c5282dac1c38a43d116cd65))
+* add tests for types-in-dts rule with valid and invalid cases ([0e8da0e](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/0e8da0efa922fda75ef6cc9f41b02ba968df683c))
+* refactor rule imports and enhance README documentation ([762d7df](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/762d7df5a2fadbfce0c042553da6b2c14890cdab))
+* remove deprecated ESLint verification step from CI workflow ([73464a1](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/73464a187a29b8c99f79e7edb858e9f7fa0c80e0))
+* remove deprecated verify script and update rule imports; add tests for new rules ([2843660](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/28436605209757babe5ce6a95714d8294722f737))
+* restructure ESLint configurations and enhance documentation ([7ef8968](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/7ef89685bc54c9bc80e9351342bb9d88757ff1ae))
+* switch from Bun to Yarn for dependency management and build processes ([55211eb](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/55211ebfa69f0b54480e9b0c55938ea07fd314b2))
+* update no-default-export rule logic and add comprehensive tests ([16c08a3](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/16c08a3a2930ffeda0181c12724aad4154c42856))
+* update TypeScript configuration and remove unused files ([60cc4ba](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/60cc4baba17d5c22d2133ead8cfd557caa9dd486))
+
 ## [2.7.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.7.0...v2.7.1) (2026-01-14)
 
 
