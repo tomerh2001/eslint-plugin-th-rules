@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.0...v3.1.1) (2026-01-16)
+
+
+### Bug Fixes
+
+* update react-hooks configuration path in recommendedReact and clean up xo.config ([1071c9d](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/1071c9d7872cd51514502a2d68346b31da084b72))
+
 # [3.1.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.0.0...v3.1.0) (2026-01-16)
 
 
