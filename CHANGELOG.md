@@ -1,3 +1,11 @@
+## [3.1.8](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.7...v3.1.8) (2026-01-16)
+
+
+### Bug Fixes
+
+* enhance TypeScript support and add new tests for ESLint rules ([ca3cf97](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/ca3cf972f48e8408d14c832a40f5356e88fd5298))
+* improve handling of options in schemas-in-schemas-file rule ([d4624c0](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/d4624c06c73838faf05c5bb9b75303703ab67e2d))
+
 ## [3.1.7](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.6...v3.1.7) (2026-01-16)
 
 
