@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {RuleTester} from '@typescript-eslint/rule-tester';
@@ -11,11 +11,11 @@ ruleTester.run('prefer-is-empty', rule, {
 		'_.isEmpty(values);',
 		'!_.isEmpty(values);',
 		'Array.isArray(values);',
-		'values.size > 0;', // Non-length property
+		'values.size > 0;',
 	],
 
 	invalid: [
-		// Values.length === 0
+
 		{
 			code: 'values.length === 0;',
 			errors: [
@@ -41,7 +41,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// Values.length < 1
 		{
 			code: 'values.length < 1;',
 			errors: [
@@ -67,7 +66,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// Values.length <= 0
 		{
 			code: 'values.length <= 0;',
 			errors: [
@@ -93,7 +91,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// Values.length > 0 (NEGATIVE check)
 		{
 			code: 'values.length > 0;',
 			errors: [
@@ -119,7 +116,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// Values.length >= 1
 		{
 			code: 'values.length >= 1;',
 			errors: [
@@ -145,7 +141,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// Values.length !== 0
 		{
 			code: 'values.length !== 0;',
 			errors: [
@@ -171,7 +166,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// If (items.length > 0) {}
 		{
 			code: 'if (items.length > 0) {}',
 			errors: [
@@ -197,7 +191,6 @@ ruleTester.run('prefer-is-empty', rule, {
 			],
 		},
 
-		// 0 === items.length
 		{
 			code: '0 === items.length;',
 			errors: [

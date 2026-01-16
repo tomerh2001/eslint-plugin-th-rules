@@ -24,3 +24,5 @@ export const coreBase: ConfigWithExtends[] = [
 		}, {}) as Linter.RulesRecord,
 	},
 ];
+
+export default coreBase;

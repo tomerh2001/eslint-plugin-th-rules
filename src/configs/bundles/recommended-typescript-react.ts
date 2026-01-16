@@ -4,8 +4,10 @@ import {recommendedReact} from './recommended-react.js';
 import {recommendedTypescript} from './recommended-typescript.js';
 import {recommended} from './recommended.js';
 
-export const recommendedTypescriptReact = resolveFlatConfig([
+export const recommendedTypescriptReact: Linter.Config[] = resolveFlatConfig([
 	...recommended,
 	...recommendedTypescript,
 	...recommendedReact,
 ] as Linter.Config[]);
+
+export default recommendedTypescriptReact;

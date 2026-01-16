@@ -1,4 +1,7 @@
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
+/* eslint-disable new-cap */
+/* eslint-disable complexity */
+/* eslint-disable @typescript-eslint/naming-convention */
+import {AST_NODE_TYPES, ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
 const preferIsEmpty = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/prefer-is-empty.md')({
@@ -20,13 +23,10 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() =>
 	defaultOptions: [],
 
 	create(context) {
-		const sourceCode = context.getSourceCode();
-
 		function isLengthAccess(node: TSESTree.Node | undefined | undefined): node is TSESTree.MemberExpression {
 			return (
-				Boolean(node)
-				&& node.type === 'MemberExpression'
-				&& node.property.type === 'Identifier'
+				node?.type === AST_NODE_TYPES.MemberExpression
+				&& node.property.type === AST_NODE_TYPES.Identifier
 				&& node.property.name === 'length'
 				&& !node.computed
 			);
@@ -34,8 +34,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() =>
 
 		function isNumericLiteral(node: TSESTree.Node | undefined | undefined): node is TSESTree.Literal & {value: number} {
 			return (
-				Boolean(node)
-				&& node.type === 'Literal'
+				node?.type === AST_NODE_TYPES.Literal
 				&& typeof node.value === 'number'
 			);
 		}
@@ -47,7 +46,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() =>
 			value: number,
 			isEmptyCheck: boolean,
 		) {
-			const collectionText = sourceCode.getText(collectionNode.object);
+			const collectionText = context.sourceCode.getText(collectionNode.object);
 			const replacement = isEmptyCheck
 				? `_.isEmpty(${collectionText})`
 				: `!_.isEmpty(${collectionText})`;
@@ -78,46 +77,40 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() =>
 
 		return {
 			BinaryExpression(node: TSESTree.BinaryExpression) {
-				const {left, right, operator} = node;
-
-				if (isLengthAccess(left) && isNumericLiteral(right)) {
-					const {value} = right;
-
+				if (isLengthAccess(node.left) && isNumericLiteral(node.right)) {
 					if (
-						(operator === '===' && value === 0)
-						|| (operator === '<=' && value === 0)
-						|| (operator === '<' && value === 1)
+						(node.operator === '===' && node.right.value === 0)
+						|| (node.operator === '<=' && node.right.value === 0)
+						|| (node.operator === '<' && node.right.value === 1)
 					) {
-						report(node, left, operator, value, true);
+						report(node, node.left, node.operator, node.right.value, true);
 						return;
 					}
 
 					if (
-						(operator === '>' && value === 0)
-						|| (operator === '>=' && value === 1)
-						|| ((operator === '!=' || operator === '!==') && value === 0)
+						(node.operator === '>' && node.right.value === 0)
+						|| (node.operator === '>=' && node.right.value === 1)
+						|| ((node.operator === '!=' || node.operator === '!==') && node.right.value === 0)
 					) {
-						report(node, left, operator, value, false);
+						report(node, node.left, node.operator, node.right.value, false);
 					}
 				}
 
-				if (isNumericLiteral(left) && isLengthAccess(right)) {
-					const {value} = left;
-
+				if (isNumericLiteral(node.left) && isLengthAccess(node.right)) {
 					if (
-						(operator === '===' && value === 0)
-						|| (operator === '>=' && value === 0)
-						|| (operator === '>' && value === 0)
+						(node.operator === '===' && node.left.value === 0)
+						|| (node.operator === '>=' && node.left.value === 0)
+						|| (node.operator === '>' && node.left.value === 0)
 					) {
-						report(node, right, operator, value, true);
+						report(node, node.right, node.operator, node.left.value, true);
 						return;
 					}
 
 					if (
-						(operator === '<' && value === 1)
-						|| (operator === '<=' && value === 0)
+						(node.operator === '<' && node.left.value === 1)
+						|| (node.operator === '<=' && node.left.value === 0)
 					) {
-						report(node, right, operator, value, false);
+						report(node, node.right, node.operator, node.left.value, false);
 					}
 				}
 			},

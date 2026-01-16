@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {RuleTester} from '@typescript-eslint/rule-tester';
@@ -8,24 +8,20 @@ const ruleTester = new RuleTester({});
 
 ruleTester.run('no-destructuring', rule, {
 	valid: [
-		// Variable destructuring within default limits
+
 		'const {a, b} = obj;',
 		'const {a} = obj;',
 
-		// Function parameters
 		'function test({a, b}: any) {}',
 		'const fn = ({a, b}: any) => {};',
 
-		// Assignment pattern
 		'function test({a, b} = {}) {}',
 
-		// Custom max variables
 		{
 			code: 'const {a, b, c} = obj;',
 			options: [{maximumDestructuredVariables: 3, maximumLineLength: 100}],
 		},
 
-		// Custom limits allow long line
 		{
 			code: 'const {a, b, c, d} = obj;',
 			options: [{maximumDestructuredVariables: 4, maximumLineLength: 200}],
@@ -33,7 +29,7 @@ ruleTester.run('no-destructuring', rule, {
 	],
 
 	invalid: [
-		// Too many variables (default max = 2)
+
 		{
 			code: 'const {a, b, c} = obj;',
 			errors: [
@@ -44,7 +40,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Too deep indentation
 		{
 			code: `
 					const {a} = obj;
@@ -57,7 +52,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Too long line AND too deep
 		{
 			code: `
 				const {a, b} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
@@ -75,7 +69,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// All three violations together
 		{
 			code: `
 					const {a, b, c} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
@@ -97,7 +90,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Function parameter destructuring – too many
 		{
 			code: 'function test({a, b, c}: any) {}',
 			errors: [
@@ -108,7 +100,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Arrow function parameter – too many
 		{
 			code: 'const fn = ({a, b, c}: any) => {};',
 			errors: [
@@ -119,7 +110,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Assignment pattern parameter – too many
 		{
 			code: 'function test({a, b, c} = {}) {}',
 			errors: [
@@ -130,7 +120,6 @@ ruleTester.run('no-destructuring', rule, {
 			],
 		},
 
-		// Method definition parameters (duplicate visitor execution)
 		{
 			code: `
 				class A {

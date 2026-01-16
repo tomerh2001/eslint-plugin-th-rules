@@ -1,12 +1,5 @@
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
-
-type Options = [
-  {
-  	allowedSuffixes?: string[];
-  	onlyWhenAssigned?: boolean;
-  	allowInTests?: boolean;
-  }?,
-];
+/* eslint-disable @typescript-eslint/naming-convention */
+import {AST_NODE_TYPES, ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
 const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/schemas-in-schemas-file.md')({
@@ -48,11 +41,10 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 	],
 
 	create(context, [options]) {
-		const allowedSuffixes
-      = options.allowedSuffixes ?? ['.schemas.ts'];
+		const allowedSuffixes = options.allowedSuffixes && options.allowedSuffixes.length > 0 ? options.allowedSuffixes : ['.schemas.ts'];
 
-		const onlyWhenAssigned = Boolean(options.onlyWhenAssigned);
-		const allowInTests = Boolean(options.allowInTests);
+		const onlyWhenAssigned = options.onlyWhenAssigned ?? false;
+		const allowInTests = options.allowInTests ?? false;
 
 		const zodIdentifiers = new Set<string>();
 
@@ -73,10 +65,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 		}
 
 		function isZodModuleImport(node: TSESTree.ImportDeclaration): boolean {
-			return (
-				node.source.type === 'Literal'
-				&& node.source.value === 'zod'
-			);
+			return (node.source.value === 'zod');
 		}
 
 		function collectZodIdentifiersFromImport(node: TSESTree.ImportDeclaration): void {
@@ -86,17 +75,15 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 
 			for (const spec of node.specifiers) {
 				if (
-					spec.type === 'ImportSpecifier'
-					&& spec.imported.type === 'Identifier'
+					spec.type === AST_NODE_TYPES.ImportSpecifier
+					&& spec.imported.type === AST_NODE_TYPES.Identifier
 					&& spec.imported.name === 'z'
-					&& spec.local.type === 'Identifier'
 				) {
 					zodIdentifiers.add(spec.local.name);
 				}
 
 				if (
-					spec.type === 'ImportNamespaceSpecifier'
-					&& spec.local.type === 'Identifier'
+					spec.type === AST_NODE_TYPES.ImportNamespaceSpecifier
 				) {
 					zodIdentifiers.add(spec.local.name);
 				}
@@ -107,7 +94,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 			const {callee} = node;
 
 			if (
-				callee.type !== 'MemberExpression'
+				callee.type !== AST_NODE_TYPES.MemberExpression
 				|| callee.computed
 			) {
 				return false;
@@ -117,9 +104,9 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 			const {property} = callee;
 
 			return (
-				object.type === 'Identifier'
+				object.type === AST_NODE_TYPES.Identifier
 				&& zodIdentifiers.has(object.name)
-				&& property.type === 'Identifier'
+				&& property.type === AST_NODE_TYPES.Identifier
 			);
 		}
 
@@ -127,7 +114,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 			const {callee} = node;
 
 			if (
-				callee.type !== 'MemberExpression'
+				callee.type !== AST_NODE_TYPES.MemberExpression
 				|| callee.computed
 			) {
 				return false;
@@ -136,14 +123,14 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 			let current: TSESTree.Expression = callee.object;
 
 			while (
-				current.type === 'MemberExpression'
+				current.type === AST_NODE_TYPES.MemberExpression
 				&& !current.computed
 			) {
 				current = current.object;
 			}
 
 			return (
-				current.type === 'Identifier'
+				current.type === AST_NODE_TYPES.Identifier
 				&& zodIdentifiers.has(current.name)
 			);
 		}
@@ -152,26 +139,22 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 			const {parent} = callNode;
 
 			if (
-				parent?.type === 'VariableDeclarator'
-				&& parent.id.type === 'Identifier'
+				parent.type === AST_NODE_TYPES.VariableDeclarator
+				&& parent.id.type === AST_NODE_TYPES.Identifier
 			) {
 				return parent.id.name;
 			}
 
 			if (
-				parent?.type === 'AssignmentExpression'
-				&& parent.left.type === 'Identifier'
+				parent.type === AST_NODE_TYPES.AssignmentExpression
+				&& parent.left.type === AST_NODE_TYPES.Identifier
 			) {
 				return parent.left.name;
 			}
-
-			return null;
 		}
 
 		function report(node: TSESTree.CallExpression): void {
-			const filename = context.getFilename();
-
-			if (filenameAllowed(filename)) {
+			if (filenameAllowed(context.filename)) {
 				return;
 			}
 

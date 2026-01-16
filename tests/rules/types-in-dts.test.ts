@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import * as path from 'node:path';
@@ -13,13 +13,7 @@ function file(name: string): string {
 
 ruleTester.run('types-in-dts', rule, {
 	valid: [
-		//
-		// ---------------------------------------------------------------------
-		// VALID CASES
-		// ---------------------------------------------------------------------
-		//
 
-		// All declarations inside .d.ts → valid
 		{
 			filename: file('good.d.ts'),
 			code: `
@@ -29,7 +23,6 @@ ruleTester.run('types-in-dts', rule, {
       `,
 		},
 
-		// AllowEnums = true → enums allowed in .ts
 		{
 			filename: file('enum-ok.ts'),
 			options: [{allowEnums: true}],
@@ -41,7 +34,6 @@ ruleTester.run('types-in-dts', rule, {
       `,
 		},
 
-		// AllowDeclare = true → declared interface allowed
 		{
 			filename: file('declared-interface.ts'),
 			options: [{allowDeclare: true}],
@@ -52,7 +44,6 @@ ruleTester.run('types-in-dts', rule, {
       `,
 		},
 
-		// AllowDeclare = true → declared type allowed
 		{
 			filename: file('declared-type.ts'),
 			options: [{allowDeclare: true}],
@@ -61,7 +52,6 @@ ruleTester.run('types-in-dts', rule, {
       `,
 		},
 
-		// AllowDeclare = true → declared enum allowed (important fix)
 		{
 			filename: file('declare-enum.ts'),
 			options: [{allowDeclare: true}],
@@ -81,11 +71,6 @@ ruleTester.run('types-in-dts', rule, {
 	],
 
 	invalid: [
-		//
-		// ---------------------------------------------------------------------
-		// INVALID CASES
-		// ---------------------------------------------------------------------
-		//
 
 		// Type alias in .ts → 1 error
 		{
@@ -131,7 +116,6 @@ ruleTester.run('types-in-dts', rule, {
 			],
 		},
 
-		// AllowDeclare=false → declared type still invalid
 		{
 			filename: file('declared-type-not-allowed.ts'),
 			options: [{allowDeclare: false}],
@@ -141,7 +125,6 @@ ruleTester.run('types-in-dts', rule, {
 			errors: [{messageId: 'moveToDts'}],
 		},
 
-		// AllowEnums=true → enum allowed, but type not allowed
 		{
 			filename: file('enum-allowed-but-type-error.ts'),
 			options: [{allowEnums: true}],
@@ -152,8 +135,6 @@ ruleTester.run('types-in-dts', rule, {
 			errors: [{messageId: 'moveToDts'}],
 		},
 
-		// AllowDeclare=true → declared interface allowed
-		// BUT enum still not allowed (allowEnums default = false)
 		{
 			filename: file('mixed.ts'),
 			options: [{allowDeclare: true}],
@@ -163,8 +144,8 @@ ruleTester.run('types-in-dts', rule, {
         enum E { A = 1 }
       `,
 			errors: [
-				{messageId: 'moveToDts'}, // Type
-				{messageId: 'moveToDts'}, // Enum
+				{messageId: 'moveToDts'},
+				{messageId: 'moveToDts'},
 			],
 		},
 	],

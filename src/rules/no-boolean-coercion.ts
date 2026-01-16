@@ -5,7 +5,7 @@ import {
 
 const createRule = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-boolean-coercion.md');
 
-export default createRule({
+const noBooleanCoercion = createRule({
 	name: 'no-boolean-coercion',
 	meta: {
 		type: 'problem',
@@ -27,10 +27,6 @@ export default createRule({
 		const {sourceCode} = context;
 		const services = ESLintUtils.getParserServices(context);
 		const checker = services?.program?.getTypeChecker?.();
-
-		// --------------------------------------------------------------------
-		// Helpers
-		// --------------------------------------------------------------------
 
 		function isBooleanCall(node: TSESTree.Node): node is TSESTree.CallExpression {
 			return (
@@ -102,10 +98,6 @@ export default createRule({
 			});
 		}
 
-		// --------------------------------------------------------------------
-		// Visitors
-		// --------------------------------------------------------------------
-
 		return {
 			CallExpression(node) {
 				if (isBooleanCall(node)) {
@@ -127,3 +119,4 @@ export default createRule({
 		};
 	},
 });
+export default noBooleanCoercion;

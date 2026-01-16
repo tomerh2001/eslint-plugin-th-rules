@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {RuleTester} from '@typescript-eslint/rule-tester';
@@ -34,9 +34,7 @@ ruleTester.run('top-level-functions', rule, {
 	],
 
 	invalid: [
-		//
-		// 1. Top-level arrow
-		//
+
 		{
 			code: `
         const run = () => 42;
@@ -47,9 +45,6 @@ ruleTester.run('top-level-functions', rule, {
       `,
 		},
 
-		//
-		// 2. Exported arrow
-		//
 		{
 			code: `
         export const load = async () => {};
@@ -60,9 +55,6 @@ ruleTester.run('top-level-functions', rule, {
       `,
 		},
 
-		//
-		// 3. Top-level function expression
-		//
 		{
 			code: `
         const compute = function(a, b) { return a + b; };
@@ -73,9 +65,6 @@ ruleTester.run('top-level-functions', rule, {
       `,
 		},
 
-		//
-		// 4. Exported function expression
-		//
 		{
 			code: `
         export const handle = async function(x) { return x * 2; };
@@ -86,10 +75,6 @@ ruleTester.run('top-level-functions', rule, {
       `,
 		},
 
-		//
-		// 5. Anonymous default export function declaration
-		//    IMPORTANT: Your rule outputs `export function`, NOT `export default function`
-		//
 		{
 			code: `
         export default function () { console.log("x"); }
@@ -100,9 +85,6 @@ ruleTester.run('top-level-functions', rule, {
       `,
 		},
 
-		//
-		// 6. Second anonymous default export case
-		//
 		{
 			code: `
         export default function () { return 1; }

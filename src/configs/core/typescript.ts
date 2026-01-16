@@ -18,3 +18,5 @@ export const coreTypescript: ConfigWithExtends[] = [
 		},
 	},
 ];
+
+export default coreTypescript;

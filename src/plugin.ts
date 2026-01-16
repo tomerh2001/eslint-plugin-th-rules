@@ -1,19 +1,22 @@
-import {readdirSync} from 'node:fs';
-import {join, dirname} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import noBooleanCoercion from './rules/no-boolean-coercion.js';
+import noComments from './rules/no-comments.js';
+import noDefaultExport from './rules/no-default-export.js';
+import noDestructuring from './rules/no-destructuring.js';
+import preferIsEmpty from './rules/prefer-is-empty.js';
+import schemasInSchemasFile from './rules/schemas-in-schemas-file.js';
+import topLevelFunctions from './rules/top-level-functions.js';
+import typesInDts from './rules/types-in-dts.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export const rules = {
+	noBooleanCoercion,
+	noComments,
+	noDefaultExport,
+	noDestructuring,
+	preferIsEmpty,
+	schemasInSchemasFile,
+	topLevelFunctions,
+	typesInDts,
+};
 
-const rulesDir = join(__dirname, 'rules');
-const ruleFiles = readdirSync(rulesDir).filter(file => file.endsWith('.js'));
-
-export const rules = Object.fromEntries(await Promise.all(ruleFiles.map(async file => {
-	const ruleName = file.replace('.js', '');
-	const ruleModule = await import(`./rules/${file}`);
-	return [ruleName, ruleModule.default];
-})));
-
-export const plugin = {rules};
-
+const plugin = {rules};
 export default plugin;

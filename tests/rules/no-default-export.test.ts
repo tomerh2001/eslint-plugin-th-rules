@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {RuleTester} from '@typescript-eslint/rule-tester';
@@ -8,7 +8,7 @@ const ruleTester = new RuleTester({});
 
 ruleTester.run('no-default-export', rule, {
 	valid: [
-		// Named default export – allowed
+
 		{
 			code: `
 				const MyFile = {};
@@ -17,7 +17,6 @@ ruleTester.run('no-default-export', rule, {
 			filename: '/project/my-file.ts',
 		},
 
-		// Named function – allowed
 		{
 			code: `
 				export default function MyFile() {}
@@ -25,7 +24,6 @@ ruleTester.run('no-default-export', rule, {
 			filename: '/project/my-file.ts',
 		},
 
-		// Named class – allowed
 		{
 			code: `
 				export default class MyFile {}
@@ -33,7 +31,6 @@ ruleTester.run('no-default-export', rule, {
 			filename: '/project/my-file.ts',
 		},
 
-		// No default export at all
 		{
 			code: `
 				export const test = 123;
@@ -43,7 +40,7 @@ ruleTester.run('no-default-export', rule, {
 	],
 
 	invalid: [
-		// Anonymous function default export
+
 		{
 			filename: '/project/my-file.ts',
 			code: `
@@ -56,7 +53,6 @@ export default myFile;
 			`,
 		},
 
-		// Anonymous class default export
 		{
 			filename: '/project/some_component.ts',
 			code: `
@@ -69,7 +65,6 @@ export default someComponent;
 			`,
 		},
 
-		// Default export of an inline arrow function
 		{
 			filename: '/project/data-loader.js',
 			code: `
@@ -82,7 +77,6 @@ export default dataLoader;
 			`,
 		},
 
-		// Object literal export
 		{
 			filename: '/src/utils/http-client.ts',
 			code: `
@@ -101,14 +95,13 @@ export default httpClient;
 			`,
 		},
 
-		// Complex name-generation check
 		{
 			filename: '/project/components/My<Special>-File.component.tsx',
 			code: `
 				export default { a: 1 };
 			`,
 			errors: [{messageId: 'unnamed'}],
-			// Name generation removes `< > - .` and applies the camelization logic
+
 			output: `
 				const mySpecialFileComponent = { a: 1 };
 export default mySpecialFileComponent;

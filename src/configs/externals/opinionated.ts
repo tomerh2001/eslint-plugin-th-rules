@@ -1,4 +1,4 @@
-import { ConfigWithExtends } from "typescript-eslint";
+import {type ConfigWithExtends} from 'typescript-eslint';
 
 export const externalsOpinionated: ConfigWithExtends[] = [
 	{
@@ -12,3 +12,5 @@ export const externalsOpinionated: ConfigWithExtends[] = [
 		},
 	},
 ];
+
+export default externalsOpinionated;

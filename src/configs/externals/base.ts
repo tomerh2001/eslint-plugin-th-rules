@@ -16,3 +16,5 @@ export const externalsBase: ConfigWithExtends[] = [
 		rules: {},
 	},
 ];
+
+export default externalsBase;

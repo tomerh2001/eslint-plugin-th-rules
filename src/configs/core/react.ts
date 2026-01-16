@@ -8,3 +8,4 @@ export const coreReact: ConfigWithExtends[] = [
 		},
 	},
 ];
+export default coreReact;
