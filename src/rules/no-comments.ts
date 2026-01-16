@@ -60,7 +60,6 @@ const noComments = ESLintUtils.RuleCreator(() =>
 		function isCommentAllowed(comment: TSESTree.Comment): boolean {
 			const text = comment.value.trim();
 
-			// Allow JSDoc
 			if (comment.type === 'Block' && comment.value.startsWith('*')) {
 				return true;
 			}
