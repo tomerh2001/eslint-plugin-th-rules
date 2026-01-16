@@ -14,70 +14,52 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('no-boolean-coercion', rule, {
-	valid: ['_.isNil(value);', '_.isEmpty(list);', 'if (value != null) {}', 'if (list.length > 0) {}', 'Boolean;', 'const BooleanValue = true;', 'const fn = Boolean;'],
+	valid: [
+		'_.isNil(value);',
+		'_.isEmpty(list);',
+		'if (value != null) {}',
+		'if (list.length > 0) {}',
+		'Boolean;',
+		'const BooleanValue = true;',
+		'const fn = Boolean;',
+		'import _ from "lodash"; const x = !_.isNil(value);',
+	],
+
 	invalid: [
 		{
 			code: 'Boolean(foo);',
-			errors: [
-				{
-					messageId: 'useIsNil',
-					suggestions: [
-						{
-							messageId: 'useIsNil',
-							data: { collection: 'foo' },
-							output: '!_.isNil(foo);',
-						},
-					],
-				},
-			],
+			output: `import _ from 'lodash';\n!_.isNil(foo);`,
+			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
 			code: 'const x = Boolean(bar);',
-			errors: [
-				{
-					messageId: 'useIsNil',
-					suggestions: [
-						{
-							messageId: 'useIsNil',
-							data: { collection: 'bar' },
-							output: 'const x = !_.isNil(bar);',
-						},
-					],
-				},
-			],
+			output: `import _ from 'lodash';\nconst x = !_.isNil(bar);`,
+			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
 			code: '!!value;',
-			errors: [
-				{
-					messageId: 'useIsNil',
-					suggestions: [
-						{
-							messageId: 'useIsNil',
-							data: { collection: 'value' },
-							output: '!_.isNil(value);',
-						},
-					],
-				},
-			],
+			output: `import _ from 'lodash';\n!_.isNil(value);`,
+			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
 			code: 'Boolean([]);',
-			errors: [
-				{
-					messageId: 'useIsEmpty',
-					suggestions: [
-						{
-							messageId: 'useIsEmpty',
-							data: { collection: '[]' },
-							output: '!_.isEmpty([]);',
-						},
-					],
-				},
-			],
+			output: `import _ from 'lodash';\n!_.isEmpty([]);`,
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: `import _ from 'lodash'; const x = Boolean(foo);`,
+			output: `import _ from 'lodash'; const x = !_.isNil(foo);`,
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: `import lodash from 'lodash'; const x = Boolean(foo);`,
+			output: `import lodash from 'lodash'; const x = !_.isNil(foo);`,
+			errors: [{ messageId: 'useIsNil' }],
 		},
 	],
 });

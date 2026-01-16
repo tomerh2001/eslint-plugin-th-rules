@@ -1,5 +1,6 @@
 /* eslint-disable import-x/order */
 
+import _ from 'lodash';
 import { type Linter, type Rule } from 'eslint';
 
 import { recommended } from './configs/bundles/recommended.js';

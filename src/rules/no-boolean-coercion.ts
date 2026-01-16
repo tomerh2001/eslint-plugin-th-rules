@@ -1,15 +1,22 @@
-import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable new-cap */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
+import type { RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 
 const createRule = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-boolean-coercion.md');
+
+const LODASH_MODULE = 'lodash';
+const LODASH_IDENT = '_';
 
 const noBooleanCoercion = createRule({
 	name: 'no-boolean-coercion',
 	meta: {
 		type: 'problem',
+		fixable: 'code',
 		docs: {
 			description: 'Disallow Boolean(value) or !!value. Enforce explicit checks: !_.isNil(value) for scalars and !_.isEmpty(value) for strings, arrays, and objects.',
 		},
-		hasSuggestions: true,
 		schema: [],
 		messages: {
 			useIsEmpty: 'Boolean coercion is not allowed. Use !_.isEmpty(value) for strings, arrays, and objects.',
@@ -18,23 +25,37 @@ const noBooleanCoercion = createRule({
 	},
 	defaultOptions: [],
 	create(context) {
-		const { sourceCode } = context;
 		const services = ESLintUtils.getParserServices(context);
-		const checker = services?.program?.getTypeChecker?.();
+		const checker = services.program.getTypeChecker();
+
+		function hasLodashImport(): boolean {
+			return context.sourceCode.ast.body.some((node) => node.type === AST_NODE_TYPES.ImportDeclaration && node.source.value === LODASH_MODULE);
+		}
+
+		function getLodashImportFixer(fixer: RuleFixer) {
+			if (hasLodashImport()) {
+				return null;
+			}
+
+			const firstNode = context.sourceCode.ast.body[0];
+			const importText = `import ${LODASH_IDENT} from '${LODASH_MODULE}';\n`;
+
+			if (!firstNode) {
+				return fixer.insertTextAfterRange([0, 0], importText);
+			}
+
+			return fixer.insertTextBefore(firstNode, importText);
+		}
 
 		function isBooleanCall(node: TSESTree.Node): node is TSESTree.CallExpression {
-			return node.type === 'CallExpression' && node.callee.type === 'Identifier' && node.callee.name === 'Boolean' && node.arguments.length === 1;
+			return node.type === AST_NODE_TYPES.CallExpression && node.callee.type === AST_NODE_TYPES.Identifier && node.callee.name === 'Boolean' && node.arguments.length === 1;
 		}
 
 		function isDoubleNegation(node: TSESTree.Node): node is TSESTree.UnaryExpression {
-			return node.type === 'UnaryExpression' && node.operator === '!' && node.argument.type === 'UnaryExpression' && node.argument.operator === '!';
+			return node.type === AST_NODE_TYPES.UnaryExpression && node.operator === '!' && node.argument.type === AST_NODE_TYPES.UnaryExpression && node.argument.operator === '!';
 		}
 
 		function isCollectionLikeByTS(node: TSESTree.Node): boolean {
-			if (!checker || !services.esTreeNodeToTSNodeMap) {
-				return false;
-			}
-
 			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 			if (!tsNode) {
 				return false;
@@ -43,52 +64,50 @@ const noBooleanCoercion = createRule({
 			const type = checker.getTypeAtLocation(tsNode);
 			const typeString = checker.typeToString(type);
 
-			return typeString.includes('[]') || typeString === 'string' || typeString === 'object' || typeString.startsWith('Array<') || typeString.startsWith('ReadonlyArray<');
+			return typeString === 'string' || typeString === 'object' || typeString.includes('[]') || typeString.startsWith('Array<') || typeString.startsWith('ReadonlyArray<');
 		}
 
 		function isCollectionLikeBySyntax(node: TSESTree.Node): boolean {
-			return node.type === 'ArrayExpression' || node.type === 'ObjectExpression' || (node.type === 'Literal' && typeof node.value === 'string');
+			return node.type === AST_NODE_TYPES.ArrayExpression || node.type === AST_NODE_TYPES.ObjectExpression || (node.type === AST_NODE_TYPES.Literal && typeof node.value === 'string');
 		}
 
 		function report(node: TSESTree.Node, valueNode: TSESTree.Node) {
 			const isCollection = isCollectionLikeBySyntax(valueNode) || isCollectionLikeByTS(valueNode);
 
-			const suggestedFn = isCollection ? '_.isEmpty' : '_.isNil';
-			const replacement = `!${suggestedFn}(${sourceCode.getText(valueNode)})`;
+			const fnName = isCollection ? 'isEmpty' : 'isNil';
+			const replacement = `!${LODASH_IDENT}.${fnName}(${context.sourceCode.getText(valueNode)})`;
 
 			context.report({
 				node,
 				messageId: isCollection ? 'useIsEmpty' : 'useIsNil',
-				suggest: [
-					{
-						messageId: isCollection ? 'useIsEmpty' : 'useIsNil',
-						fix(fixer) {
-							return fixer.replaceText(node, replacement);
-						},
-					},
-				],
+				fix(fixer) {
+					const fixes = [fixer.replaceText(node, replacement)];
+
+					const importFix = getLodashImportFixer(fixer);
+					if (importFix) {
+						fixes.push(importFix);
+					}
+
+					return fixes;
+				},
 			});
 		}
 
 		return {
 			CallExpression(node) {
 				if (isBooleanCall(node)) {
-					const arg = node.arguments[0];
-					if (arg) {
-						report(node, arg);
-					}
+					report(node, node.arguments[0]);
 				}
 			},
 
 			UnaryExpression(node) {
 				if (isDoubleNegation(node)) {
 					const valueNode = (node.argument as TSESTree.UnaryExpression).argument;
-					if (valueNode) {
-						report(node, valueNode);
-					}
+					report(node, valueNode);
 				}
 			},
 		};
 	},
 });
+
 export default noBooleanCoercion;
