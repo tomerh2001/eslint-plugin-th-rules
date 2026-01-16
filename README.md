@@ -20,6 +20,10 @@ This plugin provides:
 ```bash
 npm install --save-dev eslint-plugin-th-rules
 ```
+or
+```bash
+yarn add -D eslint-plugin-th-rules
+```
 
 This plugin requires ESLint Flat Config (ESLint 8.21+).
 
@@ -56,7 +60,7 @@ Recommended plus full strict/stylistic TypeScript configurations.
 import thRules from "eslint-plugin-th-rules";
 
 export default [
-  ...thRules.configs["recommendedTypescript"]
+  ...thRules.configs.recommendedTypescript
 ];
 ```
 
@@ -72,7 +76,18 @@ Recommended plus:
 import thRules from "eslint-plugin-th-rules";
 
 export default [
-  ...thRules.configs["recommendedReact"]
+  ...thRules.configs.recommendedReact
+];
+```
+
+## Recommended + TypeScript + React
+Recommended plus TypeScript and React extensions.
+
+```js
+import thRules from "eslint-plugin-th-rules";
+
+export default [
+  ...thRules.configs.recommendedTypescriptReact
 ];
 ```
 
