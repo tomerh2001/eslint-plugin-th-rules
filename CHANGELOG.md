@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.0...v3.2.1) (2026-01-16)
+
+
+### Bug Fixes
+
+* refactor no-boolean-coercion rule to use lodash methods and update tests ([39f53e7](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/39f53e7583e924753363fab5fe84fe2c02ae34f6))
+
 # [3.2.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.8...v3.2.0) (2026-01-16)
 
 
