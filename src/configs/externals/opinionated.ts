@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
-import {type ConfigWithExtends} from 'typescript-eslint';
+import { type ConfigWithExtends } from 'typescript-eslint';
 
 export const externalsOpinionated: ConfigWithExtends[] = [
 	{
@@ -13,6 +11,16 @@ export const externalsOpinionated: ConfigWithExtends[] = [
 			'sonarjs/no-clear-text-protocols': 'off',
 			'import-x/extensions': 'off',
 			'unicorn/filename-case': 'off',
+			'prettier/prettier': [
+				'error',
+				{
+					useTabs: true,
+					tabWidth: 2,
+					printWidth: 200,
+					singleQuote: true,
+					trailingComma: 'all',
+				},
+			],
 		},
 	},
 ];
