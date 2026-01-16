@@ -9,6 +9,6 @@ export const recommendedReact = resolveFlatConfig([
 	...recommended,
 	react.configs.flat.recommended,
 	react.configs.flat['jsx-runtime'],
-	reactHooks.configs.recommended,
+	reactHooks.configs.flat.recommended,
 	...coreReact,
 ] as Linter.Config[]);
