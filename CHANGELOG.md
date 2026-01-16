@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.3...v3.1.4) (2026-01-16)
+
+
+### Bug Fixes
+
+* disable naming convention rule and update opinionated configurations ([6b9ef4b](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/6b9ef4b6b98f3b827a5f28015c5bc53927205356))
+
 ## [3.1.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.2...v3.1.3) (2026-01-16)
 
 
