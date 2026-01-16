@@ -1,4 +1,6 @@
-import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
+/* eslint-disable new-cap */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const MAX_TAB_COUNT = 3;
 
@@ -39,17 +41,15 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 
 		const MAX_LINE_LENGTH = options.maximumLineLength ?? 100;
 
-		const sourceCode = context.getSourceCode();
-
 		function reportIfNeeded(patternNode: TSESTree.Node | undefined, reportNode: TSESTree.Node = patternNode as any): void {
-			if (patternNode?.type !== 'ObjectPattern' || !patternNode.loc) {
+			if (patternNode?.type !== AST_NODE_TYPES.ObjectPattern || !patternNode.loc) {
 				return;
 			}
 
 			const startLine = patternNode.loc.start.line;
 			const endLine = patternNode.loc.end.line;
 
-			const lineText = sourceCode.lines[startLine - 1] ?? '';
+			const lineText = context.sourceCode.lines[startLine - 1] ?? '';
 
 			const indentCount = lineText.search(/\S|$/);
 
@@ -58,7 +58,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 			let maxSpannedLineLength = 0;
 
 			for (let i = startLine; i <= endLine; i++) {
-				const t = sourceCode.lines[i - 1] ?? '';
+				const t = context.sourceCode.lines[i - 1] ?? '';
 				if (t.length > maxSpannedLineLength) {
 					maxSpannedLineLength = t.length;
 				}
@@ -102,7 +102,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 					continue;
 				}
 
-				if (p.type === 'AssignmentPattern') {
+				if (p.type === AST_NODE_TYPES.AssignmentPattern) {
 					reportIfNeeded(p.left, p);
 					continue;
 				}

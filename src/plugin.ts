@@ -2,6 +2,7 @@ import noBooleanCoercion from './rules/no-boolean-coercion.js';
 import noComments from './rules/no-comments.js';
 import noDefaultExport from './rules/no-default-export.js';
 import noDestructuring from './rules/no-destructuring.js';
+import noExplicitNilCompare from './rules/no-explicit-nil-compare.js';
 import preferIsEmpty from './rules/prefer-is-empty.js';
 import schemasInSchemasFile from './rules/schemas-in-schemas-file.js';
 import topLevelFunctions from './rules/top-level-functions.js';
@@ -16,6 +17,7 @@ export const rules = {
 	schemasInSchemasFile,
 	topLevelFunctions,
 	typesInDts,
+	noExplicitNilCompare,
 };
 
 const plugin = { rules };
