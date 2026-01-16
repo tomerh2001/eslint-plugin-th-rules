@@ -1,3 +1,4 @@
+/* eslint-disable n/prefer-global/process */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import * as path from 'node:path';
@@ -23,7 +24,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('enum-ok.ts'),
-			options: [{ allowEnums: true }],
+			options: [
+				{
+					allowEnums: true,
+					allowDeclare: false,
+				},
+			],
 			code: `
         export enum Status {
           A = "A",
@@ -34,7 +40,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declared-interface.ts'),
-			options: [{ allowDeclare: true }],
+			options: [
+				{
+					allowDeclare: true,
+					allowEnums: false,
+				},
+			],
 			code: `
         declare interface Foo {
           x: number;
@@ -44,7 +55,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declared-type.ts'),
-			options: [{ allowDeclare: true }],
+			options: [
+				{
+					allowDeclare: true,
+					allowEnums: false,
+				},
+			],
 			code: `
         declare type Z = string;
       `,
@@ -52,7 +68,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declare-enum.ts'),
-			options: [{ allowDeclare: true }],
+			options: [
+				{
+					allowDeclare: true,
+					allowEnums: false,
+				},
+			],
 			code: `
         declare enum K { A = 1 }
       `,
@@ -111,7 +132,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declared-type-not-allowed.ts'),
-			options: [{ allowDeclare: false }],
+			options: [
+				{
+					allowDeclare: false,
+					allowEnums: false,
+				},
+			],
 			code: `
         declare type Z = number;
       `,
@@ -120,7 +146,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('enum-allowed-but-type-error.ts'),
-			options: [{ allowEnums: true }],
+			options: [
+				{
+					allowEnums: true,
+					allowDeclare: false,
+				},
+			],
 			code: `
         enum A { X = 1 }
         type T = string;
@@ -130,7 +161,12 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('mixed.ts'),
-			options: [{ allowDeclare: true }],
+			options: [
+				{
+					allowDeclare: true,
+					allowEnums: false,
+				},
+			],
 			code: `
         declare interface Foo { a: string }
         type Nope = number;

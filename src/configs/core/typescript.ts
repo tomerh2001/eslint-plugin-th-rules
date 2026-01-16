@@ -3,6 +3,7 @@ import { configs as ts, type ConfigWithExtends } from 'typescript-eslint';
 export const coreTypescript: ConfigWithExtends[] = [
 	...ts.strictTypeChecked,
 	...ts.stylisticTypeChecked,
+	...ts.recommendedTypeChecked,
 	{
 		name: 'th-rules/core-typescript-overrides',
 		rules: {

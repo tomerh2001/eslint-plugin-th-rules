@@ -1,3 +1,4 @@
+/* eslint-disable n/prefer-global/process */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import * as path from 'node:path';
@@ -30,7 +31,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 
 		{
 			filename: file('api.schema.ts'),
-			options: [{ allowedSuffixes: ['.schema.ts'] }],
+			options: [
+				{
+					allowedSuffixes: ['.schema.ts'],
+					onlyWhenAssigned: false,
+					allowInTests: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         const ApiSchema = z.object({});
@@ -39,7 +46,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 
 		{
 			filename: file('myfile.test.ts'),
-			options: [{ allowInTests: true }],
+			options: [
+				{
+					allowInTests: true,
+					allowedSuffixes: [],
+					onlyWhenAssigned: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         const T = z.string();
@@ -48,7 +61,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 
 		{
 			filename: file('component.ts'),
-			options: [{ onlyWhenAssigned: true }],
+			options: [
+				{
+					onlyWhenAssigned: true,
+					allowedSuffixes: [],
+					allowInTests: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         z.object({ id: z.string() });
@@ -103,7 +122,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 		// Z.object + z.number → ACTUAL behavior = 1 error
 		{
 			filename: file('model.ts'),
-			options: [{ onlyWhenAssigned: true }],
+			options: [
+				{
+					onlyWhenAssigned: true,
+					allowedSuffixes: [],
+					allowInTests: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         const A = z.object({ id: z.number() });
@@ -128,7 +153,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 		// Z.object + z.string → 2 errors
 		{
 			filename: file('myFile.ts'),
-			options: [{ allowedSuffixes: ['.schema.ts'] }],
+			options: [
+				{
+					allowedSuffixes: ['.schema.ts'],
+					onlyWhenAssigned: false,
+					allowInTests: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         const A = z.object({ a: z.string() });
@@ -142,7 +173,13 @@ ruleTester.run('schemas-in-schemas-file', rule, {
 		// Test file, allowInTests = false → 1 error
 		{
 			filename: file('something.spec.ts'),
-			options: [{ allowInTests: false }],
+			options: [
+				{
+					allowInTests: false,
+					allowedSuffixes: [],
+					onlyWhenAssigned: false,
+				},
+			],
 			code: `
         import { z } from 'zod';
         const T = z.string();

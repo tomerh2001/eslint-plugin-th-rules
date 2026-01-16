@@ -1,12 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createDefaultPreset } from 'ts-jest';
 
 const tsJestTransformCfg = createDefaultPreset().transform;
 
-/** @type {import("jest").Config} **/
 const config = {
 	testEnvironment: 'node',
 	transform: {
 		...tsJestTransformCfg,
+		'^.+\\.tsx?$': [
+			'ts-jest',
+			{
+				diagnostics: {
+					ignoreCodes: [151_002],
+				},
+			},
+		],
 	},
 };
 

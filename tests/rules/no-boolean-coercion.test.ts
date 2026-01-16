@@ -2,11 +2,19 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/no-boolean-coercion';
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+	languageOptions: {
+		parserOptions: {
+			projectService: {
+				allowDefaultProject: ['*.ts*'],
+			},
+			tsconfigRootDir: '/../..',
+		},
+	},
+});
 
 ruleTester.run('no-boolean-coercion', rule, {
 	valid: ['_.isNil(value);', '_.isEmpty(list);', 'if (value != null) {}', 'if (list.length > 0) {}', 'Boolean;', 'const BooleanValue = true;', 'const fn = Boolean;'],
-
 	invalid: [
 		{
 			code: 'Boolean(foo);',

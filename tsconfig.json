@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "types": [
       "node",
-      "eslint"
+      "eslint",
+      "@typescript-eslint/rule-tester"
     ]
   },
   "include": [
