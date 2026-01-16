@@ -1,3 +1,10 @@
+## [3.2.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.1...v3.2.2) (2026-01-16)
+
+
+### Bug Fixes
+
+* refactor rules to utilize lodash methods and enhance TypeScript support ([d24750f](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/d24750f5c8e13beb43186051da9d275e7dd56714))
+
 ## [3.2.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.0...v3.2.1) (2026-01-16)
 
 
