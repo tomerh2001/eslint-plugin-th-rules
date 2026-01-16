@@ -1,3 +1,16 @@
+# [3.2.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.8...v3.2.0) (2026-01-16)
+
+
+### Bug Fixes
+
+* update lodash import style and ensure TypeScript compatibility ([9138e46](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9138e46e6898f086436c693ba5adcbc15645c9dc))
+* update no-explicit-nil-compare rule to use lodash methods and simplify test cases ([61e736b](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/61e736bd253ce888b59f34fc531e8b88b3ae3a2c))
+
+
+### Features
+
+* add no-explicit-nil-compare rule with tests ([f5c52f8](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/f5c52f8db672881c2e3af0036a47eab610c92a9b))
+
 ## [3.1.8](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.7...v3.1.8) (2026-01-16)
 
 
