@@ -1,4 +1,4 @@
-# th-rules/noComments
+# th-rules/no-comments
 
 📝 Disallow comments except for specified allowed patterns.
 

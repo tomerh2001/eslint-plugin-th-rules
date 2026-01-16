@@ -1,6 +1,6 @@
-# th-rules/topLevelFunctions
+# th-rules/no-default-export
 
-📝 Require all top-level functions to be named regular functions.
+📝 Convert unnamed default exports to named default exports based on the file name.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 

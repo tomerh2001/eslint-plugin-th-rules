@@ -1,6 +1,6 @@
-# th-rules/noDestructuring
+# th-rules/types-in-dts
 
-📝 Disallow destructuring that does not meet certain conditions.
+📝 Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 
@@ -10,9 +10,9 @@
 
 <!-- begin auto-generated rule options list -->
 
-| Name                           | Type    |
-| :----------------------------- | :------ |
-| `maximumDestructuredVariables` | Integer |
-| `maximumLineLength`            | Integer |
+| Name           | Type    |
+| :------------- | :------ |
+| `allowDeclare` | Boolean |
+| `allowEnums`   | Boolean |
 
 <!-- end auto-generated rule options list -->
