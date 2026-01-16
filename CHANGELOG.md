@@ -1,3 +1,10 @@
+## [3.1.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.5...v3.1.6) (2026-01-16)
+
+
+### Bug Fixes
+
+* add prettier plugin and update configurations for ESLint ([7b23f07](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/7b23f07c62c467e0208e72963abdeea6359457cb))
+
 ## [3.1.5](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.4...v3.1.5) (2026-01-16)
 
 
