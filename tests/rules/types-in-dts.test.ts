@@ -1,8 +1,7 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import * as path from 'node:path';
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/types-in-dts';
 
 const ruleTester = new RuleTester({});
@@ -13,7 +12,6 @@ function file(name: string): string {
 
 ruleTester.run('types-in-dts', rule, {
 	valid: [
-
 		{
 			filename: file('good.d.ts'),
 			code: `
@@ -25,7 +23,7 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('enum-ok.ts'),
-			options: [{allowEnums: true}],
+			options: [{ allowEnums: true }],
 			code: `
         export enum Status {
           A = "A",
@@ -36,7 +34,7 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declared-interface.ts'),
-			options: [{allowDeclare: true}],
+			options: [{ allowDeclare: true }],
 			code: `
         declare interface Foo {
           x: number;
@@ -46,7 +44,7 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declared-type.ts'),
-			options: [{allowDeclare: true}],
+			options: [{ allowDeclare: true }],
 			code: `
         declare type Z = string;
       `,
@@ -54,7 +52,7 @@ ruleTester.run('types-in-dts', rule, {
 
 		{
 			filename: file('declare-enum.ts'),
-			options: [{allowDeclare: true}],
+			options: [{ allowDeclare: true }],
 			code: `
         declare enum K { A = 1 }
       `,
@@ -71,14 +69,13 @@ ruleTester.run('types-in-dts', rule, {
 	],
 
 	invalid: [
-
 		// Type alias in .ts → 1 error
 		{
 			filename: file('type.ts'),
 			code: `
         export type A = string;
       `,
-			errors: [{messageId: 'moveToDts'}],
+			errors: [{ messageId: 'moveToDts' }],
 		},
 
 		// Interface in .ts → 1 error
@@ -89,7 +86,7 @@ ruleTester.run('types-in-dts', rule, {
           id: number;
         }
       `,
-			errors: [{messageId: 'moveToDts'}],
+			errors: [{ messageId: 'moveToDts' }],
 		},
 
 		// Enum in .ts when allowEnums = false → 1 error
@@ -98,7 +95,7 @@ ruleTester.run('types-in-dts', rule, {
 			code: `
         enum X { A, B }
       `,
-			errors: [{messageId: 'moveToDts'}],
+			errors: [{ messageId: 'moveToDts' }],
 		},
 
 		// Multiple declarations → 3 errors
@@ -109,44 +106,37 @@ ruleTester.run('types-in-dts', rule, {
         interface B { x: string }
         enum C { A = 1 }
       `,
-			errors: [
-				{messageId: 'moveToDts'},
-				{messageId: 'moveToDts'},
-				{messageId: 'moveToDts'},
-			],
+			errors: [{ messageId: 'moveToDts' }, { messageId: 'moveToDts' }, { messageId: 'moveToDts' }],
 		},
 
 		{
 			filename: file('declared-type-not-allowed.ts'),
-			options: [{allowDeclare: false}],
+			options: [{ allowDeclare: false }],
 			code: `
         declare type Z = number;
       `,
-			errors: [{messageId: 'moveToDts'}],
+			errors: [{ messageId: 'moveToDts' }],
 		},
 
 		{
 			filename: file('enum-allowed-but-type-error.ts'),
-			options: [{allowEnums: true}],
+			options: [{ allowEnums: true }],
 			code: `
         enum A { X = 1 }
         type T = string;
       `,
-			errors: [{messageId: 'moveToDts'}],
+			errors: [{ messageId: 'moveToDts' }],
 		},
 
 		{
 			filename: file('mixed.ts'),
-			options: [{allowDeclare: true}],
+			options: [{ allowDeclare: true }],
 			code: `
         declare interface Foo { a: string }
         type Nope = number;
         enum E { A = 1 }
       `,
-			errors: [
-				{messageId: 'moveToDts'},
-				{messageId: 'moveToDts'},
-			],
+			errors: [{ messageId: 'moveToDts' }, { messageId: 'moveToDts' }],
 		},
 	],
 });

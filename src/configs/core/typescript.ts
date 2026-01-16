@@ -1,4 +1,4 @@
-import {configs as ts, type ConfigWithExtends} from 'typescript-eslint';
+import { configs as ts, type ConfigWithExtends } from 'typescript-eslint';
 
 export const coreTypescript: ConfigWithExtends[] = [
 	...ts.strictTypeChecked,

@@ -1,5 +1,4 @@
-import {configs} from './dist/index.js';
+import { configs } from './dist/index.js';
 
 const xoConfig = configs.recommendedTypescript;
 export default xoConfig;
-

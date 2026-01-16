@@ -1,10 +1,10 @@
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
+import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 type Options = [
-  {
-  	allow?: string[];
-  	disallow?: string[];
-  }?,
+	{
+		allow?: string[];
+		disallow?: string[];
+	}?,
 ];
 
 type MessageIds = 'commentNotAllowed';
@@ -17,8 +17,7 @@ const DEFAULT_ALLOWED_PATTERNS: RegExp[] = [
 	/^\s*eslint-(disable|enable|env|globals|ignore|directive)/,
 ];
 
-const noComments = ESLintUtils.RuleCreator(() =>
-	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-comments.md')<Options, MessageIds>({
+const noComments = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-comments.md')<Options, MessageIds>({
 	name: 'no-comments',
 
 	meta: {
@@ -33,12 +32,12 @@ const noComments = ESLintUtils.RuleCreator(() =>
 				properties: {
 					allow: {
 						type: 'array',
-						items: {type: 'string'},
+						items: { type: 'string' },
 						description: 'Additional patterns to allow in comments.',
 					},
 					disallow: {
 						type: 'array',
-						items: {type: 'string'},
+						items: { type: 'string' },
 						description: 'Additional patterns to disallow in comments.',
 					},
 				},
@@ -54,8 +53,8 @@ const noComments = ESLintUtils.RuleCreator(() =>
 
 	create(context) {
 		const option = context.options[0] ?? {};
-		const userAllowedPatterns = (option.allow ?? []).map(pattern => new RegExp(pattern));
-		const userDisallowedPatterns = (option.disallow ?? []).map(pattern => new RegExp(pattern));
+		const userAllowedPatterns = (option.allow ?? []).map((pattern) => new RegExp(pattern));
+		const userDisallowedPatterns = (option.disallow ?? []).map((pattern) => new RegExp(pattern));
 
 		function isCommentAllowed(comment: TSESTree.Comment): boolean {
 			const text = comment.value.trim();
@@ -64,10 +63,7 @@ const noComments = ESLintUtils.RuleCreator(() =>
 				return true;
 			}
 
-			for (const pattern of [
-				...DEFAULT_ALLOWED_PATTERNS,
-				...userAllowedPatterns,
-			]) {
+			for (const pattern of [...DEFAULT_ALLOWED_PATTERNS, ...userAllowedPatterns]) {
 				if (pattern.test(text)) {
 					return true;
 				}

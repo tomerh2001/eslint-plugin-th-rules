@@ -1,20 +1,11 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/no-boolean-coercion';
 
 const ruleTester = new RuleTester();
 
 ruleTester.run('no-boolean-coercion', rule, {
-	valid: [
-		'_.isNil(value);',
-		'_.isEmpty(list);',
-		'if (value != null) {}',
-		'if (list.length > 0) {}',
-		'Boolean;',
-		'const BooleanValue = true;',
-		'const fn = Boolean;',
-	],
+	valid: ['_.isNil(value);', '_.isEmpty(list);', 'if (value != null) {}', 'if (list.length > 0) {}', 'Boolean;', 'const BooleanValue = true;', 'const fn = Boolean;'],
 
 	invalid: [
 		{
@@ -25,7 +16,7 @@ ruleTester.run('no-boolean-coercion', rule, {
 					suggestions: [
 						{
 							messageId: 'useIsNil',
-							data: {collection: 'foo'},
+							data: { collection: 'foo' },
 							output: '!_.isNil(foo);',
 						},
 					],
@@ -41,7 +32,7 @@ ruleTester.run('no-boolean-coercion', rule, {
 					suggestions: [
 						{
 							messageId: 'useIsNil',
-							data: {collection: 'bar'},
+							data: { collection: 'bar' },
 							output: 'const x = !_.isNil(bar);',
 						},
 					],
@@ -57,7 +48,7 @@ ruleTester.run('no-boolean-coercion', rule, {
 					suggestions: [
 						{
 							messageId: 'useIsNil',
-							data: {collection: 'value'},
+							data: { collection: 'value' },
 							output: '!_.isNil(value);',
 						},
 					],
@@ -73,7 +64,7 @@ ruleTester.run('no-boolean-coercion', rule, {
 					suggestions: [
 						{
 							messageId: 'useIsEmpty',
-							data: {collection: '[]'},
+							data: { collection: '[]' },
 							output: '!_.isEmpty([]);',
 						},
 					],

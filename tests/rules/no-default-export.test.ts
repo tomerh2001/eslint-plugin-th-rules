@@ -1,14 +1,12 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/no-default-export';
 
 const ruleTester = new RuleTester({});
 
 ruleTester.run('no-default-export', rule, {
 	valid: [
-
 		{
 			code: `
 				const MyFile = {};
@@ -40,13 +38,12 @@ ruleTester.run('no-default-export', rule, {
 	],
 
 	invalid: [
-
 		{
 			filename: '/project/my-file.ts',
 			code: `
 				export default function () { return 1; }
 			`,
-			errors: [{messageId: 'unnamed'}],
+			errors: [{ messageId: 'unnamed' }],
 			output: `
 				const myFile = function () { return 1; };
 export default myFile;
@@ -58,7 +55,7 @@ export default myFile;
 			code: `
 				export default class {}
 			`,
-			errors: [{messageId: 'unnamed'}],
+			errors: [{ messageId: 'unnamed' }],
 			output: `
 				const someComponent = class {};
 export default someComponent;
@@ -70,7 +67,7 @@ export default someComponent;
 			code: `
 				export default () => 42;
 			`,
-			errors: [{messageId: 'unnamed'}],
+			errors: [{ messageId: 'unnamed' }],
 			output: `
 				const dataLoader = () => 42;
 export default dataLoader;
@@ -85,7 +82,7 @@ export default dataLoader;
 					post() {}
 				};
 			`,
-			errors: [{messageId: 'unnamed'}],
+			errors: [{ messageId: 'unnamed' }],
 			output: `
 				const httpClient = {
 					get() {},
@@ -100,7 +97,7 @@ export default httpClient;
 			code: `
 				export default { a: 1 };
 			`,
-			errors: [{messageId: 'unnamed'}],
+			errors: [{ messageId: 'unnamed' }],
 
 			output: `
 				const mySpecialFileComponent = { a: 1 };

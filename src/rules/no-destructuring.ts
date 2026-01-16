@@ -1,9 +1,8 @@
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
+import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const MAX_TAB_COUNT = 3;
 
-const noDestructuring = ESLintUtils.RuleCreator(() =>
-	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-destructuring.md')({
+const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-destructuring.md')({
 	name: 'no-destructuring',
 
 	meta: {
@@ -15,19 +14,16 @@ const noDestructuring = ESLintUtils.RuleCreator(() =>
 			{
 				type: 'object',
 				properties: {
-					maximumDestructuredVariables: {type: 'integer', minimum: 0},
-					maximumLineLength: {type: 'integer', minimum: 0},
+					maximumDestructuredVariables: { type: 'integer', minimum: 0 },
+					maximumLineLength: { type: 'integer', minimum: 0 },
 				},
 				additionalProperties: false,
 			},
 		],
 		messages: {
-			tooDeep:
-        'Destructuring at a nesting level above {{max}} is not allowed; found {{actual}} levels of nesting.',
-			tooMany:
-        'Destructuring of more than {{max}} variables is not allowed.',
-			tooLong:
-        'Destructuring spanning a line exceeding {{max}} characters is not allowed.',
+			tooDeep: 'Destructuring at a nesting level above {{max}} is not allowed; found {{actual}} levels of nesting.',
+			tooMany: 'Destructuring of more than {{max}} variables is not allowed.',
+			tooLong: 'Destructuring spanning a line exceeding {{max}} characters is not allowed.',
 		},
 	},
 
@@ -45,28 +41,19 @@ const noDestructuring = ESLintUtils.RuleCreator(() =>
 
 		const sourceCode = context.getSourceCode();
 
-		function reportIfNeeded(
-			patternNode: TSESTree.Node | undefined,
-			reportNode: TSESTree.Node = patternNode as any,
-		): void {
-			if (
-				patternNode?.type !== 'ObjectPattern'
-				|| !patternNode.loc
-			) {
+		function reportIfNeeded(patternNode: TSESTree.Node | undefined, reportNode: TSESTree.Node = patternNode as any): void {
+			if (patternNode?.type !== 'ObjectPattern' || !patternNode.loc) {
 				return;
 			}
 
 			const startLine = patternNode.loc.start.line;
 			const endLine = patternNode.loc.end.line;
 
-			const lineText
-        = sourceCode.lines[startLine - 1] ?? '';
+			const lineText = sourceCode.lines[startLine - 1] ?? '';
 
 			const indentCount = lineText.search(/\S|$/);
 
-			const propertyCount
-        = (patternNode).properties
-        	?.length ?? 0;
+			const propertyCount = patternNode.properties?.length ?? 0;
 
 			let maxSpannedLineLength = 0;
 

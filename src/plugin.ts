@@ -18,5 +18,5 @@ export const rules = {
 	typesInDts,
 };
 
-const plugin = {rules};
+const plugin = { rules };
 export default plugin;

@@ -1,9 +1,9 @@
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import {type Linter} from 'eslint';
-import {resolveFlatConfig} from '@leancodepl/resolve-eslint-flat-config';
-import {coreReact} from '../core/react.js';
-import {recommended} from './recommended.js';
+import { type Linter } from 'eslint';
+import { resolveFlatConfig } from '@leancodepl/resolve-eslint-flat-config';
+import { coreReact } from '../core/react.js';
+import { recommended } from './recommended.js';
 
 export const recommendedReact: Linter.Config[] = resolveFlatConfig([
 	...recommended,

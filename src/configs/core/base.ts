@@ -1,6 +1,6 @@
 import globals from 'globals';
-import {type Linter} from 'eslint';
-import {type ConfigWithExtends} from 'typescript-eslint';
+import { type Linter } from 'eslint';
+import { type ConfigWithExtends } from 'typescript-eslint';
 import plugin from '../../plugin.js';
 
 export const coreBase: ConfigWithExtends[] = [

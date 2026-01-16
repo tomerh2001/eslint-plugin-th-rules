@@ -1,4 +1,4 @@
-import {type ConfigWithExtends} from 'typescript-eslint';
+import { type ConfigWithExtends } from 'typescript-eslint';
 
 export const coreReact: ConfigWithExtends[] = [
 	{

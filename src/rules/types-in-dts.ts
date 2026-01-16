@@ -1,35 +1,32 @@
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
+import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 type Options = [
-  {
-  	allowEnums?: boolean;
-  	allowDeclare?: boolean;
-  }?,
+	{
+		allowEnums?: boolean;
+		allowDeclare?: boolean;
+	}?,
 ];
 
-const typesInDts = ESLintUtils.RuleCreator(() =>
-	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/types-in-dts.md')({
+const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/types-in-dts.md')({
 	name: 'types-in-dts',
 
 	meta: {
 		type: 'problem',
 		docs: {
-			description:
-        'Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files.',
+			description: 'Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files.',
 		},
 		schema: [
 			{
 				type: 'object',
 				properties: {
-					allowEnums: {type: 'boolean'},
-					allowDeclare: {type: 'boolean'},
+					allowEnums: { type: 'boolean' },
+					allowDeclare: { type: 'boolean' },
 				},
 				additionalProperties: false,
 			},
 		],
 		messages: {
-			moveToDts:
-        'Type declarations must be defined in a .d.ts file.',
+			moveToDts: 'Type declarations must be defined in a .d.ts file.',
 		},
 	},
 
@@ -52,26 +49,17 @@ const typesInDts = ESLintUtils.RuleCreator(() =>
 			return filename.endsWith('.d.ts');
 		}
 
-		function hasDeclareModifier(node:
-			| TSESTree.TSTypeAliasDeclaration
-			| TSESTree.TSInterfaceDeclaration
-			| TSESTree.TSEnumDeclaration): boolean {
+		function hasDeclareModifier(node: TSESTree.TSTypeAliasDeclaration | TSESTree.TSInterfaceDeclaration | TSESTree.TSEnumDeclaration): boolean {
 			if ('declare' in node && node.declare) {
 				return true;
 			}
 
-			const modifiers
-        = 'modifiers' in node && Array.isArray(node.modifiers)
-        	? node.modifiers
-        	: [];
+			const modifiers = 'modifiers' in node && Array.isArray(node.modifiers) ? node.modifiers : [];
 
-			return modifiers.some(m => m?.type === 'TSDeclareKeyword');
+			return modifiers.some((m) => m?.type === 'TSDeclareKeyword');
 		}
 
-		function reportIfNotDts(node:
-			| TSESTree.TSTypeAliasDeclaration
-			| TSESTree.TSInterfaceDeclaration
-			| TSESTree.TSEnumDeclaration): void {
+		function reportIfNotDts(node: TSESTree.TSTypeAliasDeclaration | TSESTree.TSInterfaceDeclaration | TSESTree.TSEnumDeclaration): void {
 			const filename = context.getFilename();
 
 			if (isDtsFile(filename)) {

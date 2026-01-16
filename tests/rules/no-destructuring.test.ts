@@ -1,14 +1,12 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/no-destructuring';
 
 const ruleTester = new RuleTester({});
 
 ruleTester.run('no-destructuring', rule, {
 	valid: [
-
 		'const {a, b} = obj;',
 		'const {a} = obj;',
 
@@ -19,23 +17,22 @@ ruleTester.run('no-destructuring', rule, {
 
 		{
 			code: 'const {a, b, c} = obj;',
-			options: [{maximumDestructuredVariables: 3, maximumLineLength: 100}],
+			options: [{ maximumDestructuredVariables: 3, maximumLineLength: 100 }],
 		},
 
 		{
 			code: 'const {a, b, c, d} = obj;',
-			options: [{maximumDestructuredVariables: 4, maximumLineLength: 200}],
+			options: [{ maximumDestructuredVariables: 4, maximumLineLength: 200 }],
 		},
 	],
 
 	invalid: [
-
 		{
 			code: 'const {a, b, c} = obj;',
 			errors: [
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 			],
 		},
@@ -47,7 +44,7 @@ ruleTester.run('no-destructuring', rule, {
 			errors: [
 				{
 					messageId: 'tooDeep',
-					data: {max: 3, actual: 5},
+					data: { max: 3, actual: 5 },
 				},
 			],
 		},
@@ -56,15 +53,15 @@ ruleTester.run('no-destructuring', rule, {
 			code: `
 				const {a, b} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
 			`,
-			options: [{maximumDestructuredVariables: 2, maximumLineLength: 80}],
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
 			errors: [
 				{
 					messageId: 'tooDeep',
-					data: {max: 3, actual: 4},
+					data: { max: 3, actual: 4 },
 				},
 				{
 					messageId: 'tooLong',
-					data: {max: 80},
+					data: { max: 80 },
 				},
 			],
 		},
@@ -73,19 +70,19 @@ ruleTester.run('no-destructuring', rule, {
 			code: `
 					const {a, b, c} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
 			`,
-			options: [{maximumDestructuredVariables: 2, maximumLineLength: 80}],
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
 			errors: [
 				{
 					messageId: 'tooDeep',
-					data: {max: 3, actual: 5},
+					data: { max: 3, actual: 5 },
 				},
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 				{
 					messageId: 'tooLong',
-					data: {max: 80},
+					data: { max: 80 },
 				},
 			],
 		},
@@ -95,7 +92,7 @@ ruleTester.run('no-destructuring', rule, {
 			errors: [
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 			],
 		},
@@ -105,7 +102,7 @@ ruleTester.run('no-destructuring', rule, {
 			errors: [
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 			],
 		},
@@ -115,7 +112,7 @@ ruleTester.run('no-destructuring', rule, {
 			errors: [
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 			],
 		},
@@ -129,19 +126,19 @@ ruleTester.run('no-destructuring', rule, {
 			errors: [
 				{
 					messageId: 'tooDeep',
-					data: {max: 3, actual: 5},
+					data: { max: 3, actual: 5 },
 				},
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 				{
 					messageId: 'tooDeep',
-					data: {max: 3, actual: 5},
+					data: { max: 3, actual: 5 },
 				},
 				{
 					messageId: 'tooMany',
-					data: {max: 2},
+					data: { max: 2 },
 				},
 			],
 		},

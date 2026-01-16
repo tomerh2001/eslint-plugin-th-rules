@@ -1,8 +1,7 @@
 import * as path from 'node:path';
-import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
+import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
-const noDefaultExport = ESLintUtils.RuleCreator(() =>
-	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-default-export.md')({
+const noDefaultExport = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-default-export.md')({
 	name: 'no-default-export',
 	meta: {
 		type: 'problem',
@@ -22,10 +21,7 @@ const noDefaultExport = ESLintUtils.RuleCreator(() =>
 		function generateExportNameFromFileName(fileName: string): string {
 			const cleaned = fileName.replaceAll(/[^a-zA-Z\d]+/g, ' ');
 
-			const parts = cleaned
-				.trim()
-				.split(/\s+/g)
-				.filter(Boolean);
+			const parts = cleaned.trim().split(/\s+/g).filter(Boolean);
 
 			if (parts.length === 0) {
 				return 'defaultExport';
@@ -33,11 +29,7 @@ const noDefaultExport = ESLintUtils.RuleCreator(() =>
 
 			const [first, ...rest] = parts;
 
-			return (
-				first.charAt(0).toLowerCase() + first.slice(1)
-			) + rest
-				.map(p => p.charAt(0).toUpperCase() + p.slice(1))
-				.join('');
+			return first.charAt(0).toLowerCase() + first.slice(1) + rest.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
 		}
 
 		return {
@@ -70,4 +62,3 @@ const noDefaultExport = ESLintUtils.RuleCreator(() =>
 	},
 });
 export default noDefaultExport;
-

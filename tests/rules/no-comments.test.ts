@@ -1,14 +1,12 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/no-comments';
 
 const ruleTester = new RuleTester({});
 
 ruleTester.run('no-comments', rule, {
 	valid: [
-
 		'// TODO: refactor this',
 		'// todo: refactor this',
 		'// WARNING: this is important',
@@ -21,38 +19,37 @@ ruleTester.run('no-comments', rule, {
 
 		{
 			code: '// my custom comment',
-			options: [{allow: ['custom']}],
+			options: [{ allow: ['custom'] }],
 		},
 
 		{
 			code: '// custom comment',
-			options: [{allow: ['custom'], disallow: ['custom']}],
+			options: [{ allow: ['custom'], disallow: ['custom'] }],
 		},
 	],
 
 	invalid: [
-
 		{
 			code: '// this is not allowed',
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: '',
 		},
 
 		{
 			code: '/* not allowed */',
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: '',
 		},
 
 		{
 			code: 'const x = 1; // not allowed',
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: 'const x = 1; ',
 		},
 
 		{
 			code: '// SAFE COMMENT',
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: '',
 		},
 
@@ -62,7 +59,7 @@ ruleTester.run('no-comments', rule, {
 				// forbidden
 				const x = 1;
 			`,
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: `
 				// TODO: allowed
 				
@@ -77,7 +74,7 @@ ruleTester.run('no-comments', rule, {
 				 */
 				const y = 2;
 			`,
-			errors: [{messageId: 'commentNotAllowed'}],
+			errors: [{ messageId: 'commentNotAllowed' }],
 			output: `
 				
 				const y = 2;

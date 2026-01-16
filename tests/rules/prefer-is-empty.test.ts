@@ -1,21 +1,14 @@
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import {RuleTester} from '@typescript-eslint/rule-tester';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import rule from '../../src/rules/prefer-is-empty';
 
 const ruleTester = new RuleTester({});
 
 ruleTester.run('prefer-is-empty', rule, {
-	valid: [
-		'_.isEmpty(values);',
-		'!_.isEmpty(values);',
-		'Array.isArray(values);',
-		'values.size > 0;',
-	],
+	valid: ['_.isEmpty(values);', '!_.isEmpty(values);', 'Array.isArray(values);', 'values.size > 0;'],
 
 	invalid: [
-
 		{
 			code: 'values.length === 0;',
 			errors: [
