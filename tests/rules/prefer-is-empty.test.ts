@@ -18,12 +18,19 @@ ruleTester.run('prefer-is-empty', rule, {
 	valid: [
 		"import _ from 'lodash'; _.isEmpty(values);",
 		"import _ from 'lodash'; !_.isEmpty(values);",
+
+		'values.length === 4;',
+		'values.length > 5;',
+		'values?.length === 4;',
+		'values?.length > 5;',
+		'const n = values.length;',
+		'const n = values?.length;',
+		'const n = values?.length ?? 0;',
+		'values.length + 1;',
+		'Math.min(values.length, 10);',
+
 		'Array.isArray(values);',
 		'values.size > 0;',
-		'!_.isEmpty(items);',
-		'items?.length;',
-		'items.length === 4;',
-		'items?.length > 5;',
 	],
 
 	invalid: [
@@ -32,40 +39,29 @@ ruleTester.run('prefer-is-empty', rule, {
 			output: "import _ from 'lodash';\n_.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'values.length < 1;',
 			output: "import _ from 'lodash';\n_.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'values.length <= 0;',
 			output: "import _ from 'lodash';\n_.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'values.length > 0;',
 			output: "import _ from 'lodash';\n!_.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'values.length >= 1;',
 			output: "import _ from 'lodash';\n!_.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'values.length !== 0;',
 			output: "import _ from 'lodash';\n!_.isEmpty(values);",
-			errors: [{ messageId: 'useIsEmpty' }],
-		},
-
-		{
-			code: 'if (items.length > 0) {}',
-			output: "import _ from 'lodash';\nif (!_.isEmpty(items)) {}",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
 
@@ -76,87 +72,59 @@ ruleTester.run('prefer-is-empty', rule, {
 		},
 
 		{
+			code: 'if (items.length) {}',
+			output: "import _ from 'lodash';\nif (!_.isEmpty(items)) {}",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
+		},
+		{
 			code: '!items.length;',
 			output: "import _ from 'lodash';\n_.isEmpty(items);",
 			errors: [{ messageId: 'useIsEmptyUnary' }],
 		},
-
 		{
-			code: '!(items.length);',
-			output: "import _ from 'lodash';\n_.isEmpty(items);",
-			errors: [{ messageId: 'useIsEmptyUnary' }],
+			code: '!!items.length;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items);",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
 		},
-
 		{
-			code: 'if (!items.length) {}',
-			output: "import _ from 'lodash';\nif (_.isEmpty(items)) {}",
-			errors: [{ messageId: 'useIsEmptyUnary' }],
+			code: 'items.length && foo();',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) && foo();",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
 		},
-
 		{
-			code: "import _ from 'lodash'; values.length === 0;",
-			output: "import _ from 'lodash'; _.isEmpty(values);",
-			errors: [{ messageId: 'useIsEmpty' }],
+			code: 'items.length || foo();',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) || foo();",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
 		},
-
+		{
+			code: 'items.length ? a : b;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) ? a : b;",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
+		},
 		{
 			code: 'items?.length === 0;',
 			output: "import _ from 'lodash';\n_.isEmpty(items);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
 		{
 			code: 'items?.length > 0;',
 			output: "import _ from 'lodash';\n!_.isEmpty(items);",
 			errors: [{ messageId: 'useIsEmpty' }],
 		},
-
+		{
+			code: 'if (items?.length) {}',
+			output: "import _ from 'lodash';\nif (!_.isEmpty(items)) {}",
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
+		},
 		{
 			code: '!items?.length;',
 			output: "import _ from 'lodash';\n_.isEmpty(items);",
 			errors: [{ messageId: 'useIsEmptyUnary' }],
 		},
-
-		{
-			code: 'items?.length ?? fallback;',
-			output: "import _ from 'lodash';\n!_.isEmpty(items) ?? fallback;",
-			errors: [{ messageId: 'useIsEmpty' }],
-		},
-
-		{
-			code: '!items?.length ?? fallback;',
-			output: "import _ from 'lodash';\n_.isEmpty(items) ?? fallback;",
-			errors: [{ messageId: 'useIsEmptyUnary' }],
-		},
-
-		{
-			code: 'if (items?.length ?? false) {}',
-			output: "import _ from 'lodash';\nif (!_.isEmpty(items) ?? false) {}",
-			errors: [{ messageId: 'useIsEmpty' }],
-		},
-
-		{
-			code: 'items.length ? a : b;',
-			output: "import _ from 'lodash';\n!_.isEmpty(items) ? a : b;",
-			errors: [{ messageId: 'useIsEmpty' }],
-		},
-
-		{
-			code: '!items.length ? a : b;',
-			output: "import _ from 'lodash';\n_.isEmpty(items) ? a : b;",
-			errors: [{ messageId: 'useIsEmptyUnary' }],
-		},
-
 		{
 			code: 'items?.length ? a : b;',
 			output: "import _ from 'lodash';\n!_.isEmpty(items) ? a : b;",
-			errors: [{ messageId: 'useIsEmpty' }],
-		},
-
-		{
-			code: '!items?.length ? a : b;',
-			output: "import _ from 'lodash';\n_.isEmpty(items) ? a : b;",
-			errors: [{ messageId: 'useIsEmptyUnary' }],
+			errors: [{ messageId: 'useIsEmptyBoolean' }],
 		},
 	],
 });

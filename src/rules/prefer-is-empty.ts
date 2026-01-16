@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable th-rules/types-in-dts */
 /* eslint-disable new-cap */
 /* eslint-disable complexity */
@@ -14,13 +13,14 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 	meta: {
 		type: 'problem',
 		docs: {
-			description: 'Require _.isEmpty instead of length comparisons or !x.length checks.',
+			description: 'Require _.isEmpty instead of length comparisons or boolean checks on .length.',
 		},
 		fixable: 'code',
 		schema: [],
 		messages: {
 			useIsEmpty: 'Use _.isEmpty({{collection}}) instead of checking {{collection}}.length {{operator}} {{value}}.',
 			useIsEmptyUnary: 'Use _.isEmpty({{collection}}) instead of negating {{collection}}.length.',
+			useIsEmptyBoolean: 'Use _.isEmpty({{collection}}) instead of boolean checking {{collection}}.length.',
 		},
 	},
 
@@ -65,6 +65,44 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			return !_.isNil(node) && node.type === AST_NODE_TYPES.Literal && typeof node.value === 'number';
 		}
 
+		function isDoubleNegationLength(node: TSESTree.UnaryExpression): boolean {
+			return node.operator === '!' && node.argument.type === AST_NODE_TYPES.UnaryExpression && node.argument.operator === '!' && isLengthAccess(node.argument.argument);
+		}
+
+		function isBooleanContext(node: TSESTree.Node): boolean {
+			const { parent } = node;
+			if (!parent) return false;
+
+			switch (parent.type) {
+				case AST_NODE_TYPES.IfStatement:
+				case AST_NODE_TYPES.WhileStatement:
+				case AST_NODE_TYPES.DoWhileStatement:
+				case AST_NODE_TYPES.ForStatement: {
+					return parent.test === node;
+				}
+
+				case AST_NODE_TYPES.UnaryExpression: {
+					return parent.operator === '!';
+				}
+
+				case AST_NODE_TYPES.LogicalExpression: {
+					return parent.operator === '&&' || parent.operator === '||';
+				}
+
+				case AST_NODE_TYPES.ConditionalExpression: {
+					return parent.test === node;
+				}
+
+				case AST_NODE_TYPES.CallExpression: {
+					return parent.callee.type === AST_NODE_TYPES.Identifier && parent.callee.name === 'Boolean' && parent.arguments.length === 1 && parent.arguments[0] === node;
+				}
+
+				default: {
+					return false;
+				}
+			}
+		}
+
 		function reportBinary(node: TSESTree.BinaryExpression, lengthNode: TSESTree.MemberExpression, operator: string, value: number, isEmptyCheck: boolean) {
 			const collection = sourceCode.getText(lengthNode.object);
 			const replacement = isEmptyCheck ? `_.isEmpty(${collection})` : `!_.isEmpty(${collection})`;
@@ -98,124 +136,92 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			});
 		}
 
+		function reportBoolean(node: TSESTree.Node, lengthNode: TSESTree.MemberExpression) {
+			const collection = sourceCode.getText(lengthNode.object);
+
+			context.report({
+				node,
+				messageId: 'useIsEmptyBoolean',
+				data: { collection },
+				fix(fixer) {
+					const fixes = [fixer.replaceText(node, `!_.isEmpty(${collection})`)];
+					const importFix = ensureLodashImport(fixer);
+					if (importFix) fixes.push(importFix);
+					return fixes;
+				},
+			});
+		}
+
 		return {
 			BinaryExpression(node) {
 				if (isLengthAccess(node.left) && isNumericLiteral(node.right)) {
-					const rightValue = node.right.value;
+					const right = node.right.value;
 
-					if ((node.operator === '===' && rightValue === 0) || (node.operator === '<=' && rightValue === 0) || (node.operator === '<' && rightValue === 1)) {
-						reportBinary(node, getLengthMember(node.left), node.operator, rightValue, true);
+					if ((node.operator === '===' && right === 0) || (node.operator === '<=' && right === 0) || (node.operator === '<' && right === 1)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, right, true);
 						return;
 					}
 
-					if ((node.operator === '>' && rightValue === 0) || (node.operator === '>=' && rightValue === 1) || ((node.operator === '!=' || node.operator === '!==') && rightValue === 0)) {
-						reportBinary(node, getLengthMember(node.left), node.operator, rightValue, false);
+					if ((node.operator === '>' && right === 0) || (node.operator === '>=' && right === 1) || ((node.operator === '!=' || node.operator === '!==') && right === 0)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, right, false);
 						return;
 					}
 				}
 
 				if (isNumericLiteral(node.left) && isLengthAccess(node.right)) {
-					const leftValue = node.left.value;
+					const left = node.left.value;
 
-					if ((node.operator === '===' && leftValue === 0) || (node.operator === '>=' && leftValue === 0) || (node.operator === '>' && leftValue === 0)) {
-						reportBinary(node, getLengthMember(node.right), node.operator, leftValue, true);
+					if ((node.operator === '===' && left === 0) || (node.operator === '>=' && left === 0) || (node.operator === '<=' && left === 0)) {
+						reportBinary(node, getLengthMember(node.right), node.operator, left, true);
 						return;
 					}
 
-					if ((node.operator === '<' && leftValue === 1) || (node.operator === '<=' && leftValue === 0)) {
-						reportBinary(node, getLengthMember(node.right), node.operator, leftValue, false);
+					if (node.operator === '<' && left === 0) {
+						reportBinary(node, getLengthMember(node.right), node.operator, left, false);
 					}
 				}
 			},
 
 			UnaryExpression(node) {
-				if (node.operator !== '!') return;
-
-				if (node.parent.type === AST_NODE_TYPES.LogicalExpression && node.parent.operator === '??') {
+				if (node.parent?.type === AST_NODE_TYPES.UnaryExpression && node.parent.operator === '!' && isLengthAccess(node.argument)) {
 					return;
 				}
 
-				if (node.parent.type === AST_NODE_TYPES.ConditionalExpression && node.parent.test === node) {
+				if (isDoubleNegationLength(node)) {
+					const inner = node.argument as TSESTree.UnaryExpression;
+					const lengthNode = getLengthMember(inner.argument);
+					reportBoolean(node, lengthNode);
 					return;
 				}
 
 				const arg = unwrapChain(node.argument);
-				if (isLengthAccess(arg)) {
+				if (!isLengthAccess(arg)) return;
+
+				if (isBooleanContext(node)) {
+					reportBoolean(node, getLengthMember(arg));
+					return;
+				}
+
+				if (node.operator === '!') {
 					reportUnary(node, getLengthMember(arg));
 				}
 			},
 
-			LogicalExpression(node) {
-				if (node.operator !== '??') return;
-
-				if (isLengthAccess(node.left)) {
-					const lengthNode = getLengthMember(node.left);
-					const collection = sourceCode.getText(lengthNode.object);
-
-					context.report({
-						node: node.left,
-						messageId: 'useIsEmpty',
-						data: { collection, operator: '??', value: 0 },
-						fix(fixer) {
-							const fixes = [fixer.replaceText(node.left, `!_.isEmpty(${collection})`)];
-							const importFix = ensureLodashImport(fixer);
-							if (importFix) fixes.push(importFix);
-							return fixes;
-						},
-					});
-				}
-
-				if (node.left.type === AST_NODE_TYPES.UnaryExpression && node.left.operator === '!' && isLengthAccess(node.left.argument)) {
-					const lengthNode = getLengthMember(node.left.argument);
-					const collection = sourceCode.getText(lengthNode.object);
-
-					context.report({
-						node: node.left,
-						messageId: 'useIsEmptyUnary',
-						data: { collection },
-						fix(fixer) {
-							const fixes = [fixer.replaceText(node.left, `_.isEmpty(${collection})`)];
-							const importFix = ensureLodashImport(fixer);
-							if (importFix) fixes.push(importFix);
-							return fixes;
-						},
-					});
+			ConditionalExpression(node) {
+				if (isLengthAccess(node.test) && isBooleanContext(node.test)) {
+					reportBoolean(node.test, getLengthMember(node.test));
 				}
 			},
 
-			ConditionalExpression(node) {
-				if (isLengthAccess(node.test)) {
-					const lengthNode = getLengthMember(node.test);
-					const collection = sourceCode.getText(lengthNode.object);
-
-					context.report({
-						node: node.test,
-						messageId: 'useIsEmpty',
-						data: { collection, operator: '?', value: 0 },
-						fix(fixer) {
-							const fixes = [fixer.replaceText(node.test, `!_.isEmpty(${collection})`)];
-							const importFix = ensureLodashImport(fixer);
-							if (importFix) fixes.push(importFix);
-							return fixes;
-						},
-					});
+			LogicalExpression(node) {
+				if ((node.operator === '&&' || node.operator === '||') && isLengthAccess(node.left)) {
+					reportBoolean(node.left, getLengthMember(node.left));
 				}
+			},
 
-				if (node.test.type === AST_NODE_TYPES.UnaryExpression && node.test.operator === '!' && isLengthAccess(node.test.argument)) {
-					const lengthNode = getLengthMember(node.test.argument);
-					const collection = sourceCode.getText(lengthNode.object);
-
-					context.report({
-						node: node.test,
-						messageId: 'useIsEmptyUnary',
-						data: { collection },
-						fix(fixer) {
-							const fixes = [fixer.replaceText(node.test, `_.isEmpty(${collection})`)];
-							const importFix = ensureLodashImport(fixer);
-							if (importFix) fixes.push(importFix);
-							return fixes;
-						},
-					});
+			IfStatement(node) {
+				if (isLengthAccess(node.test)) {
+					reportBoolean(node.test, getLengthMember(node.test));
 				}
 			},
 		};
