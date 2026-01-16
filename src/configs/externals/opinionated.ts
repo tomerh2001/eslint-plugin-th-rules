@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import {type ConfigWithExtends} from 'typescript-eslint';
 
 export const externalsOpinionated: ConfigWithExtends[] = [
@@ -9,6 +11,8 @@ export const externalsOpinionated: ConfigWithExtends[] = [
 			camelcase: 'warn',
 			'security/detect-unsafe-regex': 'off',
 			'sonarjs/no-clear-text-protocols': 'off',
+			'import-x/extensions': 'off',
+			'unicorn/filename-case': 'off',
 		},
 	},
 ];
