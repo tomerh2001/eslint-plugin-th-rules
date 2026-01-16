@@ -19,114 +19,44 @@ ruleTester.run('no-explicit-nil-compare', rule, {
 	invalid: [
 		{
 			code: 'if (x === null) {}',
-			errors: [
-				{
-					messageId: 'useIsNull',
-					data: { value: 'x' },
-					suggestions: [
-						{
-							messageId: 'useIsNull',
-							output: "import _ from 'lodash';\nif (_.isNull(x)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (_.isNull(x)) {}",
+			errors: [{ messageId: 'useIsNull', data: { value: 'x' } }],
 		},
 
 		{
 			code: 'if (foo !== null) {}',
-			errors: [
-				{
-					messageId: 'useIsNull',
-					data: { value: 'foo' },
-					suggestions: [
-						{
-							messageId: 'useIsNull',
-							output: "import _ from 'lodash';\nif (!_.isNull(foo)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (!_.isNull(foo)) {}",
+			errors: [{ messageId: 'useIsNull', data: { value: 'foo' } }],
 		},
 
 		{
 			code: 'if (bar === undefined) {}',
-			errors: [
-				{
-					messageId: 'useIsUndefined',
-					data: { value: 'bar' },
-					suggestions: [
-						{
-							messageId: 'useIsUndefined',
-							output: "import _ from 'lodash';\nif (_.isUndefined(bar)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (_.isUndefined(bar)) {}",
+			errors: [{ messageId: 'useIsUndefined', data: { value: 'bar' } }],
 		},
 
 		{
 			code: 'if (baz != undefined) {}',
-			errors: [
-				{
-					messageId: 'useIsUndefined',
-					data: { value: 'baz' },
-					suggestions: [
-						{
-							messageId: 'useIsUndefined',
-							output: "import _ from 'lodash';\nif (!_.isUndefined(baz)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (!_.isUndefined(baz)) {}",
+			errors: [{ messageId: 'useIsUndefined', data: { value: 'baz' } }],
 		},
 
 		{
 			code: 'if (null === thing) {}',
-			errors: [
-				{
-					messageId: 'useIsNull',
-					data: { value: 'thing' },
-					suggestions: [
-						{
-							messageId: 'useIsNull',
-							output: "import _ from 'lodash';\nif (_.isNull(thing)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (_.isNull(thing)) {}",
+			errors: [{ messageId: 'useIsNull', data: { value: 'thing' } }],
 		},
 
 		{
 			code: 'if (undefined !== item) {}',
-			errors: [
-				{
-					messageId: 'useIsUndefined',
-					data: { value: 'item' },
-					suggestions: [
-						{
-							messageId: 'useIsUndefined',
-							output: "import _ from 'lodash';\nif (!_.isUndefined(item)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (!_.isUndefined(item)) {}",
+			errors: [{ messageId: 'useIsUndefined', data: { value: 'item' } }],
 		},
 
 		{
 			code: "import _ from 'lodash';\nif (x === null) {}",
-			errors: [
-				{
-					messageId: 'useIsNull',
-					data: { value: 'x' },
-					suggestions: [
-						{
-							messageId: 'useIsNull',
-							output: "import _ from 'lodash';\nif (_.isNull(x)) {}",
-						},
-					],
-				},
-			],
+			output: "import _ from 'lodash';\nif (_.isNull(x)) {}",
+			errors: [{ messageId: 'useIsNull', data: { value: 'x' } }],
 		},
 	],
 });
