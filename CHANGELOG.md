@@ -1,3 +1,11 @@
+## [3.2.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.2...v3.2.3) (2026-01-16)
+
+
+### Bug Fixes
+
+* enhance prefer-is-empty rule to support boolean checks and improve test cases ([0e4a3ec](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/0e4a3ecf74a5a38ecd80d22ea720a224d8b68b45))
+* refactor no-default-export and prefer-is-empty rules to utilize lodash methods for improved readability and performance ([d9937e5](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/d9937e526db8e0a821abfdc7d1ef59ea562dd1ac))
+
 ## [3.2.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.1...v3.2.2) (2026-01-16)
 
 
