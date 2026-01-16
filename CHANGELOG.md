@@ -1,3 +1,11 @@
+## [3.1.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.1...v3.1.2) (2026-01-16)
+
+
+### Bug Fixes
+
+* fixed typescript errors ([81919dd](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/81919dd09a81ade0b19f35b2e6fcf4bf7e74190b))
+* refactor rules definition in coreBase and add type declaration for eslint-plugin-lodash ([21466ec](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/21466ecd3e78a9606b35239f70d482f8d0fce35b))
+
 ## [3.1.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.0...v3.1.1) (2026-01-16)
 
 
