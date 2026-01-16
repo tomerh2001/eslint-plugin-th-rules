@@ -1,3 +1,10 @@
+## [3.1.7](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.6...v3.1.7) (2026-01-16)
+
+
+### Bug Fixes
+
+* update dependencies in package.json for ESLint and TypeScript ([8a12ec9](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/8a12ec943ed9766c61ca407261fa27f02ee10e0e))
+
 ## [3.1.6](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.5...v3.1.6) (2026-01-16)
 
 

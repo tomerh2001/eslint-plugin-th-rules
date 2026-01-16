@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-th-rules",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "description": "A List of custom ESLint rules created by Tomer Horowitz",
   "keywords": [
     "eslint",
@@ -30,12 +30,14 @@
     "@typescript-eslint/rule-tester": "^8.53.0",
     "@typescript-eslint/utils": "^8.53.0",
     "eslint-config-jsdoc": "^15.4.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-config-xo": "^0.49.0",
     "eslint-config-xo-react": "^0.29.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^62.0.0",
     "eslint-plugin-lodash": "^8.0.0",
     "eslint-plugin-n": "^17.23.2",
+    "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-native": "^5.0.0",
@@ -45,10 +47,8 @@
     "globals": "^17.0.0",
     "lodash": "^4.17.21",
     "requireindex": "^1.2.0",
-    "typescript-eslint": "^8.53.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.0",
     "xo": "^1.2.3"
   },
   "devDependencies": {
