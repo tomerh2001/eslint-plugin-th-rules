@@ -15,7 +15,16 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('prefer-is-empty', rule, {
-	valid: ["import _ from 'lodash'; _.isEmpty(values);", "import _ from 'lodash'; !_.isEmpty(values);", 'Array.isArray(values);', 'values.size > 0;', '!_.isEmpty(items);'],
+	valid: [
+		"import _ from 'lodash'; _.isEmpty(values);",
+		"import _ from 'lodash'; !_.isEmpty(values);",
+		'Array.isArray(values);',
+		'values.size > 0;',
+		'!_.isEmpty(items);',
+		'items?.length;',
+		'items.length === 4;',
+		'items?.length > 5;',
+	],
 
 	invalid: [
 		{
@@ -88,6 +97,66 @@ ruleTester.run('prefer-is-empty', rule, {
 			code: "import _ from 'lodash'; values.length === 0;",
 			output: "import _ from 'lodash'; _.isEmpty(values);",
 			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: 'items?.length === 0;',
+			output: "import _ from 'lodash';\n_.isEmpty(items);",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: 'items?.length > 0;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items);",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: '!items?.length;',
+			output: "import _ from 'lodash';\n_.isEmpty(items);",
+			errors: [{ messageId: 'useIsEmptyUnary' }],
+		},
+
+		{
+			code: 'items?.length ?? fallback;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) ?? fallback;",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: '!items?.length ?? fallback;',
+			output: "import _ from 'lodash';\n_.isEmpty(items) ?? fallback;",
+			errors: [{ messageId: 'useIsEmptyUnary' }],
+		},
+
+		{
+			code: 'if (items?.length ?? false) {}',
+			output: "import _ from 'lodash';\nif (!_.isEmpty(items) ?? false) {}",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: 'items.length ? a : b;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) ? a : b;",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: '!items.length ? a : b;',
+			output: "import _ from 'lodash';\n_.isEmpty(items) ? a : b;",
+			errors: [{ messageId: 'useIsEmptyUnary' }],
+		},
+
+		{
+			code: 'items?.length ? a : b;',
+			output: "import _ from 'lodash';\n!_.isEmpty(items) ? a : b;",
+			errors: [{ messageId: 'useIsEmpty' }],
+		},
+
+		{
+			code: '!items?.length ? a : b;',
+			output: "import _ from 'lodash';\n_.isEmpty(items) ? a : b;",
+			errors: [{ messageId: 'useIsEmptyUnary' }],
 		},
 	],
 });

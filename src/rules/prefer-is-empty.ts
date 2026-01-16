@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable th-rules/types-in-dts */
 /* eslint-disable new-cap */
 /* eslint-disable complexity */
@@ -38,12 +39,26 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			if (hasLodash) return null;
 
 			const firstImport = imports[0];
-
 			return firstImport ? fixer.insertTextBefore(firstImport, `import _ from 'lodash';\n`) : fixer.insertTextBeforeRange([0, 0], `import _ from 'lodash';\n`);
 		}
 
+		function unwrapChain(node: TSESTree.Node | undefined): TSESTree.Node | undefined {
+			return node?.type === AST_NODE_TYPES.ChainExpression ? node.expression : node;
+		}
+
 		function isLengthAccess(node: TSESTree.Node | undefined): node is TSESTree.MemberExpression {
-			return !_.isNil(node) && node.type === AST_NODE_TYPES.MemberExpression && node.property.type === AST_NODE_TYPES.Identifier && node.property.name === 'length' && !node.computed;
+			const unwrapped = unwrapChain(node);
+			return (
+				!_.isNil(unwrapped) &&
+				unwrapped.type === AST_NODE_TYPES.MemberExpression &&
+				unwrapped.property.type === AST_NODE_TYPES.Identifier &&
+				unwrapped.property.name === 'length' &&
+				!unwrapped.computed
+			);
+		}
+
+		function getLengthMember(node: TSESTree.Node): TSESTree.MemberExpression {
+			return unwrapChain(node) as TSESTree.MemberExpression;
 		}
 
 		function isNumericLiteral(node: TSESTree.Node | undefined): node is TSESTree.Literal & { value: number } {
@@ -86,36 +101,121 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 		return {
 			BinaryExpression(node) {
 				if (isLengthAccess(node.left) && isNumericLiteral(node.right)) {
-					if ((node.operator === '===' && node.right.value === 0) || (node.operator === '<=' && node.right.value === 0) || (node.operator === '<' && node.right.value === 1)) {
-						reportBinary(node, node.left, node.operator, node.right.value, true);
+					const rightValue = node.right.value;
+
+					if ((node.operator === '===' && rightValue === 0) || (node.operator === '<=' && rightValue === 0) || (node.operator === '<' && rightValue === 1)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, rightValue, true);
 						return;
 					}
 
-					if (
-						(node.operator === '>' && node.right.value === 0) ||
-						(node.operator === '>=' && node.right.value === 1) ||
-						((node.operator === '!=' || node.operator === '!==') && node.right.value === 0)
-					) {
-						reportBinary(node, node.left, node.operator, node.right.value, false);
+					if ((node.operator === '>' && rightValue === 0) || (node.operator === '>=' && rightValue === 1) || ((node.operator === '!=' || node.operator === '!==') && rightValue === 0)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, rightValue, false);
+						return;
 					}
 				}
 
 				if (isNumericLiteral(node.left) && isLengthAccess(node.right)) {
-					if ((node.operator === '===' && node.left.value === 0) || (node.operator === '>=' && node.left.value === 0) || (node.operator === '>' && node.left.value === 0)) {
-						reportBinary(node, node.right, node.operator, node.left.value, true);
+					const leftValue = node.left.value;
+
+					if ((node.operator === '===' && leftValue === 0) || (node.operator === '>=' && leftValue === 0) || (node.operator === '>' && leftValue === 0)) {
+						reportBinary(node, getLengthMember(node.right), node.operator, leftValue, true);
 						return;
 					}
 
-					if ((node.operator === '<' && node.left.value === 1) || (node.operator === '<=' && node.left.value === 0)) {
-						reportBinary(node, node.right, node.operator, node.left.value, false);
+					if ((node.operator === '<' && leftValue === 1) || (node.operator === '<=' && leftValue === 0)) {
+						reportBinary(node, getLengthMember(node.right), node.operator, leftValue, false);
 					}
 				}
 			},
 
 			UnaryExpression(node) {
 				if (node.operator !== '!') return;
-				if (isLengthAccess(node.argument)) {
-					reportUnary(node, node.argument);
+
+				if (node.parent.type === AST_NODE_TYPES.LogicalExpression && node.parent.operator === '??') {
+					return;
+				}
+
+				if (node.parent.type === AST_NODE_TYPES.ConditionalExpression && node.parent.test === node) {
+					return;
+				}
+
+				const arg = unwrapChain(node.argument);
+				if (isLengthAccess(arg)) {
+					reportUnary(node, getLengthMember(arg));
+				}
+			},
+
+			LogicalExpression(node) {
+				if (node.operator !== '??') return;
+
+				if (isLengthAccess(node.left)) {
+					const lengthNode = getLengthMember(node.left);
+					const collection = sourceCode.getText(lengthNode.object);
+
+					context.report({
+						node: node.left,
+						messageId: 'useIsEmpty',
+						data: { collection, operator: '??', value: 0 },
+						fix(fixer) {
+							const fixes = [fixer.replaceText(node.left, `!_.isEmpty(${collection})`)];
+							const importFix = ensureLodashImport(fixer);
+							if (importFix) fixes.push(importFix);
+							return fixes;
+						},
+					});
+				}
+
+				if (node.left.type === AST_NODE_TYPES.UnaryExpression && node.left.operator === '!' && isLengthAccess(node.left.argument)) {
+					const lengthNode = getLengthMember(node.left.argument);
+					const collection = sourceCode.getText(lengthNode.object);
+
+					context.report({
+						node: node.left,
+						messageId: 'useIsEmptyUnary',
+						data: { collection },
+						fix(fixer) {
+							const fixes = [fixer.replaceText(node.left, `_.isEmpty(${collection})`)];
+							const importFix = ensureLodashImport(fixer);
+							if (importFix) fixes.push(importFix);
+							return fixes;
+						},
+					});
+				}
+			},
+
+			ConditionalExpression(node) {
+				if (isLengthAccess(node.test)) {
+					const lengthNode = getLengthMember(node.test);
+					const collection = sourceCode.getText(lengthNode.object);
+
+					context.report({
+						node: node.test,
+						messageId: 'useIsEmpty',
+						data: { collection, operator: '?', value: 0 },
+						fix(fixer) {
+							const fixes = [fixer.replaceText(node.test, `!_.isEmpty(${collection})`)];
+							const importFix = ensureLodashImport(fixer);
+							if (importFix) fixes.push(importFix);
+							return fixes;
+						},
+					});
+				}
+
+				if (node.test.type === AST_NODE_TYPES.UnaryExpression && node.test.operator === '!' && isLengthAccess(node.test.argument)) {
+					const lengthNode = getLengthMember(node.test.argument);
+					const collection = sourceCode.getText(lengthNode.object);
+
+					context.report({
+						node: node.test,
+						messageId: 'useIsEmptyUnary',
+						data: { collection },
+						fix(fixer) {
+							const fixes = [fixer.replaceText(node.test, `_.isEmpty(${collection})`)];
+							const importFix = ensureLodashImport(fixer);
+							if (importFix) fixes.push(importFix);
+							return fixes;
+						},
+					});
 				}
 			},
 		};

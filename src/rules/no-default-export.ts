@@ -25,7 +25,7 @@ const noDefaultExport = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 
 			const parts = cleaned.trim().split(/\s+/g).filter(Boolean);
 
-			if (parts.length === 0) {
+			if (_.isEmpty(parts)) {
 				return 'defaultExport';
 			}
 
