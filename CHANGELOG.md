@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.2...v3.1.3) (2026-01-16)
+
+
+### Bug Fixes
+
+* update dependencies and remove duplicate entry; add xo.config.mjs to .gitignore ([61b97b6](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/61b97b6cb23f82ec6f0575c39199958ab7018808))
+
 ## [3.1.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.1.1...v3.1.2) (2026-01-16)
 
 
