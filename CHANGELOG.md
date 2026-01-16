@@ -1,3 +1,11 @@
+# [3.1.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.0.0...v3.1.0) (2026-01-16)
+
+
+### Features
+
+* enhance configuration exports and add XO config for recommended settings ([958b93b](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/958b93b5c096494420334f8e63a8c7fc3cd29f04))
+* integrate @leancodepl/resolve-eslint-flat-config for improved ESLint configuration management ([3a3d2b9](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/3a3d2b9dc1f86ec7b088c9069449a1250225ca4a))
+
 # [3.0.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v2.8.0...v3.0.0) (2026-01-15)
 
 
