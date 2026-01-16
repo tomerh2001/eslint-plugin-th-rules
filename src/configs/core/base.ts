@@ -18,10 +18,14 @@ export const coreBase: ConfigWithExtends[] = [
 				...globals.jest,
 			},
 		},
-		rules: Object.keys(plugin.rules).reduce<Record<string, string>>((acc, ruleName) => {
-			acc[`th-rules/${ruleName}`] = 'error';
-			return acc;
-		}, {}) as Linter.RulesRecord,
+		rules: (() => {
+			const rules: Record<string, string> = {};
+			for (const ruleName of Object.keys(plugin.rules)) {
+				rules[`th-rules/${ruleName}`] = 'error';
+			}
+
+			return rules as Linter.RulesRecord;
+		})(),
 	},
 ];
 
