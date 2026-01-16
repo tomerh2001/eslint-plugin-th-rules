@@ -1,7 +1,9 @@
 import globals from 'globals';
+import {type Linter} from 'eslint';
+import {type ConfigWithExtends} from 'typescript-eslint';
 import plugin from '../../plugin.js';
 
-export const coreBase = [
+export const coreBase: ConfigWithExtends[] = [
 	{
 		name: 'th-rules/core-base',
 		plugins: {
@@ -16,9 +18,9 @@ export const coreBase = [
 				...globals.jest,
 			},
 		},
-		rules: Object.keys(plugin.rules).reduce((acc, ruleName) => {
+		rules: Object.keys(plugin.rules).reduce<Record<string, string>>((acc, ruleName) => {
 			acc[`th-rules/${ruleName}`] = 'error';
 			return acc;
-		}, {} as Record<string, string>),
+		}, {}) as Linter.RulesRecord,
 	},
 ];

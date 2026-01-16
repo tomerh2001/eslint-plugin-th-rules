@@ -1,4 +1,6 @@
-export const externalsOpinionated = [
+import { ConfigWithExtends } from "typescript-eslint";
+
+export const externalsOpinionated: ConfigWithExtends[] = [
 	{
 		name: 'th-rules/externals-opinionated',
 		rules: {

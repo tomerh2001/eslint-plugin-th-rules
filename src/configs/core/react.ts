@@ -1,4 +1,6 @@
-export const coreReact = [
+import {type ConfigWithExtends} from 'typescript-eslint';
+
+export const coreReact: ConfigWithExtends[] = [
 	{
 		name: 'th-rules/core-react-overrides',
 		rules: {

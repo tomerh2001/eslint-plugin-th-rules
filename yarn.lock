@@ -1158,6 +1158,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@leancodepl/resolve-eslint-flat-config@npm:^9.7.0":
+  version: 9.7.0
+  resolution: "@leancodepl/resolve-eslint-flat-config@npm:9.7.0"
+  peerDependencies:
+    eslint: ">=8.9.0"
+  checksum: 10c0/a8097f5ab7945c88f3f9df960ccdd77faed1ec8a9406401f7cf17265b39acd17a2253c2538c9d51ffbf11050fa0366e3f688b61d58898fa71b938bc4d3683ec7
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^0.2.11":
   version: 0.2.12
   resolution: "@napi-rs/wasm-runtime@npm:0.2.12"
@@ -4598,6 +4607,7 @@ __metadata:
     "@codedependant/semantic-release-docker": "npm:^5.1.1"
     "@eslint/eslintrc": "npm:^3.3.3"
     "@eslint/js": "npm:^9.39.2"
+    "@leancodepl/resolve-eslint-flat-config": "npm:^9.7.0"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
     "@semantic-release/git": "npm:^10.0.1"
