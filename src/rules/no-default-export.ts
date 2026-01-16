@@ -1,4 +1,6 @@
+/* eslint-disable new-cap */
 import * as path from 'node:path';
+import _ from 'lodash';
 import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const noDefaultExport = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-default-export.md')({
@@ -38,7 +40,7 @@ const noDefaultExport = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 					return;
 				}
 
-				if ('id' in node.declaration && node.declaration.id != null) {
+				if ('id' in node.declaration && !_.isNull(node.declaration.id)) {
 					return;
 				}
 

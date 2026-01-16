@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable new-cap */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 import type { RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+import * as ts from 'typescript';
 
 const createRule = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-boolean-coercion.md');
 
@@ -15,7 +15,8 @@ const noBooleanCoercion = createRule({
 		type: 'problem',
 		fixable: 'code',
 		docs: {
-			description: 'Disallow Boolean(value) or !!value. Enforce explicit checks: !_.isNil(value) for scalars and !_.isEmpty(value) for strings, arrays, and objects.',
+			description:
+				'Disallow Boolean(value) or !!value. Enforce explicit checks: !_.isNil(value) for scalars and !_.isEmpty(value) for strings, arrays, and objects. If the value is already boolean, remove coercion.',
 		},
 		schema: [],
 		messages: {
@@ -55,6 +56,17 @@ const noBooleanCoercion = createRule({
 			return node.type === AST_NODE_TYPES.UnaryExpression && node.operator === '!' && node.argument.type === AST_NODE_TYPES.UnaryExpression && node.argument.operator === '!';
 		}
 
+		function isBooleanByTS(node: TSESTree.Node): boolean {
+			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
+			if (!tsNode) {
+				return false;
+			}
+
+			const type = checker.getTypeAtLocation(tsNode);
+
+			return (type.flags & ts.TypeFlags.Boolean) !== 0 || (type.flags & ts.TypeFlags.BooleanLiteral) !== 0; // eslint-disable-line no-bitwise
+		}
+
 		function isCollectionLikeByTS(node: TSESTree.Node): boolean {
 			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 			if (!tsNode) {
@@ -72,8 +84,18 @@ const noBooleanCoercion = createRule({
 		}
 
 		function report(node: TSESTree.Node, valueNode: TSESTree.Node) {
-			const isCollection = isCollectionLikeBySyntax(valueNode) || isCollectionLikeByTS(valueNode);
+			if (isBooleanByTS(valueNode)) {
+				context.report({
+					node,
+					messageId: 'useIsNil',
+					fix(fixer) {
+						return fixer.replaceText(node, context.sourceCode.getText(valueNode));
+					},
+				});
+				return;
+			}
 
+			const isCollection = isCollectionLikeBySyntax(valueNode) || isCollectionLikeByTS(valueNode);
 			const fnName = isCollection ? 'isEmpty' : 'isNil';
 			const replacement = `!${LODASH_IDENT}.${fnName}(${context.sourceCode.getText(valueNode)})`;
 

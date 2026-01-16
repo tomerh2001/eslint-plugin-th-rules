@@ -1,11 +1,5 @@
+/* eslint-disable new-cap */
 import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
-
-type Options = [
-	{
-		allowEnums?: boolean;
-		allowDeclare?: boolean;
-	}?,
-];
 
 const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/types-in-dts.md')({
 	name: 'types-in-dts',
@@ -38,9 +32,6 @@ const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/
 	],
 
 	create(context, [options]) {
-		const allowEnums = Boolean(options.allowEnums);
-		const allowDeclare = Boolean(options.allowDeclare);
-
 		function isDtsFile(filename: string): boolean {
 			if (!filename || filename === '<input>') {
 				return false;
@@ -60,13 +51,11 @@ const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/
 		}
 
 		function reportIfNotDts(node: TSESTree.TSTypeAliasDeclaration | TSESTree.TSInterfaceDeclaration | TSESTree.TSEnumDeclaration): void {
-			const filename = context.getFilename();
-
-			if (isDtsFile(filename)) {
+			if (isDtsFile(context.filename)) {
 				return;
 			}
 
-			if (allowDeclare && hasDeclareModifier(node)) {
+			if (options.allowDeclare && hasDeclareModifier(node)) {
 				return;
 			}
 
@@ -86,7 +75,7 @@ const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/
 			},
 
 			TSEnumDeclaration(node: TSESTree.TSEnumDeclaration) {
-				if (allowEnums) {
+				if (options.allowEnums) {
 					return;
 				}
 

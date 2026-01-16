@@ -23,6 +23,9 @@ ruleTester.run('no-boolean-coercion', rule, {
 		'const BooleanValue = true;',
 		'const fn = Boolean;',
 		'import _ from "lodash"; const x = !_.isNil(value);',
+
+		'const isReady: boolean = true; if (isReady) {}',
+		'let flag: boolean; flag = flag;',
 	],
 
 	invalid: [
@@ -59,6 +62,54 @@ ruleTester.run('no-boolean-coercion', rule, {
 		{
 			code: `import lodash from 'lodash'; const x = Boolean(foo);`,
 			output: `import lodash from 'lodash'; const x = !_.isNil(foo);`,
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: `
+				const isReady: boolean = true;
+				if (Boolean(isReady)) {}
+			`,
+			output: `
+				const isReady: boolean = true;
+				if (isReady) {}
+			`,
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: `
+				let isValid: boolean;
+				!!isValid;
+			`,
+			output: `
+				let isValid: boolean;
+				isValid;
+			`,
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: `
+				let flag: boolean;
+				const x: boolean = Boolean(flag);
+			`,
+			output: `
+				let flag: boolean;
+				const x: boolean = flag;
+			`,
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: `
+				function isReadyFn(): boolean { return true; }
+				Boolean(isReadyFn());
+			`,
+			output: `
+				function isReadyFn(): boolean { return true; }
+				isReadyFn();
+			`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 	],
