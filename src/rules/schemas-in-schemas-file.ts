@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable new-cap */
 import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/schemas-in-schemas-file.md')({
@@ -8,6 +10,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 		docs: {
 			description: 'Require Zod schema declarations to be placed in a .schemas.ts file.',
 		},
+
 		schema: [
 			{
 				type: 'object',
@@ -15,7 +18,6 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 					allowedSuffixes: {
 						type: 'array',
 						items: { type: 'string', minLength: 1 },
-						minItems: 1,
 					},
 					onlyWhenAssigned: { type: 'boolean' },
 					allowInTests: { type: 'boolean' },
@@ -23,6 +25,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 				additionalProperties: false,
 			},
 		],
+
 		messages: {
 			moveSchema: 'Zod schemas must be defined in a dedicated schemas file ({{suffixes}}).',
 		},
@@ -36,11 +39,12 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 		},
 	],
 
-	create(context, [options]) {
-		const allowedSuffixes = options.allowedSuffixes && options.allowedSuffixes.length > 0 ? options.allowedSuffixes : ['.schemas.ts'];
-
-		const onlyWhenAssigned = options.onlyWhenAssigned ?? false;
-		const allowInTests = options.allowInTests ?? false;
+	create(context, [rawOptions]) {
+		const options = {
+			allowedSuffixes: rawOptions?.allowedSuffixes ?? ['.schemas.ts'],
+			onlyWhenAssigned: rawOptions?.onlyWhenAssigned ?? false,
+			allowInTests: rawOptions?.allowInTests ?? false,
+		};
 
 		const zodIdentifiers = new Set<string>();
 
@@ -49,19 +53,15 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 				return false;
 			}
 
-			if (allowInTests && /\.(test|spec)\.[jt]sx?$/.test(filename)) {
+			if (options.allowInTests && /\.(test|spec)\.[jt]sx?$/.test(filename)) {
 				return true;
 			}
 
-			return allowedSuffixes.some((suffix) => filename.endsWith(suffix));
-		}
-
-		function isZodModuleImport(node: TSESTree.ImportDeclaration): boolean {
-			return node.source.value === 'zod';
+			return options.allowedSuffixes.some((suffix) => filename.endsWith(suffix));
 		}
 
 		function collectZodIdentifiersFromImport(node: TSESTree.ImportDeclaration): void {
-			if (!isZodModuleImport(node)) {
+			if (node.source.value !== 'zod') {
 				return;
 			}
 
@@ -79,42 +79,26 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 		function isZodBuilderCall(node: TSESTree.CallExpression): boolean {
 			const { callee } = node;
 
-			if (callee.type !== AST_NODE_TYPES.MemberExpression || callee.computed) {
-				return false;
-			}
-
-			const { object } = callee;
-			const { property } = callee;
-
-			return object.type === AST_NODE_TYPES.Identifier && zodIdentifiers.has(object.name) && property.type === AST_NODE_TYPES.Identifier;
+			return callee.type === AST_NODE_TYPES.MemberExpression && !callee.computed && callee.object.type === AST_NODE_TYPES.Identifier && zodIdentifiers.has(callee.object.name);
 		}
 
 		function isZodChainedBuilderCall(node: TSESTree.CallExpression): boolean {
-			const { callee } = node;
+			let current: TSESTree.Expression | null = node.callee;
 
-			if (callee.type !== AST_NODE_TYPES.MemberExpression || callee.computed) {
-				return false;
-			}
-
-			let current: TSESTree.Expression = callee.object;
-
-			while (current.type === AST_NODE_TYPES.MemberExpression && !current.computed) {
+			while (current?.type === AST_NODE_TYPES.MemberExpression && !current.computed) {
 				current = current.object;
 			}
 
-			return current.type === AST_NODE_TYPES.Identifier && zodIdentifiers.has(current.name);
+			return current?.type === AST_NODE_TYPES.Identifier && zodIdentifiers.has(current.name);
 		}
 
-		function getAssignmentTargetName(callNode: TSESTree.CallExpression): string | undefined {
-			const { parent } = callNode;
+		function getAssignmentTarget(node: TSESTree.CallExpression): boolean {
+			const { parent } = node;
 
-			if (parent.type === AST_NODE_TYPES.VariableDeclarator && parent.id.type === AST_NODE_TYPES.Identifier) {
-				return parent.id.name;
-			}
-
-			if (parent.type === AST_NODE_TYPES.AssignmentExpression && parent.left.type === AST_NODE_TYPES.Identifier) {
-				return parent.left.name;
-			}
+			return (
+				(parent?.type === AST_NODE_TYPES.VariableDeclarator && parent.id.type === AST_NODE_TYPES.Identifier) ||
+				(parent?.type === AST_NODE_TYPES.AssignmentExpression && parent.left.type === AST_NODE_TYPES.Identifier)
+			);
 		}
 
 		function report(node: TSESTree.CallExpression): void {
@@ -122,9 +106,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 				return;
 			}
 
-			const targetName = getAssignmentTargetName(node);
-
-			if (onlyWhenAssigned && !targetName) {
+			if (options.onlyWhenAssigned && !getAssignmentTarget(node)) {
 				return;
 			}
 
@@ -132,15 +114,13 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 				node,
 				messageId: 'moveSchema',
 				data: {
-					suffixes: allowedSuffixes.join(' or '),
+					suffixes: options.allowedSuffixes.join(' or ') || '.schemas.ts',
 				},
 			});
 		}
 
 		return {
-			ImportDeclaration(node: TSESTree.ImportDeclaration) {
-				collectZodIdentifiersFromImport(node);
-			},
+			ImportDeclaration: collectZodIdentifiersFromImport,
 
 			CallExpression(node: TSESTree.CallExpression) {
 				if (zodIdentifiers.size === 0) {
@@ -154,4 +134,5 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 		};
 	},
 });
+
 export default schemasInSchemasFile;
