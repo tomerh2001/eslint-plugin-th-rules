@@ -8,6 +8,8 @@ import {recommendedTypescript} from './configs/bundles/recommended-typescript.js
 import {recommendedTypescriptReact} from './configs/bundles/recommended-typescript-react.js';
 import {rules} from './plugin.js';
 
+export {rules} from './plugin.js';
+
 export const configs = {
 	recommended,
 	recommendedReact,

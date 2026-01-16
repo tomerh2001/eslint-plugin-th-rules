@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "update:eslint-docs": "eslint-doc-generator --config-emoji \"recommended,✅\" --config-emoji \"recommended-react,⚛️\" --config-emoji \"recommended-typescript,🟦\""
+    "update:eslint-docs": "eslint-doc-generator --config-emoji \"recommended,✅\" --config-emoji \"recommendedReact,⚛️\" --config-emoji \"recommendedTypescript,🟦\" --config-emoji \"recommendedTypescriptReact,🎲\""
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.28.6",
