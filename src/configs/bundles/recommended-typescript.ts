@@ -1,5 +1,5 @@
 import {resolveFlatConfig} from '@leancodepl/resolve-eslint-flat-config';
-import { Linter } from 'eslint';
+import {type Linter} from 'eslint';
 import {coreTypescript} from '../core/typescript.js';
 import {recommended} from './recommended.js';
 

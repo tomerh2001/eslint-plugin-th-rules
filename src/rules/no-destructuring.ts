@@ -2,7 +2,7 @@ import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
 const MAX_TAB_COUNT = 3;
 
-export default ESLintUtils.RuleCreator(() =>
+const noDestructuring = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-destructuring.md')({
 	name: 'no-destructuring',
 
@@ -115,7 +115,6 @@ export default ESLintUtils.RuleCreator(() =>
 					continue;
 				}
 
-				// (...args = {}) pattern
 				if (p.type === 'AssignmentPattern') {
 					reportIfNeeded(p.left, p);
 					continue;
@@ -156,3 +155,4 @@ export default ESLintUtils.RuleCreator(() =>
 		};
 	},
 });
+export default noDestructuring;

@@ -1,6 +1,6 @@
 import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
-export default ESLintUtils.RuleCreator(() =>
+const topLevelFunctions = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/top-level-functions.md')({
 	name: 'top-level-functions',
 
@@ -27,9 +27,6 @@ export default ESLintUtils.RuleCreator(() =>
 	create(context) {
 		const sourceCode = context.getSourceCode();
 
-		//
-		// Helpers
-		//
 		function buildArrowFunctionReplacement(
 			functionName: string,
 			arrow: TSESTree.ArrowFunctionExpression,
@@ -47,7 +44,6 @@ export default ESLintUtils.RuleCreator(() =>
 			if (arrow.body.type === 'BlockStatement') {
 				bodyText = sourceCode.getText(arrow.body);
 			} else {
-				// Expression → convert to return
 				const expressionText = sourceCode.getText(arrow.body);
 				bodyText = `{ return ${expressionText}; }`;
 			}
@@ -104,9 +100,6 @@ export default ESLintUtils.RuleCreator(() =>
 			return replaced;
 		}
 
-		//
-		// Utility
-		//
 		function isTopLevel(node: TSESTree.Node): boolean {
 			const {parent} = node;
 			return (
@@ -124,9 +117,6 @@ export default ESLintUtils.RuleCreator(() =>
 			);
 		}
 
-		//
-		// Rule
-		//
 		return {
 			VariableDeclarator(node: TSESTree.VariableDeclarator) {
 				const declParent = node.parent;
@@ -160,9 +150,6 @@ export default ESLintUtils.RuleCreator(() =>
 					return;
 				}
 
-				//
-				// Arrow functions
-				//
 				if (node.init.type === 'ArrowFunctionExpression') {
 					const arrowFunc = node.init;
 					context.report({
@@ -183,9 +170,6 @@ export default ESLintUtils.RuleCreator(() =>
 					});
 				}
 
-				//
-				// Function expressions
-				//
 				if (node.init.type === 'FunctionExpression') {
 					const funcExpr = node.init;
 					context.report({
@@ -210,7 +194,7 @@ export default ESLintUtils.RuleCreator(() =>
 			FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
 				if (node.id) {
 					return;
-				} // Already named
+				}
 
 				if (!isTopLevel(node)) {
 					return;
@@ -239,3 +223,4 @@ export default ESLintUtils.RuleCreator(() =>
 		};
 	},
 });
+export default topLevelFunctions;

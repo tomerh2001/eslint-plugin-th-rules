@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import {ESLintUtils, type TSESTree} from '@typescript-eslint/utils';
 
-export default ESLintUtils.RuleCreator(() =>
+const noDefaultExport = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-default-export.md')({
 	name: 'no-default-export',
 	meta: {
@@ -20,10 +20,8 @@ export default ESLintUtils.RuleCreator(() =>
 
 	create(context) {
 		function generateExportNameFromFileName(fileName: string): string {
-			// Remove all invalid characters, replace with spaces
 			const cleaned = fileName.replaceAll(/[^a-zA-Z\d]+/g, ' ');
 
-			// Split into tokens
 			const parts = cleaned
 				.trim()
 				.split(/\s+/g)
@@ -33,7 +31,6 @@ export default ESLintUtils.RuleCreator(() =>
 				return 'defaultExport';
 			}
 
-			// Build camelCase
 			const [first, ...rest] = parts;
 
 			return (
@@ -45,12 +42,10 @@ export default ESLintUtils.RuleCreator(() =>
 
 		return {
 			ExportDefaultDeclaration(node: TSESTree.ExportDefaultDeclaration) {
-				// 1. skip `export default Foo`
 				if (node.declaration.type === 'Identifier') {
 					return;
 				}
 
-				// 2. skip named function/class: `export default function Foo() {}`
 				if ('id' in node.declaration && node.declaration.id != null) {
 					return;
 				}
@@ -74,3 +69,5 @@ export default ESLintUtils.RuleCreator(() =>
 		};
 	},
 });
+export default noDefaultExport;
+

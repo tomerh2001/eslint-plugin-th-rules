@@ -17,7 +17,7 @@ const DEFAULT_ALLOWED_PATTERNS: RegExp[] = [
 	/^\s*eslint-(disable|enable|env|globals|ignore|directive)/,
 ];
 
-export default ESLintUtils.RuleCreator(() =>
+const noComments = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/no-comments.md')<Options, MessageIds>({
 	name: 'no-comments',
 
@@ -103,3 +103,4 @@ export default ESLintUtils.RuleCreator(() =>
 		};
 	},
 });
+export default noComments;

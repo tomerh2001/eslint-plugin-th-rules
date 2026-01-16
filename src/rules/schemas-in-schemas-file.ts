@@ -8,7 +8,7 @@ type Options = [
   }?,
 ];
 
-export default ESLintUtils.RuleCreator(() =>
+const schemasInSchemasFile = ESLintUtils.RuleCreator(() =>
 	'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/schemas-in-schemas-file.md')({
 	name: 'schemas-in-schemas-file',
 
@@ -210,3 +210,4 @@ export default ESLintUtils.RuleCreator(() =>
 		};
 	},
 });
+export default schemasInSchemasFile;
