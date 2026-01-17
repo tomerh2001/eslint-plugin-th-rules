@@ -1,6 +1,6 @@
-# th-rules/noDefaultExport
+# th-rules/no-boolean-coercion
 
-📝 Convert unnamed default exports to named default exports based on the file name.
+📝 Disallow Boolean(value) or !!value. Enforce explicit checks: !_.isNil(value) for scalars and !_.isEmpty(value) for strings, arrays, and objects. If the value is already boolean, remove coercion.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 

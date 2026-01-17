@@ -13,11 +13,11 @@ export const rules = {
 	'no-comments': noComments,
 	'no-default-export': noDefaultExport,
 	'no-destructuring': noDestructuring,
+	'no-explicit-nil-compare': noExplicitNilCompare,
 	'prefer-is-empty': preferIsEmpty,
 	'schemas-in-schemas-file': schemasInSchemasFile,
 	'top-level-functions': topLevelFunctions,
 	'types-in-dts': typesInDts,
-	'no-explicit-nil-compare': noExplicitNilCompare,
 };
 
 const plugin = { rules };

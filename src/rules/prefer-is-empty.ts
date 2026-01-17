@@ -13,13 +13,14 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 	meta: {
 		type: 'problem',
 		docs: {
-			description: 'Require _.isEmpty instead of length comparisons or !x.length checks.',
+			description: 'Require _.isEmpty instead of length comparisons or boolean checks on .length.',
 		},
 		fixable: 'code',
 		schema: [],
 		messages: {
 			useIsEmpty: 'Use _.isEmpty({{collection}}) instead of checking {{collection}}.length {{operator}} {{value}}.',
 			useIsEmptyUnary: 'Use _.isEmpty({{collection}}) instead of negating {{collection}}.length.',
+			useIsEmptyBoolean: 'Use _.isEmpty({{collection}}) instead of boolean checking {{collection}}.length.',
 		},
 	},
 
@@ -38,16 +39,68 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			if (hasLodash) return null;
 
 			const firstImport = imports[0];
-
 			return firstImport ? fixer.insertTextBefore(firstImport, `import _ from 'lodash';\n`) : fixer.insertTextBeforeRange([0, 0], `import _ from 'lodash';\n`);
 		}
 
+		function unwrapChain(node: TSESTree.Node | undefined): TSESTree.Node | undefined {
+			return node?.type === AST_NODE_TYPES.ChainExpression ? node.expression : node;
+		}
+
 		function isLengthAccess(node: TSESTree.Node | undefined): node is TSESTree.MemberExpression {
-			return !_.isNil(node) && node.type === AST_NODE_TYPES.MemberExpression && node.property.type === AST_NODE_TYPES.Identifier && node.property.name === 'length' && !node.computed;
+			const unwrapped = unwrapChain(node);
+			return (
+				!_.isNil(unwrapped) &&
+				unwrapped.type === AST_NODE_TYPES.MemberExpression &&
+				unwrapped.property.type === AST_NODE_TYPES.Identifier &&
+				unwrapped.property.name === 'length' &&
+				!unwrapped.computed
+			);
+		}
+
+		function getLengthMember(node: TSESTree.Node): TSESTree.MemberExpression {
+			return unwrapChain(node) as TSESTree.MemberExpression;
 		}
 
 		function isNumericLiteral(node: TSESTree.Node | undefined): node is TSESTree.Literal & { value: number } {
 			return !_.isNil(node) && node.type === AST_NODE_TYPES.Literal && typeof node.value === 'number';
+		}
+
+		function isDoubleNegationLength(node: TSESTree.UnaryExpression): boolean {
+			return node.operator === '!' && node.argument.type === AST_NODE_TYPES.UnaryExpression && node.argument.operator === '!' && isLengthAccess(node.argument.argument);
+		}
+
+		function isBooleanContext(node: TSESTree.Node): boolean {
+			const { parent } = node;
+			if (!parent) return false;
+
+			switch (parent.type) {
+				case AST_NODE_TYPES.IfStatement:
+				case AST_NODE_TYPES.WhileStatement:
+				case AST_NODE_TYPES.DoWhileStatement:
+				case AST_NODE_TYPES.ForStatement: {
+					return parent.test === node;
+				}
+
+				case AST_NODE_TYPES.UnaryExpression: {
+					return parent.operator === '!';
+				}
+
+				case AST_NODE_TYPES.LogicalExpression: {
+					return parent.operator === '&&' || parent.operator === '||';
+				}
+
+				case AST_NODE_TYPES.ConditionalExpression: {
+					return parent.test === node;
+				}
+
+				case AST_NODE_TYPES.CallExpression: {
+					return parent.callee.type === AST_NODE_TYPES.Identifier && parent.callee.name === 'Boolean' && parent.arguments.length === 1 && parent.arguments[0] === node;
+				}
+
+				default: {
+					return false;
+				}
+			}
 		}
 
 		function reportBinary(node: TSESTree.BinaryExpression, lengthNode: TSESTree.MemberExpression, operator: string, value: number, isEmptyCheck: boolean) {
@@ -83,39 +136,92 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			});
 		}
 
+		function reportBoolean(node: TSESTree.Node, lengthNode: TSESTree.MemberExpression) {
+			const collection = sourceCode.getText(lengthNode.object);
+
+			context.report({
+				node,
+				messageId: 'useIsEmptyBoolean',
+				data: { collection },
+				fix(fixer) {
+					const fixes = [fixer.replaceText(node, `!_.isEmpty(${collection})`)];
+					const importFix = ensureLodashImport(fixer);
+					if (importFix) fixes.push(importFix);
+					return fixes;
+				},
+			});
+		}
+
 		return {
 			BinaryExpression(node) {
 				if (isLengthAccess(node.left) && isNumericLiteral(node.right)) {
-					if ((node.operator === '===' && node.right.value === 0) || (node.operator === '<=' && node.right.value === 0) || (node.operator === '<' && node.right.value === 1)) {
-						reportBinary(node, node.left, node.operator, node.right.value, true);
+					const right = node.right.value;
+
+					if ((node.operator === '===' && right === 0) || (node.operator === '<=' && right === 0) || (node.operator === '<' && right === 1)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, right, true);
 						return;
 					}
 
-					if (
-						(node.operator === '>' && node.right.value === 0) ||
-						(node.operator === '>=' && node.right.value === 1) ||
-						((node.operator === '!=' || node.operator === '!==') && node.right.value === 0)
-					) {
-						reportBinary(node, node.left, node.operator, node.right.value, false);
+					if ((node.operator === '>' && right === 0) || (node.operator === '>=' && right === 1) || ((node.operator === '!=' || node.operator === '!==') && right === 0)) {
+						reportBinary(node, getLengthMember(node.left), node.operator, right, false);
+						return;
 					}
 				}
 
 				if (isNumericLiteral(node.left) && isLengthAccess(node.right)) {
-					if ((node.operator === '===' && node.left.value === 0) || (node.operator === '>=' && node.left.value === 0) || (node.operator === '>' && node.left.value === 0)) {
-						reportBinary(node, node.right, node.operator, node.left.value, true);
+					const left = node.left.value;
+
+					if ((node.operator === '===' && left === 0) || (node.operator === '>=' && left === 0) || (node.operator === '<=' && left === 0)) {
+						reportBinary(node, getLengthMember(node.right), node.operator, left, true);
 						return;
 					}
 
-					if ((node.operator === '<' && node.left.value === 1) || (node.operator === '<=' && node.left.value === 0)) {
-						reportBinary(node, node.right, node.operator, node.left.value, false);
+					if (node.operator === '<' && left === 0) {
+						reportBinary(node, getLengthMember(node.right), node.operator, left, false);
 					}
 				}
 			},
 
 			UnaryExpression(node) {
-				if (node.operator !== '!') return;
-				if (isLengthAccess(node.argument)) {
-					reportUnary(node, node.argument);
+				if (node.parent?.type === AST_NODE_TYPES.UnaryExpression && node.parent.operator === '!' && isLengthAccess(node.argument)) {
+					return;
+				}
+
+				if (isDoubleNegationLength(node)) {
+					const inner = node.argument as TSESTree.UnaryExpression;
+					const lengthNode = getLengthMember(inner.argument);
+					reportBoolean(node, lengthNode);
+					return;
+				}
+
+				const arg = unwrapChain(node.argument);
+				if (!isLengthAccess(arg)) return;
+
+				if (isBooleanContext(node)) {
+					reportBoolean(node, getLengthMember(arg));
+					return;
+				}
+
+				if (node.operator === '!') {
+					reportUnary(node, getLengthMember(arg));
+				}
+			},
+
+			ConditionalExpression(node) {
+				if (isLengthAccess(node.test) && isBooleanContext(node.test)) {
+					reportBoolean(node.test, getLengthMember(node.test));
+				}
+			},
+
+			LogicalExpression(node) {
+				if ((node.operator === '&&' || node.operator === '||') && isLengthAccess(node.left)) {
+					reportBoolean(node.left, getLengthMember(node.left));
+				}
+			},
+
+			IfStatement(node) {
+				if (isLengthAccess(node.test)) {
+					reportBoolean(node.test, getLengthMember(node.test));
 				}
 			},
 		};

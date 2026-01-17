@@ -1,6 +1,6 @@
-# th-rules/schemasInSchemasFile
+# th-rules/no-destructuring
 
-📝 Require Zod schema declarations to be placed in a .schemas.ts file.
+📝 Disallow destructuring that does not meet certain conditions.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 
@@ -10,10 +10,9 @@
 
 <!-- begin auto-generated rule options list -->
 
-| Name               | Type     |
-| :----------------- | :------- |
-| `allowedSuffixes`  | String[] |
-| `allowInTests`     | Boolean  |
-| `onlyWhenAssigned` | Boolean  |
+| Name                           | Type    |
+| :----------------------------- | :------ |
+| `maximumDestructuredVariables` | Integer |
+| `maximumLineLength`            | Integer |
 
 <!-- end auto-generated rule options list -->

@@ -1,6 +1,6 @@
-# th-rules/typesInDts
+# th-rules/schemas-in-schemas-file
 
-📝 Require TypeScript type declarations (type/interface/enum) to be placed in .d.ts files.
+📝 Require Zod schema declarations to be placed in a .schemas.ts file.
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 
@@ -10,9 +10,10 @@
 
 <!-- begin auto-generated rule options list -->
 
-| Name           | Type    |
-| :------------- | :------ |
-| `allowDeclare` | Boolean |
-| `allowEnums`   | Boolean |
+| Name               | Type     |
+| :----------------- | :------- |
+| `allowedSuffixes`  | String[] |
+| `allowInTests`     | Boolean  |
+| `onlyWhenAssigned` | Boolean  |
 
 <!-- end auto-generated rule options list -->
