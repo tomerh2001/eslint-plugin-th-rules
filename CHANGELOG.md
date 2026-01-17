@@ -1,3 +1,20 @@
+# [3.3.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.3...v3.3.0) (2026-01-17)
+
+
+### Bug Fixes
+
+* update prefer-explicit-nil-check rule to disallow implicit truthy/falsy checks and enhance test cases ([8e0165f](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/8e0165f019179934ee5f270f4a52a67ae868dde2))
+
+
+### Features
+
+* add prefer-explicit-check rule to enforce explicit lodash checks ([2098931](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/2098931941f8695098a4c295f6c927fa42851d6e))
+* add prefer-explicit-nil-check rule and enhance test cases for explicit nil checks ([9cd2dbe](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9cd2dbed8d8f99097b5e3d4970ec1fa146ff65f1))
+* add prefer-explicit-nil-check rule to enforce explicit nil checks using _.isNil ([58f8394](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/58f8394df351545dd5e05c4b5a543ed2055c7545))
+* enhance prefer-explicit-nil-check rule to support ChainExpression and update test cases ([81e0c23](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/81e0c23a17d3a7d36e7caceef95cbca3249eb975))
+* enhance prefer-explicit-nil-check rule with side effect detection and update test cases ([bb51479](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/bb51479f1fdb342271ba9d0391280fe83503b507))
+* replace implicit checks with lodash's isNil for better null/undefined handling ([a7d7ef2](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a7d7ef2590df58ac78486801a63d4f9fba8325e3))
+
 ## [3.2.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.2...v3.2.3) (2026-01-16)
 
 
