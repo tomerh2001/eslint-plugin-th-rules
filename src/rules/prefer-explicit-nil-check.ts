@@ -16,11 +16,11 @@ const preferExplicitNilCheck = createRule({
 		type: 'problem',
 		fixable: 'code',
 		docs: {
-			description: 'Disallow implicit falsy negation (!value). Require explicit _.isNil(value).',
+			description: 'Disallow implicit falsy or truthy checks. Require explicit _.isNil(value).',
 		},
 		schema: [],
 		messages: {
-			useIsNil: 'Implicit falsy negation is not allowed. Use _.isNil(value) instead.',
+			useIsNil: 'Implicit truthy/falsy checks are not allowed. Use _.isNil(value) or !_.isNil(value).',
 		},
 	},
 
@@ -51,9 +51,7 @@ const preferExplicitNilCheck = createRule({
 
 		function isBooleanByTS(node: TSESTree.Node): boolean {
 			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
-			if (!tsNode) {
-				return false;
-			}
+			if (!tsNode) return false;
 
 			const type = checker.getTypeAtLocation(tsNode);
 
@@ -75,29 +73,28 @@ const preferExplicitNilCheck = createRule({
 			return node.argument.type === AST_NODE_TYPES.UnaryExpression && node.argument.operator === '!';
 		}
 
+		function isImplicitTruthyExpression(node: TSESTree.Node): boolean {
+			if (node.type === AST_NODE_TYPES.Identifier || node.type === AST_NODE_TYPES.MemberExpression) {
+				return true;
+			}
+
+			return false;
+		}
+
 		return {
 			UnaryExpression(node) {
-				if (node.operator !== '!') {
-					return;
-				}
+				if (node.operator !== '!') return;
 
 				if (node.parent?.type === AST_NODE_TYPES.UnaryExpression && node.parent.operator === '!') {
 					return;
 				}
 
-				if (isDoubleNegation(node)) {
-					return;
-				}
+				if (isDoubleNegation(node)) return;
 
 				const valueNode = node.argument;
 
-				if (isAlreadyExplicitCheck(valueNode)) {
-					return;
-				}
-
-				if (isBooleanByTS(valueNode)) {
-					return;
-				}
+				if (isAlreadyExplicitCheck(valueNode)) return;
+				if (isBooleanByTS(valueNode)) return;
 
 				const text = context.sourceCode.getText(valueNode);
 				const replacement = `${LODASH_IDENT}.isNil(${text})`;
@@ -107,12 +104,40 @@ const preferExplicitNilCheck = createRule({
 					messageId: 'useIsNil',
 					fix(fixer) {
 						const fixes = [fixer.replaceText(node, replacement)];
-
 						const importFix = getLodashImportFixer(fixer);
-						if (importFix) {
-							fixes.push(importFix);
-						}
+						if (importFix) fixes.push(importFix);
+						return fixes;
+					},
+				});
+			},
 
+			IfStatement(node) {
+				const { test } = node;
+
+				if (test.type === AST_NODE_TYPES.BinaryExpression || test.type === AST_NODE_TYPES.LogicalExpression) {
+					return;
+				}
+
+				if (test.type === AST_NODE_TYPES.UnaryExpression && test.operator === '!') {
+					return;
+				}
+
+				if (!isImplicitTruthyExpression(test)) return;
+
+				if (isAlreadyExplicitCheck(test)) return;
+
+				if (isBooleanByTS(test)) return;
+
+				const text = context.sourceCode.getText(test);
+				const replacement = `!${LODASH_IDENT}.isNil(${text})`;
+
+				context.report({
+					node: test,
+					messageId: 'useIsNil',
+					fix(fixer) {
+						const fixes = [fixer.replaceText(test, replacement)];
+						const importFix = getLodashImportFixer(fixer);
+						if (importFix) fixes.push(importFix);
 						return fixes;
 					},
 				});

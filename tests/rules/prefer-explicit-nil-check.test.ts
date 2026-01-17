@@ -45,6 +45,12 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		},
 
 		{
+			code: 'if (user) {}',
+			output: "import _ from 'lodash';\nif (!_.isNil(user)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
 			code: "import _ from 'lodash';\nif (!item) {}",
 			output: "import _ from 'lodash';\nif (_.isNil(item)) {}",
 			errors: [{ messageId: 'useIsNil' }],
