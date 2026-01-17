@@ -5,9 +5,7 @@ import rule from '../../src/rules/prefer-explicit-nil-check';
 const ruleTester = new RuleTester({
 	languageOptions: {
 		parserOptions: {
-			projectService: {
-				allowDefaultProject: ['*.ts*'],
-			},
+			projectService: { allowDefaultProject: ['*.ts*'] },
 			tsconfigRootDir: '/../..',
 		},
 	},
@@ -18,6 +16,7 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'_.isNil(value);',
 		'if (_.isNil(item)) {}',
 		'if (!_.isNil(item)) {}',
+
 		'if (value > 0) {}',
 		'if (value === "test") {}',
 		'if (value !== 123) {}',
@@ -29,6 +28,17 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 
 		'if (!!foo) {}',
 		'if (!!someBoolean) {}',
+
+		'if (!_.isNil(a) && !_.isNil(b)) {}',
+		'if (_.isNil(a) || _.isNil(b)) {}',
+
+		'const x = _.isNil(a) ? 1 : 2;',
+
+		'if (!!_.isNil(a)) {}',
+
+		'const option = context.options[0] ?? {};',
+		'x ?? y',
+		'x || y',
 	],
 
 	invalid: [
@@ -77,6 +87,72 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		{
 			code: 'let x = null as any; if (!x) {}',
 			output: "import _ from 'lodash';\nlet x = null as any; if (_.isNil(x)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (a && b) {}',
+			output: "import _ from 'lodash';\nif (!_.isNil(a) && !_.isNil(b)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (a || b) {}',
+			output: "import _ from 'lodash';\nif (!_.isNil(a) || !_.isNil(b)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (!a && b) {}',
+			output: "import _ from 'lodash';\nif (_.isNil(a) && !_.isNil(b)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (!a || !b) {}',
+			output: "import _ from 'lodash';\nif (_.isNil(a) || _.isNil(b)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if ((x && y) || z) {}',
+			output: "import _ from 'lodash';\nif ((!_.isNil(x) && !_.isNil(y)) || !_.isNil(z)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'const r = a ? 1 : 2;',
+			output: "import _ from 'lodash';\nconst r = !_.isNil(a) ? 1 : 2;",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'a && doSomething();',
+			output: "import _ from 'lodash';\n!_.isNil(a) && doSomething();",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'foo || bar();',
+			output: "import _ from 'lodash';\n!_.isNil(foo) || bar();",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (!x && y) {}',
+			output: "import _ from 'lodash';\nif (_.isNil(x) && !_.isNil(y)) {}",
+			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'const x: boolean = true; if (!x && y) {}',
+			output: "import _ from 'lodash';\nconst x: boolean = true; if (!x && !_.isNil(y)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'x ?? (y ? y : z)',
+			output: "import _ from 'lodash';\nx ?? (!_.isNil(y) ? y : z)",
 			errors: [{ messageId: 'useIsNil' }],
 		},
 	],
