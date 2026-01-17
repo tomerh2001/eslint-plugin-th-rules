@@ -130,7 +130,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 			},
 
 			MethodDefinition(node: TSESTree.MethodDefinition) {
-				if (node.value?.params) {
+				if (!_.isNil(node.value?.params)) {
 					checkParameters(node.value.params);
 				}
 			},

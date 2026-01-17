@@ -78,7 +78,15 @@ const preferExplicitNilCheck = createRule({
 		}
 
 		function isImplicitOperand(node: TSESTree.Node): boolean {
-			return node.type === AST_NODE_TYPES.Identifier || node.type === AST_NODE_TYPES.MemberExpression;
+			if (node.type === AST_NODE_TYPES.Identifier) return true;
+			if (node.type === AST_NODE_TYPES.MemberExpression) return true;
+
+			if (node.type === AST_NODE_TYPES.ChainExpression) {
+				const inner = node.expression;
+				return inner.type === AST_NODE_TYPES.MemberExpression;
+			}
+
+			return false;
 		}
 
 		function reportFull(node: TSESTree.Node, replacement: string) {
@@ -122,7 +130,7 @@ const preferExplicitNilCheck = createRule({
 				}
 
 				case AST_NODE_TYPES.SequenceExpression: {
-					return node.expressions.some((element) => expressionHasSideEffects(element));
+					return node.expressions.some(expressionHasSideEffects);
 				}
 
 				case AST_NODE_TYPES.UnaryExpression: {
@@ -135,6 +143,10 @@ const preferExplicitNilCheck = createRule({
 
 				case AST_NODE_TYPES.LogicalExpression: {
 					return expressionHasSideEffects(node.left) || expressionHasSideEffects(node.right);
+				}
+
+				case AST_NODE_TYPES.ChainExpression: {
+					return expressionHasSideEffects(node.expression);
 				}
 
 				default: {
@@ -155,6 +167,11 @@ const preferExplicitNilCheck = createRule({
 			if (isAlreadyExplicitCheck(node)) return;
 
 			switch (node.type) {
+				case AST_NODE_TYPES.ChainExpression: {
+					inspectExpression(node.expression, mode);
+					return;
+				}
+
 				case AST_NODE_TYPES.LogicalExpression: {
 					if (node.operator === '??') {
 						inspectExpression(node.left, 'value');

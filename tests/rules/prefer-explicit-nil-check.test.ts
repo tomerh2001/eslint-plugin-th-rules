@@ -160,5 +160,17 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 			output: "import _ from 'lodash';\nx ?? (!_.isNil(y) ? y : z)",
 			errors: [{ messageId: 'useIsNil' }],
 		},
+
+		{
+			code: 'if (node.value?.params) {}',
+			output: "import _ from 'lodash';\nif (!_.isNil(node.value?.params)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'if (!node.value?.params) {}',
+			output: "import _ from 'lodash';\nif (_.isNil(node.value?.params)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
 	],
 });
