@@ -37,8 +37,13 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'if (!!_.isNil(a)) {}',
 
 		'const option = context.options[0] ?? {};',
+
 		'x ?? y',
 		'x || y',
+		'x && y',
+		'const v = x || y;',
+		'const v = x && y;',
+		'return x || y;',
 	],
 
 	invalid: [

@@ -11,6 +11,8 @@ const createRule = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/
 const LODASH_MODULE = 'lodash';
 const LODASH_IDENT = '_';
 
+type InspectMode = 'test' | 'shortCircuit' | 'value';
+
 const preferExplicitNilCheck = createRule({
 	name: 'prefer-explicit-nil-check',
 
@@ -106,33 +108,80 @@ const preferExplicitNilCheck = createRule({
 			reportFull(node, `${LODASH_IDENT}.isNil(${text})`);
 		}
 
+		function expressionHasSideEffects(node: TSESTree.Expression): boolean {
+			switch (node.type) {
+				case AST_NODE_TYPES.CallExpression:
+				case AST_NODE_TYPES.NewExpression:
+				case AST_NODE_TYPES.AssignmentExpression:
+				case AST_NODE_TYPES.UpdateExpression:
+				case AST_NODE_TYPES.AwaitExpression:
+				case AST_NODE_TYPES.YieldExpression:
+				case AST_NODE_TYPES.ImportExpression:
+				case AST_NODE_TYPES.TaggedTemplateExpression: {
+					return true;
+				}
+
+				case AST_NODE_TYPES.SequenceExpression: {
+					return node.expressions.some((element) => expressionHasSideEffects(element));
+				}
+
+				case AST_NODE_TYPES.UnaryExpression: {
+					return node.operator === 'delete';
+				}
+
+				case AST_NODE_TYPES.ConditionalExpression: {
+					return expressionHasSideEffects(node.test) || expressionHasSideEffects(node.consequent) || expressionHasSideEffects(node.alternate);
+				}
+
+				case AST_NODE_TYPES.LogicalExpression: {
+					return expressionHasSideEffects(node.left) || expressionHasSideEffects(node.right);
+				}
+
+				default: {
+					return false;
+				}
+			}
+		}
+
 		/**
-		 * Inspect an expression for *truthy/falsy* coercions.
+		 * Inspect an expression for truthy/falsy coercions.
 		 *
-		 * @param isTestPosition When true, this expression is being converted to boolean by the language
-		 * (e.g. if/while/?: test). When false, the expression is not itself a condition, but may contain
-		 * sub-expressions that are conditions (e.g. the right side of `a && expr` in an expression statement).
+		 * mode:
+		 * - 'test': expression is in a boolean-test position (must enforce)
+		 * - 'shortCircuit': expression-statement short-circuit control flow (must enforce gating)
+		 * - 'value': value context (must NOT rewrite operands)
 		 */
-		function inspectExpression(node: TSESTree.Expression, isTestPosition: boolean): void {
+		function inspectExpression(node: TSESTree.Expression, mode: InspectMode): void {
 			if (isAlreadyExplicitCheck(node)) return;
 
 			switch (node.type) {
 				case AST_NODE_TYPES.LogicalExpression: {
 					if (node.operator === '??') {
-						inspectExpression(node.left, false);
-						inspectExpression(node.right, false);
+						inspectExpression(node.left, 'value');
+						inspectExpression(node.right, 'value');
 						return;
 					}
 
 					if (node.operator === '&&' || node.operator === '||') {
-						inspectExpression(node.left, true);
+						if (mode === 'test') {
+							inspectExpression(node.left, 'test');
+							inspectExpression(node.right, 'test');
+							return;
+						}
 
-						inspectExpression(node.right, isTestPosition);
+						if (mode === 'shortCircuit') {
+							inspectExpression(node.left, 'test');
+							inspectExpression(node.right, 'shortCircuit');
+							return;
+						}
+
+						inspectExpression(node.left, 'value');
+						inspectExpression(node.right, 'value');
 						return;
 					}
 
-					inspectExpression(node.left, false);
-					inspectExpression(node.right, false);
+					inspectExpression(node.left, 'value');
+					inspectExpression(node.right, 'value');
 					return;
 				}
 
@@ -151,17 +200,17 @@ const preferExplicitNilCheck = createRule({
 						return;
 					}
 
-					inspectExpression(arg, true);
+					inspectExpression(arg, 'test');
 					return;
 				}
 
 				case AST_NODE_TYPES.ConditionalExpression: {
-					inspectExpression(node.test, true);
+					inspectExpression(node.test, 'test');
 					return;
 				}
 
 				default: {
-					if (isTestPosition && isImplicitOperand(node)) {
+					if (mode === 'test' && isImplicitOperand(node)) {
 						if (isBooleanByTS(node)) return;
 						transformTruthy(node);
 					}
@@ -171,32 +220,29 @@ const preferExplicitNilCheck = createRule({
 
 		return {
 			IfStatement(node) {
-				inspectExpression(node.test, true);
+				inspectExpression(node.test, 'test');
 			},
 
 			WhileStatement(node) {
-				inspectExpression(node.test, true);
+				inspectExpression(node.test, 'test');
 			},
 
 			DoWhileStatement(node) {
-				inspectExpression(node.test, true);
+				inspectExpression(node.test, 'test');
 			},
 
 			ForStatement(node) {
-				if (!_.isNil(node.test)) inspectExpression(node.test, true);
+				if (!_.isNil(node.test)) inspectExpression(node.test, 'test');
 			},
 
 			ConditionalExpression(node) {
-				inspectExpression(node.test, true);
-			},
-
-			LogicalExpression(node) {
-				inspectExpression(node, false);
+				inspectExpression(node.test, 'test');
 			},
 
 			ExpressionStatement(node) {
-				if (node.expression.type === AST_NODE_TYPES.LogicalExpression) {
-					inspectExpression(node.expression, false);
+				const expr = node.expression;
+				if (expr.type === AST_NODE_TYPES.LogicalExpression && (expr.operator === '&&' || expr.operator === '||') && expressionHasSideEffects(expr.right)) {
+					inspectExpression(expr, 'shortCircuit');
 				}
 			},
 		};
