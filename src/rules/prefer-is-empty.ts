@@ -39,7 +39,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 			if (hasLodash) return null;
 
 			const firstImport = imports[0];
-			return firstImport ? fixer.insertTextBefore(firstImport, `import _ from 'lodash';\n`) : fixer.insertTextBeforeRange([0, 0], `import _ from 'lodash';\n`);
+			return _.isNil(firstImport) ? fixer.insertTextBeforeRange([0, 0], `import _ from 'lodash';\n`) : fixer.insertTextBefore(firstImport, `import _ from 'lodash';\n`);
 		}
 
 		function unwrapChain(node: TSESTree.Node | undefined): TSESTree.Node | undefined {
@@ -71,7 +71,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 
 		function isBooleanContext(node: TSESTree.Node): boolean {
 			const { parent } = node;
-			if (!parent) return false;
+			if (_.isNil(parent)) return false;
 
 			switch (parent.type) {
 				case AST_NODE_TYPES.IfStatement:
@@ -114,7 +114,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 				fix(fixer) {
 					const fixes = [fixer.replaceText(node, replacement)];
 					const importFix = ensureLodashImport(fixer);
-					if (importFix) fixes.push(importFix);
+					if (!_.isNil(importFix)) fixes.push(importFix);
 					return fixes;
 				},
 			});
@@ -130,7 +130,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 				fix(fixer) {
 					const fixes = [fixer.replaceText(node, `_.isEmpty(${collection})`)];
 					const importFix = ensureLodashImport(fixer);
-					if (importFix) fixes.push(importFix);
+					if (!_.isNil(importFix)) fixes.push(importFix);
 					return fixes;
 				},
 			});
@@ -146,7 +146,7 @@ const preferIsEmpty = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh20
 				fix(fixer) {
 					const fixes = [fixer.replaceText(node, `!_.isEmpty(${collection})`)];
 					const importFix = ensureLodashImport(fixer);
-					if (importFix) fixes.push(importFix);
+					if (!_.isNil(importFix)) fixes.push(importFix);
 					return fixes;
 				},
 			});

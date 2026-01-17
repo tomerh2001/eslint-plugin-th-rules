@@ -26,7 +26,7 @@ const noExplicitNilCompare = createRule({
 		function ensureLodashImport(fixer: any) {
 			const existingImport = context.sourceCode.ast.body.find((node: TSESTree.Node) => node.type === AST_NODE_TYPES.ImportDeclaration && node.source.value === 'lodash');
 
-			if (existingImport) return null;
+			if (!_.isNil(existingImport)) return null;
 
 			return fixer.insertTextBeforeRange([0, 0], `import _ from 'lodash';\n`);
 		}
@@ -57,7 +57,7 @@ const noExplicitNilCompare = createRule({
 				targetNode = right as TSESTree.Expression;
 			}
 
-			if (!targetNode) return;
+			if (_.isNil(targetNode)) return;
 
 			const text = context.sourceCode.getText(targetNode);
 
@@ -72,7 +72,7 @@ const noExplicitNilCompare = createRule({
 					const fixes = [];
 
 					const importFix = ensureLodashImport(fixer);
-					if (importFix) fixes.push(importFix);
+					if (!_.isNil(importFix)) fixes.push(importFix);
 
 					fixes.push(fixer.replaceText(node, replacement));
 

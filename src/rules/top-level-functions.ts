@@ -1,4 +1,5 @@
-import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
+import _ from 'lodash';
+import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const topLevelFunctions = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/top-level-functions.md')({
 	name: 'top-level-functions',
@@ -84,7 +85,7 @@ const topLevelFunctions = ESLintUtils.RuleCreator(() => 'https://github.com/tome
 				const declParent = node.parent;
 				const grandParent = declParent?.parent;
 
-				if (!grandParent) {
+				if (_.isNil(grandParent)) {
 					return;
 				}
 
@@ -96,13 +97,13 @@ const topLevelFunctions = ESLintUtils.RuleCreator(() => 'https://github.com/tome
 
 				const isExport = grandParent.type === 'ExportNamedDeclaration' || grandParent.type === 'ExportDefaultDeclaration';
 
-				if (!node.init) {
+				if (_.isNil(node.init)) {
 					return;
 				}
 
 				const functionName = node.id.type === 'Identifier' ? node.id.name : null;
 
-				if (!functionName) {
+				if (_.isNil(functionName)) {
 					return;
 				}
 
@@ -119,7 +120,7 @@ const topLevelFunctions = ESLintUtils.RuleCreator(() => 'https://github.com/tome
 					});
 				}
 
-				if (node.init.type === 'FunctionExpression') {
+				if (node.init.type === AST_NODE_TYPES.FunctionExpression) {
 					const funcExpr = node.init;
 					context.report({
 						node: funcExpr,
@@ -134,7 +135,7 @@ const topLevelFunctions = ESLintUtils.RuleCreator(() => 'https://github.com/tome
 			},
 
 			FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
-				if (node.id) {
+				if (!_.isNil(node.id)) {
 					return;
 				}
 

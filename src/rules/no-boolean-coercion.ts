@@ -1,5 +1,6 @@
 /* eslint-disable new-cap */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
+import _ from 'lodash';
 import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 import type { RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 import * as ts from 'typescript';
@@ -41,7 +42,7 @@ const noBooleanCoercion = createRule({
 			const firstNode = context.sourceCode.ast.body[0];
 			const importText = `import ${LODASH_IDENT} from '${LODASH_MODULE}';\n`;
 
-			if (!firstNode) {
+			if (_.isNil(firstNode)) {
 				return fixer.insertTextAfterRange([0, 0], importText);
 			}
 
@@ -58,7 +59,7 @@ const noBooleanCoercion = createRule({
 
 		function isBooleanByTS(node: TSESTree.Node): boolean {
 			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
-			if (!tsNode) {
+			if (_.isNil(tsNode)) {
 				return false;
 			}
 
@@ -69,7 +70,7 @@ const noBooleanCoercion = createRule({
 
 		function isCollectionLikeByTS(node: TSESTree.Node): boolean {
 			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
-			if (!tsNode) {
+			if (_.isNil(tsNode)) {
 				return false;
 			}
 
@@ -106,7 +107,7 @@ const noBooleanCoercion = createRule({
 					const fixes = [fixer.replaceText(node, replacement)];
 
 					const importFix = getLodashImportFixer(fixer);
-					if (importFix) {
+					if (!_.isNil(importFix)) {
 						fixes.push(importFix);
 					}
 

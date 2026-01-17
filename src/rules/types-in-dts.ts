@@ -1,4 +1,5 @@
 /* eslint-disable new-cap */
+import _ from 'lodash';
 import { ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/types-in-dts.md')({
@@ -33,7 +34,7 @@ const typesInDts = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/
 
 	create(context, [options]) {
 		function isDtsFile(filename: string): boolean {
-			if (!filename || filename === '<input>') {
+			if (_.isNil(filename) || filename === '<input>') {
 				return false;
 			}
 

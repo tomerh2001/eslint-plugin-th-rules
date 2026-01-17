@@ -1,5 +1,6 @@
 /* eslint-disable new-cap */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import _ from 'lodash';
 import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const MAX_TAB_COUNT = 3;
@@ -42,7 +43,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 		const MAX_LINE_LENGTH = options.maximumLineLength ?? 100;
 
 		function reportIfNeeded(patternNode: TSESTree.Node | undefined, reportNode: TSESTree.Node = patternNode as any): void {
-			if (patternNode?.type !== AST_NODE_TYPES.ObjectPattern || !patternNode.loc) {
+			if (patternNode?.type !== AST_NODE_TYPES.ObjectPattern || _.isNil(patternNode.loc)) {
 				return;
 			}
 
@@ -98,7 +99,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 
 		function checkParameters(parameters: TSESTree.Parameter[]): void {
 			for (const p of parameters || []) {
-				if (!p) {
+				if (_.isNil(p)) {
 					continue;
 				}
 
@@ -135,7 +136,7 @@ const noDestructuring = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh
 			},
 
 			TSDeclareFunction(node: any) {
-				if (node.params) {
+				if (!_.isNil(node.params)) {
 					checkParameters(node.params);
 				}
 			},

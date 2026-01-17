@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable new-cap */
+import _ from 'lodash';
 import { AST_NODE_TYPES, ESLintUtils, type TSESTree } from '@typescript-eslint/utils';
 
 const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/schemas-in-schemas-file.md')({
@@ -49,7 +50,7 @@ const schemasInSchemasFile = ESLintUtils.RuleCreator(() => 'https://github.com/t
 		const zodIdentifiers = new Set<string>();
 
 		function filenameAllowed(filename: string): boolean {
-			if (!filename || filename === '<input>') {
+			if (_.isNil(filename) || filename === '<input>') {
 				return false;
 			}
 
