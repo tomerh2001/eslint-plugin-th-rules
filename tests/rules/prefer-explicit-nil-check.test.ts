@@ -46,6 +46,22 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'const v = x && y;',
 		'return x || y;',
 		'const x = 0; if (!x) {}',
+
+		'declare const bu: boolean | undefined; if (bu) {}',
+		'declare const bu: boolean | undefined; if (!bu) {}',
+		'declare const bn: boolean | null; if (bn) {}',
+		'declare const bn: boolean | null; if (!bn) {}',
+		'declare const bnu: boolean | null | undefined; if (bnu) {}',
+		'declare const bnu: boolean | null | undefined; if (!bnu) {}',
+
+		'declare const snu: string | null | undefined; if (!_.isEmpty(snu ?? "")) {}',
+		'declare const nnu: number | null | undefined; if (nnu) {}',
+		'declare const nnu: number | null | undefined; if (!nnu) {}',
+
+		'declare const n: number | null | undefined; if (n) {}',
+		'declare const n: number | null; if (n) {}',
+		'declare const n: number | undefined; if (n) {}',
+		'declare const n: number | null | undefined; if (!n) {}',
 	],
 
 	invalid: [
@@ -184,6 +200,18 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		{
 			code: 'const x = "anbcde"; if (!x) {}',
 			output: 'import _ from \'lodash\';\nconst x = "anbcde"; if (_.isEmpty(x)) {}',
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'declare const s: string | null | undefined; if (s) {}',
+			output: "import _ from 'lodash';\ndeclare const s: string | null | undefined; if (!_.isEmpty(s)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'declare const s: string | null | undefined; if (!s) {}',
+			output: "import _ from 'lodash';\ndeclare const s: string | null | undefined; if (_.isEmpty(s)) {}",
 			errors: [{ messageId: 'useIsNil' }],
 		},
 	],

@@ -75,32 +75,34 @@ const preferExplicitNilCheck = createRule({
 		}
 
 		function isStringLikeFlag(flags: ts.TypeFlags): boolean {
-			return (flags & ts.TypeFlags.String) !== 0 || (flags & ts.TypeFlags.StringLiteral) !== 0;
+			return (flags & ts.TypeFlags.StringLike) !== 0;
 		}
 
 		function isNumberLikeFlag(flags: ts.TypeFlags): boolean {
-			return (flags & ts.TypeFlags.Number) !== 0 || (flags & ts.TypeFlags.NumberLiteral) !== 0;
+			return (flags & ts.TypeFlags.NumberLike) !== 0;
+		}
+
+		function isBooleanLikeFlag(flags: ts.TypeFlags): boolean {
+			return (flags & ts.TypeFlags.BooleanLike) !== 0;
 		}
 
 		/**
 		 * Returns true iff the expression type is effectively:
 		 *   string | null | undefined
-		 * (i.e., all non-nullish constituents are string/string-literal).
+		 * (i.e., all non-nullish constituents are string/string-like).
 		 */
 		function isStringByTS(node: TSESTree.Node): boolean {
 			const type = getTsType(node);
 			if (_.isNil(type)) return false;
 
 			if (!type.isUnion()) {
-				const flags = type.getFlags();
-				return isStringLikeFlag(flags);
+				return isStringLikeFlag(type.getFlags());
 			}
 
 			let sawNonNullish = false;
 
 			for (const t of type.types) {
 				const flags = t.getFlags();
-
 				if (isNullableFlag(flags)) continue;
 
 				sawNonNullish = true;
@@ -123,15 +125,13 @@ const preferExplicitNilCheck = createRule({
 			if (_.isNil(type)) return false;
 
 			if (!type.isUnion()) {
-				const flags = type.getFlags();
-				return isNumberLikeFlag(flags);
+				return isNumberLikeFlag(type.getFlags());
 			}
 
 			let sawNonNullish = false;
 
 			for (const t of type.types) {
 				const flags = t.getFlags();
-
 				if (isNullableFlag(flags)) continue;
 
 				sawNonNullish = true;
@@ -142,12 +142,36 @@ const preferExplicitNilCheck = createRule({
 			return sawNonNullish;
 		}
 
+		/**
+		 * Returns true iff the expression type is effectively:
+		 *   boolean | null | undefined
+		 * (i.e., all non-nullish constituents are boolean/boolean-literal).
+		 *
+		 * This ensures we do NOT rewrite checks like:
+		 * - boolean | undefined
+		 * - boolean | null
+		 * - boolean | null | undefined
+		 */
 		function isBooleanByTS(node: TSESTree.Node): boolean {
 			const type = getTsType(node);
 			if (_.isNil(type)) return false;
 
-			const flags = type.getFlags();
-			return (flags & ts.TypeFlags.Boolean) !== 0 || (flags & ts.TypeFlags.BooleanLiteral) !== 0;
+			if (!type.isUnion()) {
+				return isBooleanLikeFlag(type.getFlags());
+			}
+
+			let sawNonNullish = false;
+
+			for (const t of type.types) {
+				const flags = t.getFlags();
+				if (isNullableFlag(flags)) continue;
+
+				sawNonNullish = true;
+
+				if (!isBooleanLikeFlag(flags)) return false;
+			}
+
+			return sawNonNullish;
 		}
 
 		function isAlreadyExplicitCheck(node: TSESTree.Node): boolean {
