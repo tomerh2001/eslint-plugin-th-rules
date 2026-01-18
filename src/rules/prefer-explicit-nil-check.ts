@@ -20,11 +20,11 @@ const preferExplicitNilCheck = createRule({
 		type: 'problem',
 		fixable: 'code',
 		docs: {
-			description: 'Disallow implicit truthy/falsy checks anywhere. Require explicit _.isNil(value).',
+			description: 'Disallow implicit truthy/falsy checks in boolean-test positions. Prefer explicit _.isNil(value) or _.isEmpty(value) (depending on the value type).',
 		},
 		schema: [],
 		messages: {
-			useIsNil: 'Implicit truthy/falsy checks are not allowed. Use _.isNil(value) or !_.isNil(value).',
+			useIsNil: 'Implicit truthy/falsy checks are not allowed. Use _.isNil(value) / !_.isNil(value) or _.isEmpty(value) / !_.isEmpty(value).',
 		},
 	},
 
@@ -58,12 +58,96 @@ const preferExplicitNilCheck = createRule({
 			return fixer.insertTextBefore(firstNode, importText);
 		}
 
-		function isBooleanByTS(node: TSESTree.Node): boolean {
-			const tsNode = services.esTreeNodeToTSNodeMap.get(node);
-			if (_.isNil(tsNode)) return false;
+		function unwrapChainExpression(node: TSESTree.Node): TSESTree.Node {
+			if (node.type === AST_NODE_TYPES.ChainExpression) return node.expression;
+			return node;
+		}
 
-			const type = checker.getTypeAtLocation(tsNode);
-			return (type.flags & ts.TypeFlags.Boolean) !== 0 || (type.flags & ts.TypeFlags.BooleanLiteral) !== 0;
+		function getTsType(node: TSESTree.Node): ts.Type | null {
+			const unwrapped = unwrapChainExpression(node);
+			const tsNode = services.esTreeNodeToTSNodeMap.get(unwrapped);
+			if (_.isNil(tsNode)) return null;
+			return checker.getTypeAtLocation(tsNode);
+		}
+
+		function isNullableFlag(flags: ts.TypeFlags): boolean {
+			return (flags & ts.TypeFlags.Null) !== 0 || (flags & ts.TypeFlags.Undefined) !== 0;
+		}
+
+		function isStringLikeFlag(flags: ts.TypeFlags): boolean {
+			return (flags & ts.TypeFlags.String) !== 0 || (flags & ts.TypeFlags.StringLiteral) !== 0;
+		}
+
+		function isNumberLikeFlag(flags: ts.TypeFlags): boolean {
+			return (flags & ts.TypeFlags.Number) !== 0 || (flags & ts.TypeFlags.NumberLiteral) !== 0;
+		}
+
+		/**
+		 * Returns true iff the expression type is effectively:
+		 *   string | null | undefined
+		 * (i.e., all non-nullish constituents are string/string-literal).
+		 */
+		function isStringByTS(node: TSESTree.Node): boolean {
+			const type = getTsType(node);
+			if (_.isNil(type)) return false;
+
+			if (!type.isUnion()) {
+				const flags = type.getFlags();
+				return isStringLikeFlag(flags);
+			}
+
+			let sawNonNullish = false;
+
+			for (const t of type.types) {
+				const flags = t.getFlags();
+
+				if (isNullableFlag(flags)) continue;
+
+				sawNonNullish = true;
+
+				if (!isStringLikeFlag(flags)) return false;
+			}
+
+			return sawNonNullish;
+		}
+
+		/**
+		 * Returns true iff the expression type is effectively:
+		 *   number | null | undefined
+		 *
+		 * We intentionally DO NOT auto-fix numeric truthy/falsy checks because
+		 * converting `if (n)` into `!_.isNil(n)` changes semantics for `0`.
+		 */
+		function isNumberByTS(node: TSESTree.Node): boolean {
+			const type = getTsType(node);
+			if (_.isNil(type)) return false;
+
+			if (!type.isUnion()) {
+				const flags = type.getFlags();
+				return isNumberLikeFlag(flags);
+			}
+
+			let sawNonNullish = false;
+
+			for (const t of type.types) {
+				const flags = t.getFlags();
+
+				if (isNullableFlag(flags)) continue;
+
+				sawNonNullish = true;
+
+				if (!isNumberLikeFlag(flags)) return false;
+			}
+
+			return sawNonNullish;
+		}
+
+		function isBooleanByTS(node: TSESTree.Node): boolean {
+			const type = getTsType(node);
+			if (_.isNil(type)) return false;
+
+			const flags = type.getFlags();
+			return (flags & ts.TypeFlags.Boolean) !== 0 || (flags & ts.TypeFlags.BooleanLiteral) !== 0;
 		}
 
 		function isAlreadyExplicitCheck(node: TSESTree.Node): boolean {
@@ -80,10 +164,8 @@ const preferExplicitNilCheck = createRule({
 		function isImplicitOperand(node: TSESTree.Node): boolean {
 			if (node.type === AST_NODE_TYPES.Identifier) return true;
 			if (node.type === AST_NODE_TYPES.MemberExpression) return true;
-
 			if (node.type === AST_NODE_TYPES.ChainExpression) {
-				const inner = node.expression;
-				return inner.type === AST_NODE_TYPES.MemberExpression;
+				return node.expression.type === AST_NODE_TYPES.MemberExpression;
 			}
 
 			return false;
@@ -106,13 +188,30 @@ const preferExplicitNilCheck = createRule({
 		}
 
 		function transformTruthy(node: TSESTree.Node) {
+			if (isNumberByTS(node)) return;
+
 			const text = context.sourceCode.getText(node);
+
+			if (isStringByTS(node)) {
+				reportFull(node, `!${LODASH_IDENT}.isEmpty(${text})`);
+				return;
+			}
+
 			reportFull(node, `!${LODASH_IDENT}.isNil(${text})`);
 		}
 
 		function transformFalsyUnary(node: TSESTree.UnaryExpression) {
 			const arg = node.argument;
+
+			if (isNumberByTS(arg)) return;
+
 			const text = context.sourceCode.getText(arg);
+
+			if (isStringByTS(arg)) {
+				reportFull(node, `${LODASH_IDENT}.isEmpty(${text})`);
+				return;
+			}
+
 			reportFull(node, `${LODASH_IDENT}.isNil(${text})`);
 		}
 
@@ -213,6 +312,9 @@ const preferExplicitNilCheck = createRule({
 
 					if (isImplicitOperand(arg)) {
 						if (isBooleanByTS(arg)) return;
+
+						if (isNumberByTS(arg)) return;
+
 						transformFalsyUnary(node);
 						return;
 					}
@@ -229,6 +331,9 @@ const preferExplicitNilCheck = createRule({
 				default: {
 					if (mode === 'test' && isImplicitOperand(node)) {
 						if (isBooleanByTS(node)) return;
+
+						if (isNumberByTS(node)) return;
+
 						transformTruthy(node);
 					}
 				}

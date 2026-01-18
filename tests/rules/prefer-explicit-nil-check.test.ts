@@ -41,9 +41,11 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'x ?? y',
 		'x || y',
 		'x && y',
+
 		'const v = x || y;',
 		'const v = x && y;',
 		'return x || y;',
+		'const x = 0; if (!x) {}',
 	],
 
 	invalid: [
@@ -170,6 +172,18 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		{
 			code: 'if (!node.value?.params) {}',
 			output: "import _ from 'lodash';\nif (_.isNil(node.value?.params)) {}",
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'const x = ""; if (!x) {}',
+			output: 'import _ from \'lodash\';\nconst x = ""; if (_.isEmpty(x)) {}',
+			errors: [{ messageId: 'useIsNil' }],
+		},
+
+		{
+			code: 'const x = "anbcde"; if (!x) {}',
+			output: 'import _ from \'lodash\';\nconst x = "anbcde"; if (_.isEmpty(x)) {}',
 			errors: [{ messageId: 'useIsNil' }],
 		},
 	],
