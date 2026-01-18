@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.3.0...v3.3.1) (2026-01-18)
+
+
+### Bug Fixes
+
+* enhance prefer-explicit-nil-check rule to handle string checks and update test cases ([8523f85](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/8523f85031f8393fdbc0ef228664ebcf8ee7d5da))
+
 # [3.3.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.2.3...v3.3.0) (2026-01-17)
 
 
