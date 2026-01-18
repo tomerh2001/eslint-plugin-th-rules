@@ -16,7 +16,7 @@ export const rules = {
 	'no-default-export': noDefaultExport,
 	'no-destructuring': noDestructuring,
 	'no-explicit-nil-compare': noExplicitNilCompare,
-	'no-explicit-nil-check': preferExplicitNilCheck,
+	'prefer-explicit-nil-check': preferExplicitNilCheck,
 	'prefer-is-empty': preferIsEmpty,
 	'schemas-in-schemas-file': schemasInSchemasFile,
 	'top-level-functions': topLevelFunctions,

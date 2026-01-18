@@ -1,6 +1,6 @@
-# th-rules/prefer-is-empty
+# th-rules/no-explicit-nil-check
 
-📝 Require _.isEmpty instead of length comparisons or boolean checks on .length.
+📝 Disallow implicit truthy/falsy checks anywhere. Require explicit _.isNil(value).
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, ⚛️ `recommendedReact`, 🟦 `recommendedTypescript`, 🎲 `recommendedTypescriptReact`.
 

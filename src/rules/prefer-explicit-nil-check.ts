@@ -86,6 +86,30 @@ const preferExplicitNilCheck = createRule({
 			return (flags & ts.TypeFlags.BooleanLike) !== 0;
 		}
 
+		function isAnyOrUnknownFlag(flags: ts.TypeFlags): boolean {
+			return (flags & ts.TypeFlags.Any) !== 0 || (flags & ts.TypeFlags.Unknown) !== 0;
+		}
+
+		/**
+		 * Skip when the type is `any` or `unknown` (including union constituents),
+		 * because we can't safely decide whether to prefer isNil/isEmpty without
+		 * risking semantic changes.
+		 */
+		function isAnyOrUnknownByTS(node: TSESTree.Node): boolean {
+			const type = getTsType(node);
+			if (_.isNil(type)) return false;
+
+			if (!type.isUnion()) {
+				return isAnyOrUnknownFlag(type.getFlags());
+			}
+
+			for (const t of type.types) {
+				if (isAnyOrUnknownFlag(t.getFlags())) return true;
+			}
+
+			return false;
+		}
+
 		/**
 		 * Returns true iff the expression type is effectively:
 		 *   string | null | undefined
@@ -212,6 +236,7 @@ const preferExplicitNilCheck = createRule({
 		}
 
 		function transformTruthy(node: TSESTree.Node) {
+			if (isAnyOrUnknownByTS(node)) return;
 			if (isNumberByTS(node)) return;
 
 			const text = context.sourceCode.getText(node);
@@ -227,6 +252,7 @@ const preferExplicitNilCheck = createRule({
 		function transformFalsyUnary(node: TSESTree.UnaryExpression) {
 			const arg = node.argument;
 
+			if (isAnyOrUnknownByTS(arg)) return;
 			if (isNumberByTS(arg)) return;
 
 			const text = context.sourceCode.getText(arg);
@@ -335,6 +361,8 @@ const preferExplicitNilCheck = createRule({
 					}
 
 					if (isImplicitOperand(arg)) {
+						if (isAnyOrUnknownByTS(arg)) return;
+
 						if (isBooleanByTS(arg)) return;
 
 						if (isNumberByTS(arg)) return;
@@ -354,6 +382,8 @@ const preferExplicitNilCheck = createRule({
 
 				default: {
 					if (mode === 'test' && isImplicitOperand(node)) {
+						if (isAnyOrUnknownByTS(node)) return;
+
 						if (isBooleanByTS(node)) return;
 
 						if (isNumberByTS(node)) return;

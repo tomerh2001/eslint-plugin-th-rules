@@ -33,7 +33,6 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'if (_.isNil(a) || _.isNil(b)) {}',
 
 		'const x = _.isNil(a) ? 1 : 2;',
-
 		'if (!!_.isNil(a)) {}',
 
 		'const option = context.options[0] ?? {};',
@@ -62,36 +61,75 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'declare const n: number | null; if (n) {}',
 		'declare const n: number | undefined; if (n) {}',
 		'declare const n: number | null | undefined; if (!n) {}',
+
+		'const x = {y: true}; if (!x.y) {}',
+		'interface X { y: boolean } const x: X = { y: true }; if (!x.y) {}',
+
+		'const x = true as any; if (!x) {}',
+		'declare const u: unknown; if (u) {}',
+		'declare const u: unknown; if (!u) {}',
+		'declare const a: any; if (a) {}',
+		'declare const a: any; if (!a) {}',
+		'declare const au: any | undefined; if (au) {}',
+		'declare const au: any | undefined; if (!au) {}',
+		'declare const un: unknown | null; if (un) {}',
+		'declare const un: unknown | null; if (!un) {}',
 	],
 
 	invalid: [
 		{
-			code: 'if (!dataObject) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(dataObject)) {}",
+			code: `
+declare const dataObject: {} | null | undefined;
+if (!dataObject) {}`,
+			output: `
+import _ from 'lodash';
+declare const dataObject: {} | null | undefined;
+if (_.isNil(dataObject)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!user) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(user)) {}",
+			code: `
+declare const user: {} | null | undefined;
+if (!user) {}`,
+			output: `
+import _ from 'lodash';
+declare const user: {} | null | undefined;
+if (_.isNil(user)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (user) {}',
-			output: "import _ from 'lodash';\nif (!_.isNil(user)) {}",
+			code: `
+declare const user: {} | null | undefined;
+if (user) {}`,
+			output: `
+import _ from 'lodash';
+declare const user: {} | null | undefined;
+if (!_.isNil(user)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: "import _ from 'lodash';\nif (!item) {}",
-			output: "import _ from 'lodash';\nif (_.isNil(item)) {}",
+			code: `
+import _ from 'lodash';
+declare const item: {} | null | undefined;
+if (!item) {}`,
+			output: `
+import _ from 'lodash';
+declare const item: {} | null | undefined;
+if (_.isNil(item)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!foo.bar) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(foo.bar)) {}",
+			code: `
+declare const foo: { bar: {} | null | undefined };
+if (!foo.bar) {}`,
+			output: `
+import _ from 'lodash';
+declare const foo: { bar: {} | null | undefined };
+if (_.isNil(foo.bar)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
@@ -102,92 +140,189 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		},
 
 		{
-			code: 'function f(a) { if (!a) {} }',
-			output: "import _ from 'lodash';\nfunction f(a) { if (_.isNil(a)) {} }",
+			code: `
+function f(a: {} | null | undefined) { if (!a) {} }`,
+			output: `
+import _ from 'lodash';
+function f(a: {} | null | undefined) { if (_.isNil(a)) {} }`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'let x = null as any; if (!x) {}',
-			output: "import _ from 'lodash';\nlet x = null as any; if (_.isNil(x)) {}",
+			code: `
+let x = null as {} | null;
+if (!x) {}`,
+			output: `
+import _ from 'lodash';
+let x = null as {} | null;
+if (_.isNil(x)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (a && b) {}',
-			output: "import _ from 'lodash';\nif (!_.isNil(a) && !_.isNil(b)) {}",
+			code: `
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (a && b) {}`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (!_.isNil(a) && !_.isNil(b)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (a || b) {}',
-			output: "import _ from 'lodash';\nif (!_.isNil(a) || !_.isNil(b)) {}",
+			code: `
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (a || b) {}`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (!_.isNil(a) || !_.isNil(b)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!a && b) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(a) && !_.isNil(b)) {}",
+			code: `
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (!a && b) {}`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (_.isNil(a) && !_.isNil(b)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!a || !b) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(a) || _.isNil(b)) {}",
+			code: `
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (!a || !b) {}`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+declare const b: {} | null | undefined;
+if (_.isNil(a) || _.isNil(b)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if ((x && y) || z) {}',
-			output: "import _ from 'lodash';\nif ((!_.isNil(x) && !_.isNil(y)) || !_.isNil(z)) {}",
+			code: `
+declare const x: {} | null | undefined;
+declare const y: {} | null | undefined;
+declare const z: {} | null | undefined;
+if ((x && y) || z) {}`,
+			output: `
+import _ from 'lodash';
+declare const x: {} | null | undefined;
+declare const y: {} | null | undefined;
+declare const z: {} | null | undefined;
+if ((!_.isNil(x) && !_.isNil(y)) || !_.isNil(z)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'const r = a ? 1 : 2;',
-			output: "import _ from 'lodash';\nconst r = !_.isNil(a) ? 1 : 2;",
+			code: `
+declare const a: {} | null | undefined;
+const r = a ? 1 : 2;`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+const r = !_.isNil(a) ? 1 : 2;`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'a && doSomething();',
-			output: "import _ from 'lodash';\n!_.isNil(a) && doSomething();",
+			code: `
+declare const a: {} | null | undefined;
+declare function doSomething(): void;
+a && doSomething();`,
+			output: `
+import _ from 'lodash';
+declare const a: {} | null | undefined;
+declare function doSomething(): void;
+!_.isNil(a) && doSomething();`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'foo || bar();',
-			output: "import _ from 'lodash';\n!_.isNil(foo) || bar();",
+			code: `
+declare const foo: {} | null | undefined;
+declare function bar(): void;
+foo || bar();`,
+			output: `
+import _ from 'lodash';
+declare const foo: {} | null | undefined;
+declare function bar(): void;
+!_.isNil(foo) || bar();`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!x && y) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(x) && !_.isNil(y)) {}",
+			code: `
+declare const x: {} | null | undefined;
+declare const y: {} | null | undefined;
+if (!x && y) {}`,
+			output: `
+import _ from 'lodash';
+declare const x: {} | null | undefined;
+declare const y: {} | null | undefined;
+if (_.isNil(x) && !_.isNil(y)) {}`,
 			errors: [{ messageId: 'useIsNil' }, { messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'const x: boolean = true; if (!x && y) {}',
-			output: "import _ from 'lodash';\nconst x: boolean = true; if (!x && !_.isNil(y)) {}",
+			code: `
+declare const y: {} | null | undefined;
+const x: boolean = true;
+if (!x && y) {}`,
+			output: `
+import _ from 'lodash';
+declare const y: {} | null | undefined;
+const x: boolean = true;
+if (!x && !_.isNil(y)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'x ?? (y ? y : z)',
-			output: "import _ from 'lodash';\nx ?? (!_.isNil(y) ? y : z)",
+			code: `
+declare const x: unknown;
+declare const y: {} | null | undefined;
+declare const z: number;
+x ?? (y ? y : z)`,
+			output: `
+import _ from 'lodash';
+declare const x: unknown;
+declare const y: {} | null | undefined;
+declare const z: number;
+x ?? (!_.isNil(y) ? y : z)`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (node.value?.params) {}',
-			output: "import _ from 'lodash';\nif (!_.isNil(node.value?.params)) {}",
+			code: `
+declare const node: { value?: { params?: {} | null | undefined } | null };
+if (node.value?.params) {}`,
+			output: `
+import _ from 'lodash';
+declare const node: { value?: { params?: {} | null | undefined } | null };
+if (!_.isNil(node.value?.params)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
 		{
-			code: 'if (!node.value?.params) {}',
-			output: "import _ from 'lodash';\nif (_.isNil(node.value?.params)) {}",
+			code: `
+declare const node: { value?: { params?: {} | null | undefined } | null };
+if (!node.value?.params) {}`,
+			output: `
+import _ from 'lodash';
+declare const node: { value?: { params?: {} | null | undefined } | null };
+if (_.isNil(node.value?.params)) {}`,
 			errors: [{ messageId: 'useIsNil' }],
 		},
 
