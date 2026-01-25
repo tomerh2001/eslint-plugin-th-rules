@@ -74,6 +74,8 @@ ruleTester.run('prefer-explicit-nil-check', rule, {
 		'declare const au: any | undefined; if (!au) {}',
 		'declare const un: unknown | null; if (un) {}',
 		'declare const un: unknown | null; if (!un) {}',
+
+		'const x: string | object | null | boolean | number = 4; if (x) {}',
 	],
 
 	invalid: [

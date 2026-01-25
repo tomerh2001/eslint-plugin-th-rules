@@ -136,6 +136,39 @@ const preferExplicitNilCheck = createRule({
 		}
 
 		/**
+		 * Returns true when the type is a union that includes boolean-like AND also
+		 * includes some other non-nullish, non-boolean-like constituent.
+		 *
+		 * Example: string | object | null | boolean | number
+		 *
+		 * In these cases we avoid rewriting `if (x)` / `if (!x)` because the intent
+		 * may be genuine boolean gating (or semantic-preserving rewrite isn't clear).
+		 */
+		function isPartialBooleanUnionByTS(node: TSESTree.Node): boolean {
+			const type = getTsType(node);
+			if (_.isNil(type)) return false;
+			if (!type.isUnion()) return false;
+
+			let sawBoolean = false;
+			let sawOtherNonNullish = false;
+
+			for (const t of type.types) {
+				const flags = t.getFlags();
+				if (isNullableFlag(flags)) continue;
+
+				if (isBooleanLikeFlag(flags)) {
+					sawBoolean = true;
+				} else {
+					sawOtherNonNullish = true;
+				}
+
+				if (sawBoolean && sawOtherNonNullish) return true;
+			}
+
+			return false;
+		}
+
+		/**
 		 * Returns true iff the expression type is effectively:
 		 *   string | null | undefined
 		 * (i.e., all non-nullish constituents are string/string-like).
@@ -264,6 +297,8 @@ const preferExplicitNilCheck = createRule({
 			if (isAnyOrUnknownByTS(node)) return;
 			if (isNumberByTS(node)) return;
 
+			if (isPartialBooleanUnionByTS(node)) return;
+
 			const text = context.sourceCode.getText(node);
 
 			if (isStringByTS(node)) {
@@ -279,6 +314,8 @@ const preferExplicitNilCheck = createRule({
 
 			if (isAnyOrUnknownByTS(arg)) return;
 			if (isNumberByTS(arg)) return;
+
+			if (isPartialBooleanUnionByTS(arg)) return;
 
 			const text = context.sourceCode.getText(arg);
 
@@ -389,6 +426,7 @@ const preferExplicitNilCheck = createRule({
 						if (isAnyOrUnknownByTS(arg)) return;
 
 						if (isBooleanByTS(arg)) return;
+						if (isPartialBooleanUnionByTS(arg)) return;
 
 						if (isNumberByTS(arg)) return;
 
@@ -410,6 +448,7 @@ const preferExplicitNilCheck = createRule({
 						if (isAnyOrUnknownByTS(node)) return;
 
 						if (isBooleanByTS(node)) return;
+						if (isPartialBooleanUnionByTS(node)) return;
 
 						if (isNumberByTS(node)) return;
 
