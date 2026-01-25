@@ -1,3 +1,10 @@
+## [3.4.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.2...v3.4.3) (2026-01-25)
+
+
+### Bug Fixes
+
+* disable prefer-nullish-coalescing rule in core TypeScript configuration ([5486e04](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/5486e0445937a4da3652af6be02682f1e8b4665c))
+
 ## [3.4.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.1...v3.4.2) (2026-01-25)
 
 
