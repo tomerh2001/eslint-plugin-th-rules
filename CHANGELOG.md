@@ -1,3 +1,15 @@
+# [3.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.3.3...v3.4.0) (2026-01-25)
+
+
+### Bug Fixes
+
+* update rule descriptions for clarity and consistency in README ([7391bf6](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/7391bf6a578fcbc7e55d650dde4387bf05a15f7d))
+
+
+### Features
+
+* add no-isnil-isempty-on-boolean rule with tests and documentation ([8ba9eb2](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/8ba9eb21e09f57a741e9391722b620cc4ce3b2ae))
+
 ## [3.3.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.3.2...v3.3.3) (2026-01-18)
 
 
