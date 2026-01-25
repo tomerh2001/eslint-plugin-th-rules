@@ -1,3 +1,10 @@
+## [3.4.2](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.1...v3.4.2) (2026-01-25)
+
+
+### Bug Fixes
+
+* add support for partial boolean union types in prefer-explicit-nil-check rule ([a917d53](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a917d53913200b91a69ccdfd6ed56b0073682a91))
+
 ## [3.4.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.0...v3.4.1) (2026-01-25)
 
 
