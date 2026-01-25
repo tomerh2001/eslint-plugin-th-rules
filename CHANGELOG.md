@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.0...v3.4.1) (2026-01-25)
+
+
+### Bug Fixes
+
+* enhance type checking in prefer-explicit-nil-check rule ([2477fb8](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/2477fb8176a9504e7380c5dc5dd020ddbbce4624))
+
 # [3.4.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.3.3...v3.4.0) (2026-01-25)
 
 
