@@ -9,6 +9,7 @@ import preferIsEmpty from './rules/prefer-is-empty.js';
 import schemasInSchemasFile from './rules/schemas-in-schemas-file.js';
 import topLevelFunctions from './rules/top-level-functions.js';
 import typesInDts from './rules/types-in-dts.js';
+import noIsNilOrIsEmptyOnBoolean from './rules/no-isnil-isempty-on-boolean.js';
 
 export const rules = {
 	'no-boolean-coercion': noBooleanCoercion,
@@ -21,6 +22,7 @@ export const rules = {
 	'schemas-in-schemas-file': schemasInSchemasFile,
 	'top-level-functions': topLevelFunctions,
 	'types-in-dts': typesInDts,
+	'no-isnil-isempty-on-boolean': noIsNilOrIsEmptyOnBoolean,
 };
 
 const plugin = { rules };
