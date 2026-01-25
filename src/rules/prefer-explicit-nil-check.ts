@@ -63,11 +63,36 @@ const preferExplicitNilCheck = createRule({
 			return node;
 		}
 
+		function getTypeFromSymbolAnnotation(symbol: ts.Symbol): ts.Type | null {
+			const decl = symbol.valueDeclaration ?? symbol.declarations?.[0];
+			if (_.isNil(decl)) return null;
+
+			if ('type' in decl) {
+				const typeNode = (decl as { type?: ts.TypeNode }).type;
+				if (!_.isNil(typeNode)) {
+					return checker.getTypeFromTypeNode(typeNode);
+				}
+			}
+
+			return null;
+		}
+
 		function getTsType(node: TSESTree.Node): ts.Type | null {
 			const unwrapped = unwrapChainExpression(node);
 			const tsNode = services.esTreeNodeToTSNodeMap.get(unwrapped);
 			if (_.isNil(tsNode)) return null;
-			return checker.getTypeAtLocation(tsNode);
+
+			let type: ts.Type;
+
+			if (unwrapped.type === AST_NODE_TYPES.Identifier) {
+				const symbol = checker.getSymbolAtLocation(tsNode);
+				const annotated = _.isNil(symbol) ? null : getTypeFromSymbolAnnotation(symbol);
+				type = annotated ?? checker.getTypeAtLocation(tsNode);
+			} else {
+				type = checker.getTypeAtLocation(tsNode);
+			}
+
+			return checker.getWidenedType(type);
 		}
 
 		function isNullableFlag(flags: ts.TypeFlags): boolean {
