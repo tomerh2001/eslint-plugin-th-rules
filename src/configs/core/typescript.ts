@@ -18,6 +18,7 @@ export const coreTypescript: ConfigWithExtends[] = [
 			'@typescript-eslint/no-unsafe-argument': 'off',
 			'@typescript-eslint/no-restricted-types': 'off',
 			'@typescript-eslint/naming-convention': 'off',
+			'@typescript-eslint/prefer-nullish-coalescing': 'off',
 		},
 	},
 ];
