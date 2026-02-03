@@ -32,17 +32,6 @@ ruleTester.run('no-destructuring', rule, {
 		{
 			code: 'function a() { const {x, y} = obj; }\nfunction b() { const {z, w} = obj; }',
 		},
-
-		{
-			code: 'const {length, onComplete} = properties;\nconst {onChangeText, value} = properties;',
-			options: [
-				{
-					maximumDestructuredVariables: 10,
-					maximumLineLength: 100,
-					directAccessIdentifiers: [],
-				},
-			],
-		},
 	],
 
 	invalid: [
@@ -52,20 +41,6 @@ ruleTester.run('no-destructuring', rule, {
 				{
 					messageId: 'tooMany',
 					data: { max: 2 },
-				},
-				{
-					messageId: 'tooManyCumulative',
-					data: { source: 'obj', max: 2, total: 3 },
-				},
-			],
-		},
-
-		{
-			code: 'const {length, onComplete} = properties;',
-			errors: [
-				{
-					messageId: 'directAccessRequired',
-					data: { identifier: 'properties' },
 				},
 			],
 		},
@@ -92,7 +67,7 @@ ruleTester.run('no-destructuring', rule, {
 
 		{
 			code: '\n    const {a, b} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;\n',
-			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80, directAccessIdentifiers: [] }],
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
 			errors: [
 				{
 					messageId: 'tooDeep',
@@ -107,7 +82,7 @@ ruleTester.run('no-destructuring', rule, {
 
 		{
 			code: '\n     const {a, b, c} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;\n',
-			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80, directAccessIdentifiers: [] }],
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
 			errors: [
 				{
 					messageId: 'tooDeep',
@@ -120,14 +95,6 @@ ruleTester.run('no-destructuring', rule, {
 				{
 					messageId: 'tooLong',
 					data: { max: 80 },
-				},
-				{
-					messageId: 'tooManyCumulative',
-					data: {
-						source: 'someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit',
-						max: 2,
-						total: 3,
-					},
 				},
 			],
 		},
