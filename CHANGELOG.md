@@ -1,3 +1,15 @@
+# [3.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.5.0...v3.6.0) (2026-02-03)
+
+
+### Bug Fixes
+
+* update ExtractedPath type and improve test case error handling ([a059b4a](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/a059b4a1fd37144ea955cf2075f3cd3e30d51598))
+
+
+### Features
+
+* enhance no-destructuring rule with additional options and improved test cases ([9c5da05](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/9c5da051ece868c085887cf0d257e253fe54edc4))
+
 # [3.5.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.3...v3.5.0) (2026-02-03)
 
 
