@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import noBooleanCoercion from './rules/no-boolean-coercion.js';
 import noComments from './rules/no-comments.js';
 import noDefaultExport from './rules/no-default-export.js';
@@ -10,6 +9,7 @@ import schemasInSchemasFile from './rules/schemas-in-schemas-file.js';
 import topLevelFunctions from './rules/top-level-functions.js';
 import typesInDts from './rules/types-in-dts.js';
 import noIsNilOrIsEmptyOnBoolean from './rules/no-isnil-isempty-on-boolean.js';
+import preferLodashIterateeShorthand from './rules/prefer-lodash-iteratee-shorthand.js';
 
 export const rules = {
 	'no-boolean-coercion': noBooleanCoercion,
@@ -23,6 +23,7 @@ export const rules = {
 	'top-level-functions': topLevelFunctions,
 	'types-in-dts': typesInDts,
 	'no-isnil-isempty-on-boolean': noIsNilOrIsEmptyOnBoolean,
+	'prefer-lodash-iteratee-shorthand': preferLodashIterateeShorthand,
 };
 
 const plugin = { rules };
