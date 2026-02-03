@@ -1,3 +1,10 @@
+## [3.6.1](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.6.0...v3.6.1) (2026-02-03)
+
+
+### Bug Fixes
+
+* **no-destructuring:** remove unused options and improve error messages in tests ([d67d9de](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/d67d9de74ce6e273f4bfa164d43bd246ace0099e))
+
 # [3.6.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.5.0...v3.6.0) (2026-02-03)
 
 
