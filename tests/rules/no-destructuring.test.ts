@@ -24,6 +24,25 @@ ruleTester.run('no-destructuring', rule, {
 			code: 'const {a, b, c, d} = obj;',
 			options: [{ maximumDestructuredVariables: 4, maximumLineLength: 200 }],
 		},
+
+		{
+			code: 'const {a, b} = obj1;\nconst {c, d} = obj2;',
+		},
+
+		{
+			code: 'function a() { const {x, y} = obj; }\nfunction b() { const {z, w} = obj; }',
+		},
+
+		{
+			code: 'const {length, onComplete} = properties;\nconst {onChangeText, value} = properties;',
+			options: [
+				{
+					maximumDestructuredVariables: 10,
+					maximumLineLength: 100,
+					directAccessIdentifiers: [],
+				},
+			],
+		},
 	],
 
 	invalid: [
@@ -34,13 +53,35 @@ ruleTester.run('no-destructuring', rule, {
 					messageId: 'tooMany',
 					data: { max: 2 },
 				},
+				{
+					messageId: 'tooManyCumulative',
+					data: { source: 'obj', max: 2, total: 3 },
+				},
 			],
 		},
 
 		{
-			code: `
-					const {a} = obj;
-			`,
+			code: 'const {length, onComplete} = properties;',
+			errors: [
+				{
+					messageId: 'directAccessRequired',
+					data: { identifier: 'properties' },
+				},
+			],
+		},
+
+		{
+			code: 'function test() {\nconst { length, onComplete } = obj;\nconst { onChangeText, value } = obj;\n}',
+			errors: [
+				{
+					messageId: 'tooManyCumulative',
+					data: { source: 'obj', max: 2, total: 4 },
+				},
+			],
+		},
+
+		{
+			code: '\n     const {a} = obj;\n',
 			errors: [
 				{
 					messageId: 'tooDeep',
@@ -50,10 +91,8 @@ ruleTester.run('no-destructuring', rule, {
 		},
 
 		{
-			code: `
-				const {a, b} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
-			`,
-			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
+			code: '\n    const {a, b} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;\n',
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80, directAccessIdentifiers: [] }],
 			errors: [
 				{
 					messageId: 'tooDeep',
@@ -67,10 +106,8 @@ ruleTester.run('no-destructuring', rule, {
 		},
 
 		{
-			code: `
-					const {a, b, c} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;
-			`,
-			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80 }],
+			code: '\n     const {a, b, c} = someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit;\n',
+			options: [{ maximumDestructuredVariables: 2, maximumLineLength: 80, directAccessIdentifiers: [] }],
 			errors: [
 				{
 					messageId: 'tooDeep',
@@ -83,6 +120,14 @@ ruleTester.run('no-destructuring', rule, {
 				{
 					messageId: 'tooLong',
 					data: { max: 80 },
+				},
+				{
+					messageId: 'tooManyCumulative',
+					data: {
+						source: 'someVeryLongVariableNameThatWillDefinitelyExceedTheConfiguredMaximumLineLengthLimit',
+						max: 2,
+						total: 3,
+					},
 				},
 			],
 		},
@@ -118,15 +163,11 @@ ruleTester.run('no-destructuring', rule, {
 		},
 
 		{
-			code: `
-				class A {
-					method({a, b, c}: any) {}
-				}
-			`,
+			code: 'class A {\n    method({a, b, c}: any) {}\n}\n',
 			errors: [
 				{
 					messageId: 'tooDeep',
-					data: { max: 3, actual: 5 },
+					data: { max: 3, actual: 4 },
 				},
 				{
 					messageId: 'tooMany',
@@ -134,7 +175,7 @@ ruleTester.run('no-destructuring', rule, {
 				},
 				{
 					messageId: 'tooDeep',
-					data: { max: 3, actual: 5 },
+					data: { max: 3, actual: 4 },
 				},
 				{
 					messageId: 'tooMany',
