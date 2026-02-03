@@ -1,3 +1,11 @@
+# [3.5.0](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.3...v3.5.0) (2026-02-03)
+
+
+### Features
+
+* add prefer-lodash-iteratee-shorthand rule to encourage Lodash iteratee shorthands ([997fe58](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/997fe584d01638202ad44dbe97f483130b4c3166))
+* enhance prefer-lodash-iteratee-shorthand rule with native method support and improve test cases ([fa2e45a](https://github.com/tomerh2001/eslint-plugin-th-rules/commit/fa2e45a6e2831c167093c187e77dcb47a7879e47))
+
 ## [3.4.3](https://github.com/tomerh2001/eslint-plugin-th-rules/compare/v3.4.2...v3.4.3) (2026-01-25)
 
 
