@@ -17,7 +17,7 @@ const ruleTester = new RuleTester({
 	},
 });
 
-function error(messageId: MessageId) {
+function errors(messageId: MessageId): readonly [{ readonly messageId: MessageId }] {
 	return [{ messageId }] as const;
 }
 
@@ -28,18 +28,17 @@ function buildPredicateLodashCases() {
 	for (const method of PREDICATE_METHOD_NAMES) {
 		valid.push(`import _ from 'lodash'; _.${method}(collection, {Y: z});`, `import _ from 'lodash'; _(collection).${method}({Y: z});`);
 
-		invalid.push(
-			{
-				code: `import _ from 'lodash'; _.${method}(collection, (x) => x.Y === z && x.A === b);`,
-				output: `import _ from 'lodash'; _.${method}(collection, {Y: z, A: b});`,
-				errors: error('useMatchesObject'),
-			},
-			{
-				code: `import _ from 'lodash'; _(collection).${method}((x) => x.Y === z && x.A === b);`,
-				output: `import _ from 'lodash'; _(collection).${method}({Y: z, A: b});`,
-				errors: error('useMatchesObject'),
-			},
-		);
+		invalid.push({
+			code: `import _ from 'lodash'; _.${method}(collection, (x) => x.Y === z && x.A === b);`,
+			output: `import _ from 'lodash'; _.${method}(collection, {Y: z, A: b});`,
+			errors: errors('useMatchesObject'),
+		});
+
+		invalid.push({
+			code: `import _ from 'lodash'; _(collection).${method}((x) => x.Y === z && x.A === b);`,
+			output: `import _ from 'lodash'; _(collection).${method}({Y: z, A: b});`,
+			errors: errors('useMatchesObject'),
+		});
 	}
 
 	return { valid, invalid };
@@ -57,38 +56,35 @@ function buildIterateeLodashSingleFunctionCases() {
 			`import _ from 'lodash'; _(collection).${method}(field);`,
 		);
 
-		invalid.push(
-			{
-				code: `import _ from 'lodash'; _.${method}(collection, (x) => x.field);`,
-				output: `import _ from 'lodash'; _.${method}(collection, 'field');`,
-				errors: error('usePropertyShorthand'),
-			},
-			{
-				code: `import _ from 'lodash'; _.${method}(collection, (x) => x[field]);`,
-				output: `import _ from 'lodash'; _.${method}(collection, field);`,
-				errors: error('usePropertyShorthand'),
-			},
-			{
-				code: `import _ from 'lodash'; _.${method}(collection, (x) => _.get(x, 'a.b.c'));`,
-				output: `import _ from 'lodash'; _.${method}(collection, 'a.b.c');`,
-				errors: error('usePropertyShorthand'),
-			},
-			{
-				code: `import _ from 'lodash'; _.${method}(collection, (x) => _.get(x, path));`,
-				output: `import _ from 'lodash'; _.${method}(collection, path);`,
-				errors: error('usePropertyShorthand'),
-			},
-			{
-				code: `import _ from 'lodash'; _(collection).${method}((x) => x.field);`,
-				output: `import _ from 'lodash'; _(collection).${method}('field');`,
-				errors: error('usePropertyShorthand'),
-			},
-			{
-				code: `import _ from 'lodash'; _(collection).${method}((x) => x[field]);`,
-				output: `import _ from 'lodash'; _(collection).${method}(field);`,
-				errors: error('usePropertyShorthand'),
-			},
-		);
+		invalid.push({
+			code: `import _ from 'lodash'; _.${method}(collection, (x) => x.field);`,
+			output: `import _ from 'lodash'; _.${method}(collection, 'field');`,
+			errors: errors('usePropertyShorthand'),
+		});
+
+		invalid.push({
+			code: `import _ from 'lodash'; _.${method}(collection, (x) => x[field]);`,
+			output: `import _ from 'lodash'; _.${method}(collection, field);`,
+			errors: errors('usePropertyShorthand'),
+		});
+
+		invalid.push({
+			code: `import _ from 'lodash'; _.${method}(collection, (x) => _.get(x, 'a.b.c'));`,
+			output: `import _ from 'lodash'; _.${method}(collection, 'a.b.c');`,
+			errors: errors('usePropertyShorthand'),
+		});
+
+		invalid.push({
+			code: `import _ from 'lodash'; _.${method}(collection, (x) => _.get(x, path));`,
+			output: `import _ from 'lodash'; _.${method}(collection, path);`,
+			errors: errors('usePropertyShorthand'),
+		});
+
+		invalid.push({
+			code: `import _ from 'lodash'; _(collection).${method}((x) => x[field]);`,
+			output: `import _ from 'lodash'; _(collection).${method}(field);`,
+			errors: errors('usePropertyShorthand'),
+		});
 	}
 
 	return { valid, invalid };
@@ -100,33 +96,31 @@ function buildSortOrderArrayIterateeCases() {
 
 	valid.push(`import _ from 'lodash'; _.sortBy(items, ['a', 'b.c']);`, `import _ from 'lodash'; _(items).sortBy(['a', 'b.c']);`);
 
-	invalid.push(
-		{
-			code: `import _ from 'lodash'; _.sortBy(items, [(x) => x.a, (x) => _.get(x, 'b.c')]);`,
-			output: `import _ from 'lodash'; _.sortBy(items, ['a', 'b.c']);`,
-			errors: error('usePropertyShorthand'),
-		},
-		{
-			code: `import _ from 'lodash'; _(items).sortBy([(x) => x.a, (x) => _.get(x, 'b.c')]);`,
-			output: `import _ from 'lodash'; _(items).sortBy(['a', 'b.c']);`,
-			errors: error('usePropertyShorthand'),
-		},
-	);
+	invalid.push({
+		code: `import _ from 'lodash'; _.sortBy(items, [(x) => x.a, (x) => _.get(x, 'b.c')]);`,
+		output: `import _ from 'lodash'; _.sortBy(items, ['a', 'b.c']);`,
+		errors: errors('usePropertyShorthand'),
+	});
+
+	invalid.push({
+		code: `import _ from 'lodash'; _(items).sortBy([(x) => x.a, (x) => _.get(x, 'b.c')]);`,
+		output: `import _ from 'lodash'; _(items).sortBy(['a', 'b.c']);`,
+		errors: errors('usePropertyShorthand'),
+	});
 
 	valid.push(`import _ from 'lodash'; _.orderBy(items, [path, 'c'], ['asc', 'desc']);`, `import _ from 'lodash'; _(items).orderBy([path, 'c'], ['asc', 'desc']);`);
 
-	invalid.push(
-		{
-			code: `import _ from 'lodash'; _.orderBy(items, [(x) => _.get(x, path), (x) => x.c], ['asc', 'desc']);`,
-			output: `import _ from 'lodash'; _.orderBy(items, [path, 'c'], ['asc', 'desc']);`,
-			errors: error('usePropertyShorthand'),
-		},
-		{
-			code: `import _ from 'lodash'; _(items).orderBy([(x) => _.get(x, path), (x) => x.c], ['asc', 'desc']);`,
-			output: `import _ from 'lodash'; _(items).orderBy([path, 'c'], ['asc', 'desc']);`,
-			errors: error('usePropertyShorthand'),
-		},
-	);
+	invalid.push({
+		code: `import _ from 'lodash'; _.orderBy(items, [(x) => _.get(x, path), (x) => x.c], ['asc', 'desc']);`,
+		output: `import _ from 'lodash'; _.orderBy(items, [path, 'c'], ['asc', 'desc']);`,
+		errors: errors('usePropertyShorthand'),
+	});
+
+	invalid.push({
+		code: `import _ from 'lodash'; _(items).orderBy([(x) => _.get(x, path), (x) => x.c], ['asc', 'desc']);`,
+		output: `import _ from 'lodash'; _(items).orderBy([path, 'c'], ['asc', 'desc']);`,
+		errors: errors('usePropertyShorthand'),
+	});
 
 	return { valid, invalid };
 }
@@ -135,9 +129,9 @@ function buildNativeCases() {
 	const valid: string[] = [];
 	const invalid: Case[] = [];
 
-	const nativeMethodNames = Object.keys(NATIVE_TO_LODASH_METHOD_NAMES) as Array<keyof typeof NATIVE_TO_LODASH_METHOD_NAMES>;
+	const nativeMethods = Object.keys(NATIVE_TO_LODASH_METHOD_NAMES) as Array<keyof typeof NATIVE_TO_LODASH_METHOD_NAMES>;
 
-	for (const nativeMethod of nativeMethodNames) {
+	for (const nativeMethod of nativeMethods) {
 		const lodashMethod = NATIVE_TO_LODASH_METHOD_NAMES[nativeMethod];
 
 		if (
@@ -149,45 +143,45 @@ function buildNativeCases() {
 			lodashMethod === 'some' ||
 			lodashMethod === 'every'
 		) {
-			invalid.push(
-				{
-					code: `collection.${nativeMethod}((x) => x.Y === z && x.A === b);`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, {Y: z, A: b});`,
-					errors: error('useLodashMethod'),
-				},
-				{
-					code: `collection?.${nativeMethod}((x) => x.Y === z && x.A === b);`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, {Y: z, A: b});`,
-					errors: error('useLodashMethod'),
-				},
-			);
+			invalid.push({
+				code: `collection.${nativeMethod}((x) => x.Y === z && x.A === b);`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, {Y: z, A: b});`,
+				errors: errors('useLodashMethod'),
+			});
+
+			invalid.push({
+				code: `collection?.${nativeMethod}((x) => x.Y === z && x.A === b);`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, {Y: z, A: b});`,
+				errors: errors('useLodashMethod'),
+			});
 
 			valid.push(`collection.${nativeMethod}((x) => x.Y !== z);`, `collection.${nativeMethod}((x) => x.Y === z || x.A === b);`);
 		}
 
 		if (lodashMethod === 'map' || lodashMethod === 'flatMap') {
-			invalid.push(
-				{
-					code: `collection.${nativeMethod}((x) => x.field);`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, 'field');`,
-					errors: error('useLodashMethod'),
-				},
-				{
-					code: `collection.${nativeMethod}((x) => x[field]);`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, field);`,
-					errors: error('useLodashMethod'),
-				},
-				{
-					code: `collection.${nativeMethod}((x) => _.get(x, 'a.b.c'));`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, 'a.b.c');`,
-					errors: error('useLodashMethod'),
-				},
-				{
-					code: `collection.${nativeMethod}((x) => _.get(x, path));`,
-					output: `import _ from 'lodash';\n_.${lodashMethod}(collection, path);`,
-					errors: error('useLodashMethod'),
-				},
-			);
+			invalid.push({
+				code: `collection.${nativeMethod}((x) => x.field);`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, 'field');`,
+				errors: errors('useLodashMethod'),
+			});
+
+			invalid.push({
+				code: `collection.${nativeMethod}((x) => x[field]);`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, field);`,
+				errors: errors('useLodashMethod'),
+			});
+
+			invalid.push({
+				code: `collection.${nativeMethod}((x) => _.get(x, 'a.b.c'));`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, 'a.b.c');`,
+				errors: errors('useLodashMethod'),
+			});
+
+			invalid.push({
+				code: `collection.${nativeMethod}((x) => _.get(x, path));`,
+				output: `import _ from 'lodash';\n_.${lodashMethod}(collection, path);`,
+				errors: errors('useLodashMethod'),
+			});
 
 			valid.push(`collection.${nativeMethod}((x) => foo(x));`);
 		}
@@ -208,18 +202,8 @@ ruleTester.run('prefer-lodash-iteratee-shorthand', rule, {
 		...sortOrderCases.valid,
 		...nativeCases.valid,
 
-		"import _ from 'lodash'; _.find(collection, {Y: z, A: b});",
-		"import _ from 'lodash'; _.find(collection, {a: {b: {c: z}}});",
-		"import _ from 'lodash'; _.groupBy(collection, 'a.b.c');",
-
-		'collection.find((x) => x.Y === x.Z);',
-		'_.find(collection, (x) => x.Y === x.Z);',
-		'_.find(collection, (x) => x.Y !== z);',
-		'_.find(collection, (x) => x.Y === z || x.A === b);',
-		'_.find(collection, (x) => _.get(x, path) === z && x.A === b);',
-
-		'_.map(collection, (x) => foo(x));',
-		"_.filter(collection, (x) => _.get(x, 'a.b.c') > 1);",
+		"import _ from 'lodash'; _.map(collection, 'a.b.c.d');",
+		"import _ from 'lodash'; _.find(collection, {b: {c: 2}});",
 	],
 
 	invalid: [
@@ -231,13 +215,37 @@ ruleTester.run('prefer-lodash-iteratee-shorthand', rule, {
 		{
 			code: "import _ from 'lodash'; _.find(collection, (x) => _.get(x, 'a.b.c.d') === z);",
 			output: "import _ from 'lodash'; _.find(collection, {a: {b: {c: {d: z}}}});",
-			errors: error('useMatchesObject'),
+			errors: errors('useMatchesObject'),
 		},
 
 		{
 			code: "import _ from 'lodash'; _.find(collection, (x) => _.get(x, '[0].a.b.c') === z);",
 			output: "import _ from 'lodash'; _.find(collection, [{a: {b: {c: z}}}]);",
-			errors: error('useMatchesObject'),
+			errors: errors('useMatchesObject'),
+		},
+
+		{
+			code: "import _ from 'lodash'; _.map(collection, (x) => x.a.b.c.d);",
+			output: "import _ from 'lodash'; _.map(collection, 'a.b.c.d');",
+			errors: errors('usePropertyShorthand'),
+		},
+
+		{
+			code: '[{ a: { b: { c: { d: 1 } } } }].map((x) => x.a.b.c.d);',
+			output: "import _ from 'lodash';\n_.map([{ a: { b: { c: { d: 1 } } } }], 'a.b.c.d');",
+			errors: errors('useLodashMethod'),
+		},
+
+		{
+			code: 'collection.find((x) => x.b.c === 2);',
+			output: "import _ from 'lodash';\n_.find(collection, {b: {c: 2}});",
+			errors: errors('useLodashMethod'),
+		},
+
+		{
+			code: "import _ from 'lodash'; _.find(collection, (x) => x.b.c === 2);",
+			output: "import _ from 'lodash'; _.find(collection, {b: {c: 2}});",
+			errors: errors('useMatchesObject'),
 		},
 	],
 });

@@ -9,7 +9,7 @@ type Fixer = TSESLint.RuleFixer;
 
 type FunctionLike = TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression;
 
-type ExtractedPath = { kind: 'member'; keyText: string; keyIsIdentifier: boolean } | { kind: 'get'; pathText: string; pathIsStaticString: boolean };
+type ExtractedPath = { kind: 'memberPath'; segments: Array<string | number> } | { kind: 'get'; pathText: string; pathIsStaticString: boolean };
 
 type PredicateClause = { path: ExtractedPath; valueExpr: TSESTree.Expression };
 
@@ -135,6 +135,10 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return !_.isNil(node) && node.type === AST_NODE_TYPES.Literal && typeof node.value === 'string';
 		}
 
+		function isNumberLiteral(node: TSESTree.Node | undefined): node is TSESTree.Literal & { value: number } {
+			return !_.isNil(node) && node.type === AST_NODE_TYPES.Literal && typeof node.value === 'number';
+		}
+
 		function isTemplateLiteralWithoutExpressions(node: TSESTree.Node | undefined): node is TSESTree.TemplateLiteral {
 			return !_.isNil(node) && node.type === AST_NODE_TYPES.TemplateLiteral && _.isEmpty(node.expressions) && node.quasis.length === 1;
 		}
@@ -196,66 +200,6 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return !_.isNil(node) && (node.type === AST_NODE_TYPES.ArrowFunctionExpression || node.type === AST_NODE_TYPES.FunctionExpression);
 		}
 
-		function isGetCallOnParameter(expr: TSESTree.Expression, parameterName: string): ExtractedPath | null {
-			const unwrapped = unwrapChain(expr);
-			if (_.isNil(unwrapped) || unwrapped.type !== AST_NODE_TYPES.CallExpression) return null;
-
-			const callee = unwrapChain(unwrapped.callee);
-			if (!isLodashMember(callee, 'get')) return null;
-
-			if (unwrapped.arguments.length < 2) return null;
-
-			const arg0 = unwrapped.arguments[0];
-			const arg1 = unwrapped.arguments[1];
-
-			if (_.isNil(arg0) || arg0.type === AST_NODE_TYPES.SpreadElement) return null;
-			if (_.isNil(arg1) || arg1.type === AST_NODE_TYPES.SpreadElement) return null;
-
-			const object = unwrapChain(arg0);
-			if (_.isNil(object) || object.type !== AST_NODE_TYPES.Identifier || object.name !== parameterName) return null;
-
-			if (isStringLiteral(arg1)) {
-				return { kind: 'get', pathText: sourceCode.getText(arg1), pathIsStaticString: true };
-			}
-
-			if (isTemplateLiteralWithoutExpressions(arg1)) {
-				return { kind: 'get', pathText: sourceCode.getText(arg1), pathIsStaticString: true };
-			}
-
-			if (arg1.type === AST_NODE_TYPES.Identifier) {
-				return { kind: 'get', pathText: arg1.name, pathIsStaticString: false };
-			}
-
-			return null;
-		}
-
-		function isMemberAccessOnParameter(expr: TSESTree.Expression, parameterName: string): ExtractedPath | null {
-			const unwrapped = unwrapChain(expr);
-			if (_.isNil(unwrapped) || unwrapped.type !== AST_NODE_TYPES.MemberExpression) return null;
-
-			const object = unwrapChain(unwrapped.object);
-			if (_.isNil(object) || object.type !== AST_NODE_TYPES.Identifier || object.name !== parameterName) return null;
-
-			if (!unwrapped.computed && unwrapped.property.type === AST_NODE_TYPES.Identifier) {
-				const key = unwrapped.property.name;
-				return { kind: 'member', keyText: key, keyIsIdentifier: true };
-			}
-
-			if (unwrapped.computed && unwrapped.property.type === AST_NODE_TYPES.Literal && typeof unwrapped.property.value === 'string') {
-				return { kind: 'member', keyText: sourceCode.getText(unwrapped.property), keyIsIdentifier: false };
-			}
-
-			if (unwrapped.computed && unwrapped.property.type === AST_NODE_TYPES.Identifier) {
-				return { kind: 'member', keyText: unwrapped.property.name, keyIsIdentifier: false };
-			}
-
-			return null;
-		}
-
-		function extractPathFromExpression(expr: TSESTree.Expression, parameterName: string): ExtractedPath | null {
-			return isMemberAccessOnParameter(expr, parameterName) ?? isGetCallOnParameter(expr, parameterName);
-		}
-
 		function normalizeStaticPathText(pathText: string): string {
 			const trimmed = pathText.trim();
 			if ((trimmed.startsWith("'") && trimmed.endsWith("'")) || (trimmed.startsWith('"') && trimmed.endsWith('"'))) {
@@ -276,6 +220,33 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 		function toSingleQuotedStringLiteral(value: string): string {
 			const escaped = value.replaceAll('\\', '\\\\').replaceAll("'", String.raw`\'`);
 			return `'${escaped}'`;
+		}
+
+		function toDoubleQuotedRaw(value: string): string {
+			return value.replaceAll('\\', '\\\\').replaceAll('"', String.raw`\"`);
+		}
+
+		function buildLodashPathStringFromSegments(segments: Array<string | number>): string | null {
+			if (_.isEmpty(segments)) return null;
+
+			let out = '';
+
+			for (const seg of segments) {
+				if (typeof seg === 'number') {
+					out += `[${seg}]`;
+					continue;
+				}
+
+				if (isValidIdentifierName(seg)) {
+					out += _.isEmpty(out) ? seg : `.${seg}`;
+					continue;
+				}
+
+				const inner = toDoubleQuotedRaw(seg);
+				out += `["${inner}"]`;
+			}
+
+			return out;
 		}
 
 		function containsIdentifier(node: TSESTree.Node, name: string): boolean {
@@ -423,6 +394,84 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return `{${props.join(', ')}}`;
 		}
 
+		function isGetCallOnParameter(expr: TSESTree.Expression, parameterName: string): ExtractedPath | null {
+			const unwrapped = unwrapChain(expr);
+			if (_.isNil(unwrapped) || unwrapped.type !== AST_NODE_TYPES.CallExpression) return null;
+
+			const callee = unwrapChain(unwrapped.callee);
+			if (!isLodashMember(callee, 'get')) return null;
+
+			if (unwrapped.arguments.length < 2) return null;
+
+			const arg0 = unwrapped.arguments[0];
+			const arg1 = unwrapped.arguments[1];
+
+			if (_.isNil(arg0) || arg0.type === AST_NODE_TYPES.SpreadElement) return null;
+			if (_.isNil(arg1) || arg1.type === AST_NODE_TYPES.SpreadElement) return null;
+
+			const object = unwrapChain(arg0);
+			if (_.isNil(object) || object.type !== AST_NODE_TYPES.Identifier || object.name !== parameterName) return null;
+
+			if (isStringLiteral(arg1)) {
+				return { kind: 'get', pathText: sourceCode.getText(arg1), pathIsStaticString: true };
+			}
+
+			if (isTemplateLiteralWithoutExpressions(arg1)) {
+				return { kind: 'get', pathText: sourceCode.getText(arg1), pathIsStaticString: true };
+			}
+
+			if (arg1.type === AST_NODE_TYPES.Identifier) {
+				return { kind: 'get', pathText: arg1.name, pathIsStaticString: false };
+			}
+
+			return null;
+		}
+
+		function extractMemberPathSegments(expr: TSESTree.Expression, parameterName: string): Array<string | number> | null {
+			const unwrapped = unwrapChainExpr(expr) ?? expr;
+
+			const segments: Array<string | number> = [];
+			let current: TSESTree.Node = unwrapped;
+
+			while (current.type === AST_NODE_TYPES.MemberExpression) {
+				if (current.computed) {
+					const prop = unwrapChain(current.property);
+
+					if (!_.isNil(prop) && prop.type === AST_NODE_TYPES.Identifier) return null;
+
+					if (isStringLiteral(prop)) {
+						segments.unshift(prop.value);
+					} else if (isNumberLiteral(prop)) {
+						segments.unshift(prop.value);
+					} else if (isTemplateLiteralWithoutExpressions(prop)) {
+						const cooked = prop.quasis[0]?.value.cooked ?? prop.quasis[0]?.value.raw ?? '';
+						segments.unshift(cooked);
+					} else {
+						return null;
+					}
+				} else {
+					if (current.property.type !== AST_NODE_TYPES.Identifier) return null;
+					segments.unshift(current.property.name);
+				}
+
+				const object = unwrapChain(current.object);
+				if (_.isNil(object)) return null;
+				current = object;
+			}
+
+			if (current.type !== AST_NODE_TYPES.Identifier || current.name !== parameterName) return null;
+			if (_.isEmpty(segments)) return null;
+
+			return segments;
+		}
+
+		function extractPathFromExpression(expr: TSESTree.Expression, parameterName: string): ExtractedPath | null {
+			const memberSegments = extractMemberPathSegments(expr, parameterName);
+			if (!_.isNil(memberSegments)) return { kind: 'memberPath', segments: memberSegments };
+
+			return isGetCallOnParameter(expr, parameterName);
+		}
+
 		function extractPredicateClausesFromExpression(expr: TSESTree.Expression, parameterName: string): PredicateClause[] | null {
 			const unwrapped = unwrapChainExpr(expr);
 			if (_.isNil(unwrapped)) return null;
@@ -468,25 +517,16 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return clauses;
 		}
 
-		function buildObjectKeyTextForMemberPath(path: ExtractedPath & { kind: 'member' }): string | null {
-			if (path.keyIsIdentifier) {
-				return path.keyText;
-			}
-
-			return null;
-		}
-
 		function buildMatchesObjectFromClauses(clauses: PredicateClause[]): string | null {
 			const literals: string[] = [];
 
 			for (const clause of clauses) {
 				const valueText = sourceCode.getText(clause.valueExpr);
 
-				if (clause.path.kind === 'member') {
-					const keyText = buildObjectKeyTextForMemberPath(clause.path);
-					if (_.isNil(keyText)) return null;
-
-					literals.push(`{${keyText}: ${valueText}}`);
+				if (clause.path.kind === 'memberPath') {
+					const nested = buildNestedLiteralFromSegments(clause.path.segments, valueText);
+					if (_.isNil(nested)) return null;
+					literals.push(nested);
 					continue;
 				}
 
@@ -514,23 +554,26 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			const expr = getReturnedExpression(fn);
 			if (_.isNil(expr)) return null;
 
-			const unwrapped = unwrapChainExpr(expr) ?? expr;
+			const memberSegments = extractMemberPathSegments(expr, parameterName);
+			if (!_.isNil(memberSegments)) {
+				const raw = buildLodashPathStringFromSegments(memberSegments);
+				if (_.isNil(raw)) return null;
 
-			const member = isMemberAccessOnParameter(unwrapped, parameterName);
-			if (!_.isNil(member) && member.kind === 'member') {
-				if (!member.keyIsIdentifier && isValidIdentifierName(member.keyText)) {
-					return member.keyText;
-				}
-
-				if (member.keyIsIdentifier) {
-					return toSingleQuotedStringLiteral(member.keyText);
-				}
-
-				const normalized = normalizeStaticPathText(member.keyText);
-				return toSingleQuotedStringLiteral(normalized);
+				return toSingleQuotedStringLiteral(raw);
 			}
 
-			const get = isGetCallOnParameter(unwrapped, parameterName);
+			const unwrapped = unwrapChainExpr(expr) ?? expr;
+			if (unwrapped.type === AST_NODE_TYPES.MemberExpression) {
+				const object = unwrapChain(unwrapped.object);
+				if (!_.isNil(object) && object.type === AST_NODE_TYPES.Identifier && object.name === parameterName && unwrapped.computed) {
+					const prop = unwrapChain(unwrapped.property);
+					if (!_.isNil(prop) && prop.type === AST_NODE_TYPES.Identifier) {
+						return prop.name;
+					}
+				}
+			}
+
+			const get = isGetCallOnParameter(expr, parameterName);
 			if (!_.isNil(get) && get.kind === 'get') {
 				return get.pathText;
 			}
