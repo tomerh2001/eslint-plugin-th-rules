@@ -13,6 +13,8 @@ type ExtractedPath = { kind: 'member'; keyText: string; keyIsIdentifier: boolean
 
 type PredicateClause = { path: ExtractedPath; valueExpr: TSESTree.Expression };
 
+const RULE_NAME = 'prefer-lodash-iteratee-shorthand';
+
 export const PREDICATE_METHOD_NAMES = [
 	'find',
 	'findLast',
@@ -54,13 +56,25 @@ export const ITERATEE_METHOD_NAMES = [
 	'sortedUniqBy',
 ] as const;
 
+export const NATIVE_TO_LODASH_METHOD_NAMES = {
+	find: 'find',
+	findLast: 'findLast',
+	findIndex: 'findIndex',
+	findLastIndex: 'findLastIndex',
+	filter: 'filter',
+	some: 'some',
+	every: 'every',
+	map: 'map',
+	flatMap: 'flatMap',
+} as const;
+
 type PredicateMethodName = (typeof PREDICATE_METHOD_NAMES)[number];
 type IterateeMethodName = (typeof ITERATEE_METHOD_NAMES)[number];
+type NativeMethodName = keyof typeof NATIVE_TO_LODASH_METHOD_NAMES;
 
-const PREDICATE_METHODS = new Set<string>(PREDICATE_METHOD_NAMES satisfies readonly PredicateMethodName[]);
-const ITERATEE_METHODS = new Set<string>(ITERATEE_METHOD_NAMES satisfies readonly IterateeMethodName[]);
-
-const RULE_NAME = 'prefer-lodash-iteratee-shorthand';
+function typedKeys<T extends Record<string, unknown>>(object: T): Array<keyof T> {
+	return Object.keys(object) as Array<keyof T>;
+}
 
 const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://github.com/tomerh2001/eslint-plugin-th-rules/blob/main/docs/rules/${RULE_NAME}.md`)({
 	name: RULE_NAME,
@@ -76,7 +90,7 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 		messages: {
 			useMatchesObject: 'Prefer Lodash iteratee shorthand. Use {{replacement}}.',
 			usePropertyShorthand: 'Prefer Lodash iteratee shorthand. Use {{replacement}}.',
-			useLodashFind: 'Prefer Lodash iteratee shorthand. Use {{replacement}}.',
+			useLodashMethod: 'Prefer Lodash iteratee shorthand. Use {{replacement}}.',
 		},
 	},
 
@@ -84,6 +98,12 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 
 	create(context) {
 		const { sourceCode } = context;
+
+		const PREDICATE_METHODS = new Set<string>(PREDICATE_METHOD_NAMES satisfies readonly PredicateMethodName[]);
+		const ITERATEE_METHODS = new Set<string>(ITERATEE_METHOD_NAMES satisfies readonly IterateeMethodName[]);
+
+		const nativeMethodNames = typedKeys(NATIVE_TO_LODASH_METHOD_NAMES);
+		const NATIVE_METHODS = new Set<string>(nativeMethodNames);
 
 		function ensureLodashImport(fixer: Fixer) {
 			const imports = sourceCode.ast.body.filter((node): node is TSESTree.ImportDeclaration => node.type === AST_NODE_TYPES.ImportDeclaration);
@@ -453,12 +473,7 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 				return path.keyText;
 			}
 
-			if (isValidIdentifierName(path.keyText)) {
-				return null;
-			}
-
-			const normalized = normalizeStaticPathText(path.keyText);
-			return toSingleQuotedStringLiteral(normalized);
+			return null;
 		}
 
 		function buildMatchesObjectFromClauses(clauses: PredicateClause[]): string | null {
@@ -533,18 +548,18 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return unwrapped.property.name;
 		}
 
-		function isNativeArrayFindCall(node: TSESTree.CallExpression): { collectionText: string } | null {
+		function isNativeArrayMethodCall(node: TSESTree.CallExpression): { methodName: NativeMethodName; collectionText: string } | null {
 			const callee = unwrapChain(node.callee);
 			if (_.isNil(callee) || callee.type !== AST_NODE_TYPES.MemberExpression) return null;
 
 			const method = getMethodNameFromMemberCallee(callee);
-			if (method !== 'find') return null;
+			if (_.isNil(method) || !NATIVE_METHODS.has(method)) return null;
 
 			if (isLodashIdentifier(callee.object)) return null;
 			if (isLodashWrapperCallExpression(callee.object)) return null;
 
 			const collectionText = sourceCode.getText(callee.object);
-			return { collectionText };
+			return { methodName: method as NativeMethodName, collectionText };
 		}
 
 		function isLodashMethodCall(node: TSESTree.CallExpression): { mode: 'static' | 'wrapper'; methodName: string } | null {
@@ -557,8 +572,8 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return null;
 		}
 
-		function reportAndFixReplaceCallWithLodashFind(callNode: TSESTree.CallExpression, collectionText: string, replacementIterateeText: string, fixer: Fixer) {
-			const replacement = `_.find(${collectionText}, ${replacementIterateeText})`;
+		function reportAndFixReplaceCallWithLodash(callNode: TSESTree.CallExpression, methodName: string, collectionText: string, iterateeText: string, fixer: Fixer) {
+			const replacement = `_.${methodName}(${collectionText}, ${iterateeText})`;
 			const target = callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent : callNode;
 
 			const fixes = [fixer.replaceText(target, replacement)];
@@ -574,38 +589,71 @@ const preferLodashIterateeShorthand = ESLintUtils.RuleCreator(() => `https://git
 			return fixes;
 		}
 
+		function getNativeIterateeKind(methodName: NativeMethodName): 'predicate' | 'iteratee' | null {
+			const lodashMethod = NATIVE_TO_LODASH_METHOD_NAMES[methodName];
+
+			if (PREDICATE_METHODS.has(lodashMethod)) return 'predicate';
+			if (ITERATEE_METHODS.has(lodashMethod)) return 'iteratee';
+
+			return null;
+		}
+
 		return {
 			CallExpression(node) {
-				const nativeFind = isNativeArrayFindCall(node);
-				if (!_.isNil(nativeFind)) {
-					const predicateArg = node.arguments[0];
-					if (_.isNil(predicateArg) || predicateArg.type === AST_NODE_TYPES.SpreadElement) return;
-					if (!isFunctionLike(predicateArg)) return;
+				const nativeCall = isNativeArrayMethodCall(node);
+				if (!_.isNil(nativeCall)) {
+					const arg0 = node.arguments[0];
+					if (_.isNil(arg0) || arg0.type === AST_NODE_TYPES.SpreadElement) return;
+					if (!isFunctionLike(arg0)) return;
 
-					const expr = getReturnedExpression(predicateArg);
-					if (_.isNil(expr)) return;
+					const lodashMethod = NATIVE_TO_LODASH_METHOD_NAMES[nativeCall.methodName];
+					const kind = getNativeIterateeKind(nativeCall.methodName);
+					if (_.isNil(kind)) return;
 
-					const parameterName = getFunctionParameterName(predicateArg);
-					if (_.isNil(parameterName)) return;
+					if (kind === 'predicate') {
+						const expr = getReturnedExpression(arg0);
+						if (_.isNil(expr)) return;
 
-					const clauses = extractPredicateClausesFromExpression(expr, parameterName);
-					if (_.isNil(clauses) || _.isEmpty(clauses)) return;
+						const parameterName = getFunctionParameterName(arg0);
+						if (_.isNil(parameterName)) return;
 
-					const matchesObject = buildMatchesObjectFromClauses(clauses);
-					if (_.isNil(matchesObject)) return;
+						const clauses = extractPredicateClausesFromExpression(expr, parameterName);
+						if (_.isNil(clauses) || _.isEmpty(clauses)) return;
 
-					const replacement = `_.find(${nativeFind.collectionText}, ${matchesObject})`;
+						const matchesObject = buildMatchesObjectFromClauses(clauses);
+						if (_.isNil(matchesObject)) return;
 
-					context.report({
-						node,
-						messageId: 'useLodashFind',
-						data: { replacement },
-						fix(fixer) {
-							return reportAndFixReplaceCallWithLodashFind(node, nativeFind.collectionText, matchesObject, fixer);
-						},
-					});
+						const replacement = `_.${lodashMethod}(${nativeCall.collectionText}, ${matchesObject})`;
 
-					return;
+						context.report({
+							node,
+							messageId: 'useLodashMethod',
+							data: { replacement },
+							fix(fixer) {
+								return reportAndFixReplaceCallWithLodash(node, lodashMethod, nativeCall.collectionText, matchesObject, fixer);
+							},
+						});
+
+						return;
+					}
+
+					if (kind === 'iteratee') {
+						const replacementIteratee = extractPropertyIterateeRewrite(arg0);
+						if (_.isNil(replacementIteratee)) return;
+
+						const replacement = `_.${lodashMethod}(${nativeCall.collectionText}, ${replacementIteratee})`;
+
+						context.report({
+							node,
+							messageId: 'useLodashMethod',
+							data: { replacement },
+							fix(fixer) {
+								return reportAndFixReplaceCallWithLodash(node, lodashMethod, nativeCall.collectionText, replacementIteratee, fixer);
+							},
+						});
+
+						return;
+					}
 				}
 
 				const lodashCall = isLodashMethodCall(node);
