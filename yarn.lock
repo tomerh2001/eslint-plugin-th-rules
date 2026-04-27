@@ -1159,11 +1159,11 @@ __metadata:
   linkType: hard
 
 "@leancodepl/resolve-eslint-flat-config@npm:^9.7.0":
-  version: 9.7.0
-  resolution: "@leancodepl/resolve-eslint-flat-config@npm:9.7.0"
+  version: 9.7.4
+  resolution: "@leancodepl/resolve-eslint-flat-config@npm:9.7.4"
   peerDependencies:
     eslint: ">=8.9.0"
-  checksum: 10c0/a8097f5ab7945c88f3f9df960ccdd77faed1ec8a9406401f7cf17265b39acd17a2253c2538c9d51ffbf11050fa0366e3f688b61d58898fa71b938bc4d3683ec7
+  checksum: 10c0/ec943d09950ed5676fe11c961829572e4f5155c9bfb15c987a7f844ead9efa76aee4628fffd191f07a9f6e39decbd578ef3bd344888f1a2381f6c239573694e5
   languageName: node
   linkType: hard
 
